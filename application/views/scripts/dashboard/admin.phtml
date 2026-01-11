@@ -1,0 +1,56 @@
+<div id="tabs_main"> 
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Impegni</a>
+        <a class="heading_tab advanced_link tab1" href="#">Ultime offerte</a>
+        <a class="heading_tab advanced_link tab3" href="#">Ultime commesse</a>
+       <!-- <a class="heading_tab advanced_link tab1" href="#">Messaggi</a> -->
+    </div>
+    
+    <div class="tab_contents">
+        <div class="tab_content" id="general">
+            <h2>I miei impegni della settimana</h2>
+            <div id="impegni_settimana">
+                <?php echo $this->partial('tasks/list_per_day.phtml', array('tasks' => $this->tasks_array)); ?>
+            </div>
+            
+        </div>
+
+        <div class="tab_content" id="general">
+        	<h2>Ultime 5 offerte aggiunte</h2>
+            <?php $this->offers->deploy(); ?>
+        </div>
+              
+        <div class="tab_content" id="general">
+        	<h2>Ultime 5 commesse aggiunte</h2>
+            <?php $this->orders->deploy(); ?>
+        </div>
+        
+        <div class="tab_content" id="general">
+            <h2>Messaggi</h2>
+            <table class="fluid">
+                <?php /*
+                <?php foreach($this->messages as $m) : ?>
+                    <tr>
+                        <th width="20%" class="">
+                            <?php echo $m['date_sent']; ?>
+                        </th>
+                        <th>
+                            <?php echo $m['subject']; ?>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <?php echo $m['text']; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                */
+                ?>
+            </table>
+        </div>
+        
+    </div>
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabPane.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabs.js')); ?>

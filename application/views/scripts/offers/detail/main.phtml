@@ -1,0 +1,224 @@
+<div id="offer-top-div">
+    <?php echo $this->partial('offers/detail/offertop.ajax.phtml', $this); ?>
+</div>
+
+<input type="hidden" name="id" id="id" value="<?php echo $this->offer['offer_id']; ?>" />
+<input type="hidden" name="id_offer" id="id_offer" value="<?php echo $this->offer['id_offer']; ?>" />
+<input type="hidden" name="rev" id="rev" value="<?php echo $this->offer['revision']; ?>" />
+<input type="hidden" name="year" id="year" value="<?php echo $this->offer['year']; ?>" />
+
+<!--
+    <div class="internals-container">
+        <span title="stato offerta" id="stato_offerta">
+            <?php echo $this->offer['status_name']; ?> |
+        </span>
+        <span title="cambia revisione">revisione:
+            <select name="crev" id="crev">
+                <?php foreach($this->offer['revisions'] as $rev) : ?>
+                    <?php $selected = ($this->offer['revision'] == $rev) ? 'selected="selected"' : ''; ?>
+                    <option value="<?php echo $rev; ?>" <?php echo $selected; ?>><?php echo $rev; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </span>
+        <?php if($this->offer['active'] != 1) : ?>
+            <a href="#" id="arev">&laquo; ripristina</a>
+        <?php endif; ?>
+    </div>
+    -->
+<table class="detail fluid">
+    <tr><th colspan="4">Cliente</th></tr>
+    <tr>
+        <td class="label">Ragione Sociale:</td>
+        <td>
+            <a href="<?php echo $this->baseUrl('companies/detail/id/' . $this->offer->company->company_id); ?>">
+                <?php echo $this->offer->company->ragione_sociale; ?>
+            </a>
+        </td>
+        <td class="label">Contatto:</td>
+        <td><?php echo $this->offer->company_contact_name; ?></td>
+    </tr>
+    <tr><th colspan="4">Informazioni Generali</th></tr>
+    <tr>
+        <td class="label">Servizio:</td>
+        <td><?php echo $this->offer['service_name']; ?></td>
+        <td class="label">Servizio Specifico:</td>
+        <td><?php echo $this->offer['subservice_name']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Sede di Erogazione:</td>
+        <td colspan="3" class="cs3"><?php echo $this->offer['luogo']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Specifiche Oggetto:</td>
+        <td colspan="3" class="cs3"><?php echo $this->offer['subject']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Note:</td>
+        <td colspan="3" class="cs3"><?php echo $this->offer['note']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Scadenze:</td>
+        <td><?php echo $this->offer['scadenze']; ?></td>
+        <td class="label">Interesse Cliente:</td>
+        <td><?php echo $this->offer['interest_name']; ?></td>
+    </tr>
+    <tr><th colspan="4">Riferimenti</th></tr>
+    <tr>
+        <td class="label">RCO:</td>
+        <td><?php echo $this->offer['rco_name']; ?></td>
+        <td class="label">Segnalato da:</td>
+        <td><?php echo $this->offer['segnalato_da']; ?></td>
+    </tr>
+    <tr><th colspan="4">Date</th></tr>
+    <tr>
+        <td class="label">Data Offerta:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->offer['date_offer']); ?></td>
+        <td class="label">Scadenza Offerta:</td>
+        <td>
+            <?php echo Maco_Utils_DbDate::fromDb($this->offer['date_end']); ?>
+            <span class="info">(<?php echo $this->offer['validita']; ?> giorni)</span>
+        </td>
+    </tr>
+    <tr>
+        <td class="label">Data Invio Offerta:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->offer['date_sent']); ?></td>
+        <td class="label">Data Accettazione:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->offer['date_accepted']); ?></td>
+    </tr>
+    <tr><th colspan="4">Sconto e Partners</th></tr>
+    <tr>
+        <td class="label">Tipo di Pagamento:</td>
+        <td><?php echo $this->offer['pagamento_name']; ?></td>
+        <td class="label">Sconto:</td>
+        <td><?php echo $this->offer['sconto'] . (($this->offer['sconto'] != '') ? ' %' : ''); ?></td>
+    </tr>
+    <?php if($this->offer['promotore_name'] != '') : ?>
+        <tr>
+            <td class="label">Promotore:</td>
+            <td><?php echo $this->offer['promotore_name']; ?></td>
+            <td class="label">Al Promotore:</td>
+            <td>
+                <?php if($this->offer['promotore_value_flag'] == 'P') : ?>
+                    <?php echo $this->offer['promotore_percent'] . (($this->offer['promotore_percent'] != '') ? ' %' : ''); ?>
+                <?php elseif($this->offer['promotore_value_flag'] == 'V') : ?>
+                    <?php echo $this->offer['promotore_value'] . (($this->offer['promotore_value'] != '') ? ' &euro;' : ''); ?>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endif; ?>
+
+    <tr><th colspan="4">File Offerta</th></tr>
+    <tr>
+        <td class="label">Scarica:</td>
+        <td>
+            <?php if($this->offerPdf) : ?>
+                <a class="button" href="<?php echo $this->baseUrl() . '/files/download/p/' . $this->offerPdf; ?>">
+                    <img style="vertical-align: middle" src="<?php echo $this->baseUrl('img/pdf.png'); ?>"/>
+                    <?php echo $this->offer['code_offer'] . '.pdf'; ?>
+                </a>
+            <?php else : ?>
+                <span class="info">file non presente</span>
+            <?php endif; ?>
+        </td>
+        <td class="label">Carica:</td>
+        <td>
+            <input id="file_upload" name="file_upload" type="file" />
+        </td>
+    </tr>
+
+</table>
+
+<br />
+
+<div class="fieldset-container">
+    <h3>Fasi di Lavorazione</h3>
+    <?php $tot = 0; ?>
+    <table class="fluid">
+        <thead>
+        <tr>
+            <th>Tipologia</th>
+            <th>Importo</th>
+            <th>Data prevista</th>
+            <th>Pianificazione</th>
+            <th>Fatturazione</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach($this->offer['moments'] as $i => $moment) : ?>
+            <tr class="">
+                <td width="40%">
+                    <?php echo $moment['tipologia']; ?>
+                </td>
+                <td>
+                    <?php if($moment['importo'] != '' && $moment['importo'] != 0) : ?>
+                        <?php echo number_format($moment['importo'], 2, ',', '.'); ?> &euro;
+                    <?php endif; ?>
+                </td>
+                <?php $tot+= $moment['importo']; ?>
+                <td>
+                    <?php echo Maco_Utils_DbDate::fromDb($moment['expected_date']); ?>
+                </td>
+                <td>
+                    <?php if($moment['p_valore_g_uomo'] != '' && $moment['p_valore_g_uomo'] != 0) : ?>
+                        Valore gg/hm: <?php echo number_format($moment['p_valore_g_uomo'], 2); ?> &euro;<br />
+                        <?php
+                        $giorni_hm = number_format($moment['importo'] / $moment['p_valore_g_uomo'], 2);
+                        $ore_hm = number_format($giorni_hm * 8, 2);
+                        ?>
+                        <span class="info">ore / hm: <?php echo $ore_hm; ?></span> <br />
+                        <span class="info">giorni / hm: <?php echo $giorni_hm; ?></span> <br />
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php echo ($moment['fatturazione'] == 1) ? 'si' : 'no'; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        <?php
+        $sconto = $tot * (($this->offer['sconto']) / 100);
+        $scontato = $tot * ((100 - $this->offer['sconto']) / 100);
+        $alpartner = $scontato * ($this->offer['promotore_percent']) / 100;
+        $netto = $scontato - $alpartner;
+        ?>
+        <tr>
+            <td colspan="5"></td>
+        </tr>
+        <?php if($this->offer['sconto'] == 0 || $this->offer['sconto'] == '') : ?>
+            <tr class="offer_total" style="font-weight:bold">
+                <td align="right">Totale a Pagare</td>
+                <td colspan="3">
+                    <?php echo number_format($tot, 2, ',', '.'); ?> &euro;
+                </td>
+            </tr>
+        <?php else : ?>
+            <tr class="offer_total" style="">
+                <td align="right">Totale</td>
+                <td colspan="4">
+                    <?php echo number_format($tot, 2, ',', '.'); ?> &euro;
+                </td>
+            </tr>
+            <tr class="info">
+                <td align="right">Sconto</td>
+                <td colspan="4">
+                    <?php echo number_format($sconto, 2, ',', '.'); ?> &euro;
+                </td>
+            </tr>
+            <tr class="offer_total" style="font-weight:bold">
+                <td align="right">Totale a Pagare</td>
+                <td colspan="4">
+                    <?php echo number_format($scontato, 2, ',', '.'); ?> &euro;
+                </td>
+            </tr>
+        <?php endif; ?>
+            <?php if($this->offer['promotore_value'] != 0 && $this->offer['promotore_value'] != '') : ?>
+                <tr class="info">
+                    <td align="right">Al promotore</td>
+                    <td colspan="4">
+                        <?php echo number_format($this->offer['promotore_value'], 2, ',', '.'); ?> &euro;
+                    </td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+
+</div>

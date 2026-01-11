@@ -1,0 +1,13 @@
+<table class="detail fluid">
+    <tr><th colspan="6">Indirizzi</th></tr>
+    <?php foreach($this->addresses as $address) : ?>
+        <tr>
+            <td class="label"><?php echo $address['description']; ?></td>
+            <td colspan="4">
+            <?php
+                echo $address->getCleanAddress();
+            ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

@@ -1,0 +1,13 @@
+- name: update apt cache
+  apt: update_cache=yes cache_valid_time=3600
+
+- name: ensure some base packages are installed
+  apt: name={{ item }} state=latest
+  with_items:
+    - build-essential
+    - wget
+    - curl
+    - git
+
+- name: ensure user `vagrant` is part of `vboxsf` group (to access shared folder)
+  user: name=vagrant groups=vboxsf append=yes

@@ -1,0 +1,50 @@
+
+<div id="cs">
+<h2>Modifica Pianificazione</h2>
+<form name="mp_form" id="mp_form" action="<?php echo $this->baseUrl(); ?>/orders/mps/format/html" method="post">
+    <?php echo $this->formHidden('id', $this->id); ?> 
+<dl>
+    <dt><label for="oldpw"><span class="red">*</span> Valore Giornata Uomo:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'valore_g_uomo', $this->data['valore_g_uomo'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl>
+    <dt><label for="oldpw">Ore / hM:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'ore_hm', $this->data['ore_hm'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl>
+    <dt><label for="oldpw">Giorni / hM:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'gg_hm', $this->data['ore_hm'], array('class' => 'input-small')); ?></dd>
+</dl>
+<br />
+<dl>
+    <dt><label for="oldpw"># incontri:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'n_incontri', $this->data['n_incontri'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl>
+    <dt><label for="oldpw"># ore di studio:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'n_ore_studio', $this->data['n_ore_studio'], array('class' => 'input-small')); ?></dd>
+</dl>
+<br />
+<dl>
+    <dt><label for="oldpw">Data Chiusura Richiesta:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'date_chisura_richiesta', $this->data['date_chisura_richiesta'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl>
+    <dt><label for="oldpw">Data Assegnazione:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'date_assegnazione', $this->data['date_assegnazione'], array('class' => 'input-small')); ?></dd>
+</dl>
+<br />
+<dl>
+    <dt><label for="oldpw">Responsabile:</label></dt>
+    <dd></dd><?php echo $this->formSelect($this->inputNamePrefix. 'id_responsabile', $this->data['id_responsabile'], array('class' => 'input-medium required', 'multiple' => ''), $this->rcos); ?></dd>
+</dl>
+<br />
+<dl>
+    <dt><label for="oldpw">Note:</label></dt>
+    <dd><?php echo $this->formTextArea($this->inputNamePrefix . 'note', $this->data['note'], array('class' => 'input-big', 'rows' => '2')); ?></dd>
+</dl>
+<p class="submit">
+    <input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+</form>
+</div>

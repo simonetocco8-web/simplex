@@ -1,0 +1,20 @@
+- name: ensure Apache is installed
+  apt: name=apache2 state=latest
+
+- name: disable apache2 default websites
+  action: command /usr/sbin/a2dissite {{ item }} removes=/etc/apache2/sites-enabled/{{ item }}
+  with_items:
+    - default
+    - default-ssl
+
+- name: copy app vhost file
+  template: src=files/apache/vhost/vhost.j2 dest=/etc/apache2/sites-available/{{ app_name }}.conf
+
+- name: enable apache2 APP_NAME vhost file
+  action: command /usr/sbin/a2ensite {{ app_name }}.conf creates=/etc/apache2/sites-enabled/{{ app_name }}.conf
+
+- name: ensure mod_rewrite is enabled (required by most framework/cms)
+  command: /usr/sbin/a2enmod rewrite
+
+- name: ensure Apache service is restarted
+  service: name=apache2 state=restarted

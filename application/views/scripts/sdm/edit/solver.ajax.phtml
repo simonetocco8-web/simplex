@@ -1,0 +1,45 @@
+    <form name="mod_solver_form" id="mod_solver_form"
+          action="<?php echo $this->baseUrl(); ?>/sdm/<?php echo $this->action; ?>/save/1/format/json"
+          method="post">
+    <?php echo $this->formHidden('id', $this->data['sdm_id']); ?>
+ <div class="fieldset-container">
+    <h4>Dati Responsabile Trattamento</h4>
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'id_solver'; ?>"><span class="red">*</span> Responsabile Trattamento:</label></dt>
+        <dd>
+            <?php $id_solver = (isset($this->data['id_solver']) && $this->data['id_solver'])
+                ? $this->data['id_solver']
+                : ((isset($this->id_solver) && $this->id_solver) ? $this->id_solver : null); ?>
+            <?php echo $this->formSelect($this->inputNamePrefix . 'id_solver', $id_solver, array('class' => 'input-medium required', 'multiple' => ''), $this->users); ?>
+        </dd>
+    </dl>
+     <dl>
+         <dt><label for="<?php echo $this->inputNamePrefix . 'date_expected_resolution'; ?>"><span class="red">*</span> Data attesa risoluzione:</label></dt>
+         <dd>
+             <?php $date_expected = (isset($this->data['date_expected_resolution']) && $this->data['date_expected_resolution'])
+                 ? $this->data['date_expected']
+                 : ((isset($this->date_expected_resolution) && $this->date_expected_resolution) ? $this->date_expected_resolution : null); ?>
+             <?php echo $this->formText($this->inputNamePrefix . 'date_expected_resolution', Maco_Utils_DbDate::fromDb($date_expected), array('class' => 'input-medium validate-date date-field required')); ?>
+         </dd>
+     </dl>
+
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'cause'; ?>">Possibile Causa:</label></dt>
+        <dd>
+            <?php echo $this->formTextarea($this->inputNamePrefix . 'cause', $this->data['cause'], array('class' => 'input-big', 'rows' => 4)); ?>
+        </dd>
+    </dl>
+     <dl>
+         <dt><label for="<?php echo $this->inputNamePrefix . 'treatment'; ?>">Note:</label></dt>
+         <dd>
+             <?php echo $this->formTextarea($this->inputNamePrefix . 'treatment', $this->data['treatment'], array('class' => 'input-big', 'rows' => 2)); ?>
+         </dd>
+     </dl>
+
+
+    <div class="clear"></div>
+                                                            
+    <p class="submit"><input class="button" type="submit" value="salva" /></p>  
+                                                            
+</div>        
+</form>

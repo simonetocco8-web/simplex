@@ -1,0 +1,68 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Anagrafica</a>
+    </div>
+
+<h2><?php echo $this->contentTitle; ?></h2>
+<form action="<?php echo $this->baseUrl(); ?>/companies/edit" method="post" id="edit" name="edit">
+    <div class="tab_contents">
+
+        <?php echo $this->formHidden('new_company', $this->newCompany); ?>
+        <?php echo $this->formHidden('company_id', $this->data['company_id']); ?>
+        <?php echo $this->formHidden('internal_id', $this->layout()->user->internal_id); ?>
+        <div class="fieldset-container clear2">
+            <h4>Identificativo azienda</h4>
+
+            <dl class="fleft">
+                <dt><label for="partita_iva"><span class="red">*</span>Partita IVA:</label></dt>
+                <dd><?php echo $this->formText('partita_iva', $this->data['partita_iva'], array('class' => 'input-medium minLength:11 maxLength:11')); ?></dd>
+            </dl>
+            <dl class="fleft with-margin">
+                <dt>&nbsp;</dt>
+                <dd>
+                    <a href="#" id="pi_check" class="link-button">controlla</a>
+                    |
+                    <a href="#" id="pi_temp" class="link-button">provvisoria</a>
+                </dd>
+            </dl>
+            <div class="clear"></div>
+            <div class="message warning" id="pi-msg"></div>
+        </div>
+
+        <div id="company_data">
+        <hr />
+
+
+            <div class="tab_content" id="anagrafica-info">
+                <?php echo $this->partial('companies/edit/anagrafica.phtml', $this); ?>
+            </div>
+
+            <div id="riferimenti" class="tab_content">
+                <?php echo $this->partial('companies/edit/riferimenti.phtml', $this); ?>
+            </div>
+
+            <div id="note_prodotti" class="tab_content">
+                <?php echo $this->partial('companies/edit/noteprodotti.phtml', $this); ?>
+            </div>
+            <p class="submit"><input class="button" type="submit" value="salva azienda" /></p>
+        </div>
+    </div>
+
+</form>
+
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/Meio.Mask.min.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/moocheck.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/edit.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/companies/edit.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/autocomplete/meio.aucomplete.css', true)); ?>

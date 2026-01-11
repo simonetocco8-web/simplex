@@ -1,0 +1,134 @@
+ <table class="detail fluid">
+        <?php if($this->extended) : ?>
+            <tr><th colspan="4">Informazioni impegno</th></tr>
+        <?php endif; ?>
+        <tr>
+            <td class="label">Chi:</td>
+            <td><?php echo $this->deps['who']; ?></td>
+            <?php if($this->extended) : ?>
+            <td class="label">Settore</td>
+            <td><?php echo $this->data->getSector(); ?></td>
+            <?php else : ?>
+            <td class="label">Quando</td>
+            <td><?php echo Maco_Utils_DbDate::fromDb($this->data['when']);  ?></td>
+            <?php endif; ?>
+        </tr>
+        <tr><th colspan="4"></th></tr>
+        <tr>
+            <td class="label">
+                <?php if($this->extended) : ?>
+                    Contatto:
+                <?php else : ?>
+                    <?php echo $this->data->getWhat(); ?> con:
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php if((int)$this->data['id_subject']) :?>
+                    <a href="<?php echo $this->baseUrl('companies/detailcontact/id/' . $this->data['id_company'] . '/idc/' . $this->data['id_subject']); ?>" title="vai al dettaglio contatto"><?php echo $this->data['subject']; ?></a>
+                <?php else : ?>
+                    <?php echo $this->data['subject']; ?>
+                <?php endif; ?>
+            </td>
+            <td class="label">Azienda:</td>
+            <td><a href="<?php echo $this->baseUrl('companies/detail/id/' . $this->data['id_company']); ?>" title="vai al dettaglio azienda"><?php echo $this->deps['company']; ?></a></td>
+        </tr>
+     <?php if($this->extended) : ?>
+        <tr><th colspan="4"></th></tr>
+        <tr>
+            <td class="label">Cosa:</td>
+            <?php
+            switch($this->data['what'])
+            {
+                case 1:
+            ?>
+            <td>Telefonata</td>
+            <td class="label">Numero:</td>
+            <td><?php echo $this->data['subject_data']; ?></td>
+            
+            <?php
+                break;
+                case 2:
+            ?>
+            <td>Mail:</td>
+            <td class="label">indirizzo email:</td>
+            <td><a href="mailto:<?php echo $this->data['subject_data']; ?>"><?php echo $this->data['subject_data']; ?></a></td>
+            
+            <?php
+                break;
+                case 3:
+                case 5:
+            ?>
+            <td><?php echo (($this->data['what'] == 3) ? 'Incontro' : 'Riunione'); ?></td>
+            <td class="label">Luogo:</td>
+            <td>
+                <?php echo $this->data['subject_data']; ?>
+                <?php if($this->data['with_auto']) : ?>
+                <br />
+                <span class="info">(auto prenotata)</span>
+                <?php endif; ?>
+            </td>
+
+            <?php
+                break;
+                case 6:
+            ?>
+            <td>Videoconferenza</td>
+            <td class="label">Info:</td>
+            <td>
+                <?php echo $this->data['subject_data']; ?>
+            </td>
+            
+            <?php
+                break;
+                case 8:
+            ?>
+
+            <td colspan="3">PFM</td>
+
+            <?php
+                break;
+            }
+            ?>
+        </tr>
+
+            <tr>
+                <td class="label">Quando</td>
+                <td><?php echo Maco_Utils_DbDate::fromDb($this->data['when']);  ?></td>
+                <td class="label">Tempo previsto:</td>
+                <td><?php echo $this->data->getFormattedTimeExpected(); ?></td>
+            </tr>
+     
+            <tr><th colspan="4"></th></tr>
+            <tr>
+                <td class="label">Info:</td>
+                <td colspan="3"><?php echo $this->data['info'];  ?></td>
+            </tr>
+            
+            <?php if(trim($this->data['note']) != '') : ?>
+            <tr>
+                <td class="label">Note di esecuzione:</td>
+                <td colspan="3"><?php echo $this->data['note'];  ?></td>
+            </tr>
+         <?php endif; ?>
+            <?php endif; ?>
+        </table>
+
+<?php /*
+<div class="fieldset-container floating detail">
+    <h3>Altro</h3>
+
+    <div class="single-container single-action">
+        <dl class="detail">
+            <dt>Type:</dt>
+            <dd>
+                <?php if($this->data['type'] & 1) echo ' | Commerciale'; ?>
+                <?php if($this->data['type'] & 2) echo ' | Produzione'; ?>
+                <?php if($this->data['type'] & 4) echo ' | Amministrazione'; ?>
+            </dd>
+        </dl>
+    </div>   
+</div>
+
+<div class="clear"></div>
+
+*/ ?>

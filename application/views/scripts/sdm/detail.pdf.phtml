@@ -1,0 +1,132 @@
+<style>
+    table{
+        font-size:11px;
+        margin:0;
+        padding:0;
+    }
+
+    table caption{
+        padding: 0 0 5px;
+        overflow:hidden;
+        /*text-align: right;*/
+    }
+
+    table.fluid{
+        clear:both;
+        width:100%;
+    }
+
+    table.fluid caption{
+        width: 100%;
+    }
+
+    table.fixed{
+        width: 470px;
+    }
+
+    table.fixed caption{
+        width: 470px;
+    }
+
+    table.auto {
+        clear:both;
+        width:auto;
+    }
+
+    table.fixed caption{
+        width: auto;
+    }
+
+    th  {
+        background:url("../img/highlight_line.gif") repeat-x scroll 0 0 #A8B2C5;
+        border-color:#959595 #959595 #959595 #FFFFFF;
+        border-style:solid;
+        border-width:1px;
+        color:#FFFFFF;
+        letter-spacing:2px;
+        padding:6px 6px 6px 12px;
+        text-align:left;
+        text-transform:uppercase;
+    }
+
+    th .info{
+        text-transform: lowercase;
+        float: right;
+    }
+
+    td {
+        background:none repeat scroll 0 0 #FFFFFF;
+        border-bottom:1px solid #959595;
+        border-right:1px solid #959595;
+        color:#484848;
+        padding:6px 6px 6px 12px;
+        background: #fff url(../img/highlight_line.gif) repeat-x scroll 0 0;
+    }
+
+    td.alt, tr.even td {
+        background-color: #eceff5;
+        color: #797268;
+    }
+
+    th.nobg {
+        background:none repeat scroll 0 0 transparent;
+        border-left:0 none;
+        border-right:1px solid #959595;
+        border-top:0 none;
+        color:#484848;
+    }
+
+    th.spec {
+        background:url("../img/bullet2.gif") no-repeat scroll 0 0 #FFFFFF;
+        border-left:1px solid #959595;
+        border-top:0 none;
+        color:#484848;
+        font-size:10px;
+        font-weight:bold;
+    }
+
+    th.specalt {
+        background:url("../img/bullet1.gif") no-repeat scroll 0 0 #ECEFF5;
+        color:#797268;
+        border-left: 1px solid #959595;
+        border-top: 0 none;
+        font-size: 10px;
+        font-weight: bold;
+    }
+
+    table a:link, table a:visited{
+        color: #006;
+    }
+
+    table.listview tr:hover td{
+        background-color: #9999cc;
+        color: #fff;
+        /*cursor:pointer;*/
+    }
+
+    table td.list-links{
+        width: 80px;
+    }
+
+    table td.moment_detail_td{
+        background: #fff !important;
+        color: #484848 !important;
+    }
+
+    table.detail td.label{
+        background-color: #eaeaea;
+        padding-right: 6px;
+    }
+
+</style>
+
+
+        <h2>
+            Stato: <?php echo Model_Sdm2::getStatoDescription($this->sdm['id_status']); ?>
+
+            <?php if($this->sdm['with_prevention']) : ?>
+                - <?php echo Model_Sdm2::getStatoDescription($this->sdm['with_prevention']); ?>
+            <?php endif; ?>
+        </h2>
+
+        <?php echo $this->partial('sdm/detail/main.phtml', array('sdm' => $this->sdm)); ?>

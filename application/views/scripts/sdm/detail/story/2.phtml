@@ -1,0 +1,27 @@
+<tr><th colspan="4">Informazioni Segnalazione</th></tr>
+<tr>
+    <td class="label">Emittente</td>
+    <td>
+        <?php echo $this->story['creator']; ?>
+    </td>
+    <td class="label">Data Emissione:</td>
+    <td>
+        <?php echo Maco_Utils_DbDate::fromDb($this->story['date1']); ?>
+    </td>
+</tr>
+<tr>
+    <td class="label">RSQ</td>
+    <td>
+        <?php echo $this->story['user']; ?>
+    </td>
+    <td class="label"></td>
+    <td>
+    </td>
+</tr>
+
+<tr>
+    <td class="label">Descrizione:</td>
+    <td colspan="3">
+        <?php echo nl2br($this->story['text1']); ?>
+    </td>
+</tr>

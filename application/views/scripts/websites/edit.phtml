@@ -1,0 +1,16 @@
+<div class="to-be-added <?php echo ($this->index == 0) ?: 'added'; ?>">
+
+    <?php echo $this->formHidden($this->inputNamePrefix . 'website_id[]', $this->website['website_id']); ?>
+
+    <dl class="fleft">
+	    <dt><label for="number[]">Url:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix . 'url[]', $this->website['url'], array('class' => 'input-medium')); ?></dd>
+    </dl>
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'description[]'; ?>">Descrizione:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'description[]', $this->website['description'], array('class' => 'input-medium')); ?></dd>
+    </dl>
+
+    <a class="remove-more" name="removewebsite" id="removewebsite">Cancella</a>
+    <div style="clear: both;"></div>
+</div>

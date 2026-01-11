@@ -1,0 +1,64 @@
+
+<div id="cs" class="overflow-scroll">
+<h2>Modifica Pianificazione</h2>
+
+<form name="mp_form" id="mp_form" action="<?php echo $this->baseUrl(); ?>/orders/mps/format/json" method="post">
+    <?php echo $this->formHidden('id', $this->data['order_id']); ?> 
+    <?php echo $this->formHidden('total', $this->data->offer['total']); ?>
+    <!--
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"><span class="red">*</span> Valore Giornata Uomo:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'valore_g_uomo', $this->data['valore_g_uomo'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Ore / hM:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'ore_hm', $this->data['ore_hm'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Giorni / hM:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'gg_hm', $this->data['gg_hm'], array('class' => 'input-small')); ?></dd>
+</dl>
+<div class="clear"></div>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"># incontri:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'n_incontri', $this->data['n_incontri'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"># ore di studio:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'n_ore_studio', $this->data['n_ore_studio'], array('class' => 'input-small')); ?></dd>
+</dl>
+<div class="clear"></div>
+-->
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Data Chiusura Richiesta: <span class="info"><?php echo $this->data_chiusura_da_offerta; ?></span></label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'date_chiusura_richiesta', Maco_Utils_DbDate::fromDb($this->data['date_chiusura_richiesta']), array('class' => 'input-small validate-date')); ?></dd>
+</dl>
+
+<div class="clear"></div>
+<dl>
+    <dt><label for="oldpw">Note di Pianificazione:</label></dt>
+    <dd><?php echo $this->formTextarea($this->inputNamePrefix . 'note_pianificazione', $this->data['note_pianificazione'], array('class' => 'input-big', 'rows' => '2')); ?></dd>
+</dl>
+<br />
+<div class="fieldset-container with-more">
+	<h4>Responsabili Commessa</h4>
+	<?php foreach($this->data['rcos'] as $key => $item) : ?> 
+        <?php echo $this->partial('orders/edit/rco.phtml', 
+                array('data' => $item, 'index' => $key, 'inputNamePrefix' => $this->inputNamePrefix . 'rcos_', 'rcos' => $this->rcos)); ?>
+    <?php endforeach; ?> 
+    <a class="more-button" name="morenumbers" id="morenumbers">Aggiungi un altro responsabile</a>
+</div>
+
+<!--
+<dl>
+    <dt><label for="oldpw">Responsabile:</label></dt>
+    <dd><?php echo $this->formSelect($this->inputNamePrefix. 'id_responsabile', $this->data['id_responsabile'], array('class' => 'input-medium required', 'multiple' => ''), $this->rcos); ?></dd>
+</dl>
+
+-->
+
+<p class="submit">
+    <input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+</form>
+</div>

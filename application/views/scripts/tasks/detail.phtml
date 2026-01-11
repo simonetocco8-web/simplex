@@ -1,0 +1,119 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Impegno</a>
+        <a class="heading_tab advanced_link tab2" href="#">Modulistica</a>
+    </div>
+
+
+    <div class="tab_contents">
+
+        <div class="tab_content" id="task-info">
+
+            <h2>
+                <?php if($this->data['done'] == 1) : ?>
+                    Eseguito alle <?php echo Maco_Utils_DbDate::fromDb($this->data['date_done']); ?>
+                <?php elseif($this->data['done'] == -1) : ?>
+                    Annullato
+                <?php else : ?>
+                    Da eseguire
+                <?php endif; ?>
+            </h2>
+
+            <ul class="contextual-menu">
+                <?php /*
+            <li>
+              <a href="<?php echo $this->baseUrl('tasks/done/id/' . $this->data['task_id']); ?>" id="done_button" ><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> aggiorna</a>
+            </li>
+            */ ?>
+            </ul>
+
+            <?php if(isset($this->parent_data)) : ?>
+                <div id="parent_task" class="font9">
+                    <h4><a href="<?php echo $this->baseUrl(); ?>/tasks/detail/id/<?php echo $this->parent_data['task_id']; ?>">Causa</a> <span class="info">Etichetta da cambiare</span></h4>
+                    <?php echo $this->partial('tasks/detail/main.phtml', array('data' => $this->parent_data, 'deps' => $this->parent_deps, 'extended' => false)); ?>
+                </div>
+                <?php echo $this->formHidden('id_parent', $this->parent_data['task_id']); ?>
+            <?php endif; ?>
+
+            <hr />
+            <?php echo $this->formHidden('id', $this->data['task_id']); ?>
+            <?php echo $this->partial('tasks/detail/main.phtml', array('data' => $this->data, 'deps' => $this->deps, 'extended' => true)); ?>
+
+            <br />
+
+            <p class="submit">
+                <?php if($this->data['done']) : ?>
+                    <input class="button" type="submit" id="new_button" name="b2submit" value="Crea Nuovo da Questo"/>
+                    &nbsp;
+                    <input class="button" type="submit" id="duplica_button" name="b2submit" value="Duplica"/>
+                <?php else : ?>
+                    <input class="button" data-href="<?php echo $this->baseUrl('tasks/edit/id/' . $this->data['task_id']); ?>" type="submit" id="pedit_button" name="b1submit" value="Modifica"/>
+                    &nbsp;
+                    <input class="button" data-href="<?php echo $this->baseUrl('tasks/postpone/id/' . $this->data['task_id']); ?>" type="submit" id="pp_button" name="b1submit" value="Rinvia"/>
+                    &nbsp;|&nbsp;
+                    <input class="button" data-href="<?php echo $this->baseUrl('tasks/done/id/' . $this->data['task_id']); ?>" type="submit" id="cancel_button" name="b1submit" value="Annulla"/>
+                    &nbsp;|&nbsp;
+                    <input class="button" data-href="<?php echo $this->baseUrl('tasks/done/id/' . $this->data['task_id']); ?>" type="submit" id="c_button" name="b1submit" value="Eseguito"/>
+                    &nbsp;
+                    <input class="button" data-href="<?php echo $this->baseUrl('tasks/done/id/' . $this->data['task_id']); ?>" type="submit" id="cnew_button" name="b2submit" value="Eseguito e Crea Nuovo da Questo"/>
+                    &nbsp;
+                    <input class="button" data-href="<?php echo $this->baseUrl('tasks/done/id/' . $this->data['task_id']); ?>" type="submit" id="cduplica_button" name="b2submit" value="Eseguito e Duplica"/>
+                <?php endif; ?>
+            </p>
+
+            <hr />
+            <div class="children_tasks">
+                <h3>Impegni derivati</h3>
+
+                <div id="all" class="">
+                    <?php $this->dag->deploy(); ?>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="tab_content" id="modulistica">
+
+            <h2>Elenco documenti disponibili</h2>
+
+            <ul class="contextual-menu">
+                <li>
+
+                </li>
+            </ul>
+
+            <div>
+                <table class="fluid">
+
+                    <?php if($this->data['what'] == 3) : ?>
+
+                    <tr>
+                        <td>Conferma Appuntamento</td>
+                        <td></td>
+                        <td style="width: 100px">
+                            <a class="button" href="<?php echo $this->baseUrl('export/tasks/id/' . $this->data['task_id'] . '/w/ca'); ?>">
+                                scarica
+                            </a>
+                        </td>
+                    </tr>
+
+                    <?php endif; ?>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/detail.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/tasks/detail.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabPane.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabs.js')); ?>

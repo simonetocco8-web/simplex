@@ -1,0 +1,69 @@
+<h2>Pagamento per Fattura: <?php echo $this->tranche->invoice->code_invoice; ?></h2>
+                
+ <ul class="contextual-menu">
+    <li><a href="#"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> Stampa</a></li>
+    <?php if($this->tranche->getImportoDaPagare() > 0) : ?>
+    <li><a id="np" href="#"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> nuovo pagamento</a></li>
+    <li><a id="ns" href="#"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> genera sollecito</a></li>
+    <?php endif; ?>
+</ul>
+
+<?php echo $this->formHidden('tranche_id', $this->tranche->tranche_id); ?>
+
+<table class="detail fluid">
+    <thead>
+        <tr>
+            <th colspan="4">Dati Pagamento</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="label">Importo</td>
+            <td><?php echo number_format($this->tranche->importo, 2, ',', '.'); ?> &euro;</td>
+            <td class="label">Data scadenza</td>
+            <td><?php echo Maco_Utils_DbDate::fromDb($this->tranche->date_expected); ?></td>
+        </tr>
+    </tbody>
+</table>
+
+<br />
+<table class="detail fluid">
+    <thead>
+        <tr>
+            <th colspan="4">Pagamenti</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if(count($this->tranche->payments) == 0) : ?>
+        <tr>
+            <td colspan="4">Non sono stati effettuati pagamenti per questo momento!</td>
+        </tr>
+        <?php else : ?>
+        <?php foreach($this->tranche->payments as $payment) : ?>
+        <tr>
+            <td class="label">importo:</td>
+            <td><?php echo number_format($payment->importo, 2, ',', '.'); ?> &euro;</td>
+            <td class="label">data:</td>
+            <td><?php echo Maco_Utils_DbDate::fromDb($payment->date_done); ?></td>
+        </tr>
+        <?php endforeach; ?>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+<br />
+<table class="detail fluid">
+    <thead>
+        <tr>
+            <th colspan="4">Riepilogo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="label">Da pagare:</td>
+            <td><?php echo number_format($this->tranche->getImportoDaPagare(), 2, ',', '.'); ?> &euro;</td>
+            <td class="label">Stato:</td>
+            <td><b><?php echo Model_Tranche::getStatoDescriptionByStatusId($this->tranche->status); ?></b></td>
+        </tr>
+    </tbody>
+</table>

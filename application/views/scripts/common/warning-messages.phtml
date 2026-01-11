@@ -1,0 +1,13 @@
+<?php if(!empty($this->layout()->flashMessages)) : ?>
+    <div class="message warning clear2">
+        <?php foreach($this->layout()->flashMessages as $k => $message) : ?>
+            <?php if(is_array($message)) : ?>
+                <?php foreach($message as $j => $msg) : ?>
+                    <p><?php echo '<b>' . $j . '</b> ' . $msg; ?></p>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <p><?php echo $message; ?></p>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>

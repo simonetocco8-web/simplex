@@ -1,0 +1,61 @@
+- name: ensure required PHP extensions are installed
+  apt: name={{ item }} state=latest
+  with_items:
+    - php-pear
+    - php5-cli
+    - php5-common
+    - php5-curl
+    - php5-dev
+    - php5-fpm
+    - php5-gd
+    - php5-intl
+#    - php5-json
+    - php5-mcrypt
+    - php5-mysql
+    - php5-xdebug
+    - libapache2-mod-php5
+
+- name: set PHP .ini timezone config (web)
+  lineinfile: dest=/etc/php5/apache2/php.ini
+               regexp='^date.timezone\s?='
+               line="date.timezone = \"Europe/Rome\""
+
+- name: set PHP .ini timezone config (cli)
+  lineinfile: dest=/etc/php5/cli/php.ini
+              regexp='^date.timezone\s?='
+              line="date.timezone = \"Europe/Rome\""
+
+- name: set php.ini display_error to ON
+  lineinfile: dest=/etc/php5/apache2/php.ini
+              regexp='^display_errors\s?='
+              line="display_errors = On"
+
+- name: set php.ini error_reporting to E_ALL
+  lineinfile: dest=/etc/php5/apache2/php.ini
+              regexp='^error_reporting\s?='
+              line="error_reporting = E_ALL"
+
+#- name: ensure xdebug.max_nesting_level is ok for Symfony2
+#  lineinfile: dest=/etc/php5/mods-available/xdebug.ini
+#              regexp='^xdebug.max_nesting_level='
+#              line='xdebug.max_nesting_level=250'
+
+- name: ensure php.ini memory_limit is ok for Drupal 8
+  lineinfile: dest=/etc/php5/apache2/php.ini
+              regexp='^memory_limit\s?='
+              line='memory_limit = 256M'
+
+- name: setup adminer
+  get_url: url=http://www.adminer.org/latest.php dest=/var/{{ app_name }}/public/adminer.php
+
+- name: download composer
+  get_url: url=http://getcomposer.org/installer dest=/tmp/composer_installer
+
+- name: install composer
+  action: command /usr/bin/php /tmp/composer_installer --install-dir=/usr/bin
+
+- name: move composer.phar to composer
+  action: command mv /usr/bin/composer.phar /usr/bin/composer
+
+- name: ensure Apache service is restarted
+  service: name=apache2 state=reloaded

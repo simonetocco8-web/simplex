@@ -1,0 +1,19 @@
+<div id="cs">
+<h2>Assegna Sede</h2>
+<form name="cs_form" id="cs_form"
+      action="<?php echo $this->baseUrl(); ?>/companies/lo/id/<?php echo $this->company['company_id'] ?>/format/json"
+	    method="post">
+	<?php echo $this->formHidden('id', $this->company['company_id']); ?>
+	<?php echo $this->formHidden('save', 1); ?>
+<dl>
+	<dt><label for="oldpw"><span class="red">*</span> Sede di Riferimento:</label></dt>
+	<dd>
+		<?php echo $this->formSelect('id_office', $this->company['office_id'], array('class' => 'input-medium required', 'multiple' => ''), $this->offices); ?>
+	</dd>
+</dl>
+
+<p class="submit">
+	<input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+</form>
+</div>

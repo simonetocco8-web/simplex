@@ -1,0 +1,216 @@
+<div id="tabs_main">
+
+    <h2><?php echo $this->contentTitle; ?> </h2>
+    <form action="<?php echo $this->baseUrl() . $this->return_url; ?>" method="post" id="edit" name="edit">
+        
+        <?php echo $this->formHidden('offer_id', $this->offer['offer_id']); ?>
+        <?php echo $this->formHidden('year', $this->offer['year']); ?>
+        <?php echo $this->formHidden('active', $this->offer['active']); ?>
+        <?php echo $this->formHidden('id_company', $this->offer->id_company); ?>
+        <?php echo $this->formHidden('id_status', $this->offer->id_status); ?>
+        <input type="hidden" name="nr" id="nr" value="<?php echo $this->new_revision; ?>" />
+        <?php if(isset($this->offer['id_offer'])) : ?>
+            <input type="hidden" name="id_offer" id="id_offer" value="<?php echo $this->offer['id_offer']; ?>" />
+            <input type="hidden" name="revision" id="revision" value="<?php echo $this->offer['revision']; ?>" />
+        <?php endif; ?>
+    <div id="riferimenti" class="tab_content">
+        <div class="fieldset-container">
+            <h4>Dati Generali</h4>
+            
+            <dl class="fleft">
+                <dt><label for="id_service"><span class="red">*</span> Servizio:</label></dt>
+                <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_service', $this->offer['id_service'], array('class' => 'input-medium required', 'multiple' => ''), $this->services); ?></dd>
+            </dl>
+            <dl class="fleft">
+                <dt><label for="id_subservice"><span class="red">*</span> Servizio Specifico:</label></dt>
+                <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_subservice', $this->offer['id_subservice'], array('class' => 'input-medium required', 'multiple' => ''), $this->subservices); ?></dd>
+            </dl>
+            
+            <div class="clear"></div>
+            
+            <dl>
+                <dt><label for="subject">Specifiche Oggetto:</label></dt>
+                <dd><?php echo $this->formTextarea($this->inputNamePrefix . 'subject', $this->offer['subject'], array('class' => 'input-big', 'rows' => 4)); ?></dd>
+            </dl>
+
+            <dl>
+                <dt><label for="luogo">Sede di erogazione del servizio:</label></dt>
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'luogo', $this->offer['luogo'], array('class' => 'input-big')); ?></dd>
+            </dl>
+
+            <br />
+            <dl>
+                <dt><label for="id_company_contact">Contatto Azienda:</label></dt>
+                <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_company_contact', $this->offer['id_company_contact'], array('class' => 'input-medium', 'multiple' => ''), $this->contacts); ?></dd>
+            </dl>
+
+        </div>
+		
+
+		<div class="fieldset-container">
+            <h4>Riferimenti</h4>
+            
+            <dl class="fleft with-margin">
+                <dt><label for="id_rco"><span class="red">*</span> RCO:</label></dt>
+                <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_rco', $this->offer['id_rco'], array('class' => 'input-medium required', 'multiple' => ''), $this->users); ?></dd>
+            </dl>
+            
+            <dl class="fleft with-margin">
+                <dt><label for="segnalato_da">Segnalato da:</label></dt>                
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'segnalato_da', $this->offer['segnalato_da'], array('class' => 'input-big')); ?></dd>
+            </dl>
+            
+            <div class="clear"></div>
+            
+        </div>
+        
+        <div class="fieldset-container">
+            <h4>Dati Generali</h4>
+            <dl>
+                <dt><label for="scadenze">Scadenze:</label></dt>
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'scadenze', $this->offer['scadenze'], array('class' => 'input-big')); ?></dd>
+            </dl>
+            <dl class="fleft">
+                <dt><label for="id_interest"><span class="red">*</span> Livello di Interesse del Cliente:</label></dt>
+                <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_interest', $this->offer['id_interest'], array('class' => 'input-medium required', 'multiple' => ''), $this->levels); ?></dd>
+            </dl>
+            
+            <div class="clear"></div>
+            
+        </div>
+        
+        <div class="fieldset-container">
+            <h4>Date</h4>
+            
+            <dl class="fleft with-margin">
+                <dt><label for="date_offer"><span class="red">*</span> Data Offerta:</label></dt>
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'date_offer', $this->offer['date_offer'], array('class' => 'input-small required validate-date linked1 lfd')); ?></dd>
+            </dl>
+            
+            <dl class="fleft with-margin">
+                <dt><label for="validita"><span class="red">*</span> Validit&agrave;:</label></dt>
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'validita', $this->offer['validita'], array('class' => 'input-small required linked1')); ?></dd>
+            </dl>
+            
+            <dl class="fleft with-margin">
+                <dt><label for="scadenza"><span class="red">*</span> Data  Scadenza:</label></dt>
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'date_end', $this->offer['date_end'], array('class' => 'input-small required validate-date linked1 lfd ')); ?></dd>
+            </dl>
+            <!--<dl class="fleft">
+                <dt><label for="date_sent">Data Invio:</label></dt>
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'date_sent', $this->offer['date_sent'], array('class' => 'input-small required')); ?></dd>
+            </dl>-->
+            
+            <div class="clear"></div>
+            
+        </div>
+        
+        <div class="fieldset-container">
+            <h4>Altro</h4>
+            
+            <dl>
+                <dt><label for="note">Note:</label></dt>
+                <dd><?php echo $this->formTextarea($this->inputNamePrefix . 'note', $this->offer['note'], array('class' => 'input-big', 'rows' => 2)); ?></dd>
+            </dl>
+            
+        </div>
+        
+        <div class="fieldset-container clear2">
+            <h4>Promotore</h4>
+
+            <dl class="fleft with-margin">
+                <dt><label for="id_partner">Promotore:</label></dt>
+                <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_promotore', $this->offer['id_promotore'], array('class' => 'input-medium', 'multiple' => ''), $this->promotori); ?></dd>
+            </dl>
+
+            <div class="clear"></div>
+
+            <dl class="fleft with-margin">
+                <dt>
+                    <label>Tiplogia</label>
+                    <input <?php if($this->offer['promotore_value_flag'] == 'P') echo 'checked="checked"'; ?> id="ppp" type="radio" name="promotore_value_flag" value="P">
+                    <label style="display: inline" for="ppp">Percentuale</label>
+                    <br />
+                    <input <?php if($this->offer['promotore_value_flag'] == 'V') echo 'checked="checked"'; ?> id="ppv" type="radio" name="promotore_value_flag" value="V">
+                    <label style="display: inline" for="ppv">Valore</label>
+                </dt>
+                <dd>
+
+                </dd>
+            </dl>
+
+            <dl class="fleft">
+                <div id="pppf" <?php if($this->offer['promotore_value_flag'] != 'P') echo 'style="display: none"'; ?>>
+                    <dt><label for="promotore_percent">% al Promotore:</label></dt>
+                    <dd><?php echo $this->formText($this->inputNamePrefix . 'promotore_percent', $this->offer['promotore_percent'], array('class' => 'input-small')); ?></dd>
+                </div>
+                <div id="pppv" <?php if($this->offer['promotore_value_flag'] != 'V') echo 'style="display: none"'; ?>>
+                    <dt><label for="promotore_percent">Valore al Promotore:</label></dt>
+                    <dd><?php echo $this->formText($this->inputNamePrefix . 'promotore_value', $this->offer['promotore_value'], array('class' => 'input-small')); ?></dd>
+                </div>
+            </dl>
+
+            <div class="clear"></div>
+            
+        </div>
+
+        <div class="fieldset-container clear2">
+            <h4>Pagamento</h4>
+
+            <dl class="fleft with-margin">
+                <dt><label for="id_pagamento">Modalit&agrave; di pagamento:</label></dt>
+                <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_pagamento', $this->offer['id_pagamento'], array('class' => 'input-medium', 'multiple' => ''), $this->pagamenti); ?></dd>
+            </dl>
+
+            <dl class="fleft">
+                <dt><label for="promotore_percentual">% Sconto:</label></dt>
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'sconto', $this->offer['sconto'], array('class' => 'input-small')); ?></dd>
+            </dl>
+
+            <div class="clear"></div>
+
+        </div>
+        
+        <div class="fieldset-container relative">
+            <h4>Fasi di Lavorazione</h4>
+            
+            <?php foreach($this->offer['moments'] as $key => $item) : ?>
+                <?php echo $this->partial('moments/edit/moment.phtml', 
+                        array('data' => $item, 'index' => $key, 'inputNamePrefix' => $this->inputNamePrefix . 'moments_')); ?>
+            <?php endforeach; ?> 
+            <a class="more-button link-button" name="morenumbers" id="morenumbers">Aggiungi un altra fase di lavorazione</a>
+        </div>
+        
+        <div id="t_t">
+            totale <span id="t_totale"></span>
+            - totale scontato <strong><span id="t_totalescontato"></span></strong>
+            - al partner <span id="t_alpartner"></span>
+        </div>
+        <br />
+    </div>
+            
+        <p class="submit">
+            <input class="button" type="submit" value="salva" />
+            <?php if($this->offer->offer_id != '') : ?>
+                <input class="button" type="submit" id="nr-button" value="salva nuova revisione" />
+            <?php endif; ?>
+
+
+    </form>
+
+</div>
+
+<?php $this->textboxList(); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/edit.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0LinkedFields.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/offers/edit.js')); ?>
+
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/autocomplete/meio.aucomplete.css', true)); ?>

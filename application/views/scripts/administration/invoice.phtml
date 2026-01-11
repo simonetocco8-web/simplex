@@ -1,0 +1,199 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Dati</a>
+    </div>
+
+    <div class="tab_contents">
+
+        <div id="detail" class="tab_content">
+            <h2>Fattura: <?php echo $this->invoice->code_invoice; ?> -- <?php
+                echo ($this->invoice->status == 1) ? 'Chiusa' : 'Aperta';
+                ?></h2>
+
+            <ul class="contextual-menu">
+                <li><a href="<?php echo $this->baseUrl() . '/administration/export/id/' . $this->invoice->invoice_id; ?>"><img src="<?php echo $this->baseUrl('img/export.png'); ?>"/>  Stampa</a></li>
+                <li><a href="<?php echo $this->baseUrl() . '/administration/draft/idv/' . $this->invoice->invoice_id; ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> Modifica</a></li>
+                <li><a id="nc" href="#"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> Nota Credito</a></li>
+            </ul>
+
+
+            <?php echo $this->formHidden('invoice_id', $this->invoice->invoice_id); ?>
+
+            <table class="detail fluid">
+                <tr>
+                    <th colspan="4">Dati Azienda</th>
+                </tr>
+                <tr>
+                    <td class="label">Ragione Sociale:</td>
+                    <td>
+                        <a href="<?php echo $this->baseUrl('companies/detail/id/'
+                                . $this->invoice->order->offer->company->company_id); ?>" title="dettaglio azienda">
+                            <?php echo $this->invoice->order->offer->company['ragione_sociale']; ?>
+                        </a>
+                    </td>
+                    <td class="label">Partita IVA:</td>
+                    <td><?php echo $this->invoice->order->offer->company['partita_iva']; ?></td>
+                </tr>
+                <tr>
+                    <td class="label">Codice Fiscale:</td>
+                    <td><?php echo $this->invoice->order->offer->company['cf']; ?></td>
+                    <td class="label">IBAN:</td>
+                    <td><?php echo $this->invoice->order->offer->company['iban']; ?></td>
+                </tr>
+                <tr>
+                    <th colspan="4">Dati Offerta</th>
+                </tr>
+                <tr>
+                    <td class="label">Codice:</td>
+                    <td>
+                        <a href="<?php echo $this->baseUrl('offers/detail/id/'
+                                . $this->invoice->order->offer->offer_id); ?>" title="dettaglio offerta">
+                            <?php echo $this->invoice->order->offer['code_offer']; ?>
+                        </a>
+                    </td>
+                    <td class="label"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th colspan="4">Dati Commessa</th>
+                </tr>
+                <tr>
+                    <td class="label">Codice:</td>
+                    <td><?php echo $this->invoice->order['code_order']; ?></td>
+                    <td class="label">Data R.A.L.I.:</td>
+                    <td>
+                        <a href="<?php echo $this->baseUrl('orders/detail/id/'
+                                . $this->invoice->order->order_id); ?>" title="dettaglio commessa">
+                            <?php echo Maco_Utils_DbDate::fromDb($this->invoice->order['rali_date']); ?>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Servizio:</td>
+                    <td><?php echo $this->invoice->order->offer['service_name']; ?></td>
+                    <td class="label">Sotto Servizio:</td>
+                    <td><?php echo $this->invoice->order->offer['subservice_name']; ?></td>
+                </tr>
+                <tr>
+                    <td class="label">Tipologia di pagamento</td>
+                    <td>
+                        <?php echo $this->invoice->tipo_pagamento_name; ?>
+                    </td>
+                    <td class="label">Data Fattura</td>
+                    <td>
+                        <?php echo Maco_Utils_DbDate::fromDb($this->invoice->date_invoice); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label">Banca di Appoggio</td>
+                    <td><?php echo $this->invoice->iban_name; ?></td>
+                    <td class="label"></td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <br />
+            <h3>Momenti di Fatturazione</h3>
+            <table class="detail fluid">
+                <tr>
+                    <th>Tipologia</th>
+                    <th>Prezzo</th>
+                    <th>Sconto (%)</th>
+                    <th>Imponibile</th>
+                    <th>IVA (%)</th>
+                </tr>
+                <?php $tot = array(0, 0); ?>
+                <?php foreach($this->invoice->moments as $moment) : ?>
+                <?php
+                $scontato = $moment->i_prezzo - $moment->i_prezzo * $moment->i_sconto / 100;
+                $tot[0] += $scontato;
+                $tot[1] += $scontato * $moment->i_iva / 100;
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $moment['tipologia']; ?>
+                    </td>
+                    <td><?php echo number_format($moment->i_prezzo, 2, ',', '.'); ?> &euro;</td>
+                    <td><?php echo $moment->i_sconto; ?></td>
+                    <td><?php echo number_format($scontato, 2, ',', '.'); ?> &euro;</td>
+                    <td><?php echo $moment->i_iva; ?></td>
+                </tr>
+                <?php endforeach; ?>
+                <?php
+                    $tot[0] += $this->invoice->trasferta + $this->invoice->varie;
+                    $tot[1] += $this->invoice->varie * $this->invoice->varie_iva / 100;
+                ?>
+                <tr>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td>Spese di Trasferta</td>
+                    <td><?php echo number_format($this->invoice->trasferta, 2, ',', '.'); ?></td>
+                    <td>-</td>
+                    <td><?php echo number_format($this->invoice->trasferta, 2, ',', '.'); ?></td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Spese Varie</td>
+                    <td><?php echo number_format($this->invoice->varie, 2, ',', '.'); ?></td>
+                    <td>-</td>
+                    <td><?php echo number_format($this->invoice->varie, 2, ',', '.'); ?></td>
+                    <td><?php echo $this->invoice->varie_iva; ?></td>
+                </tr>
+                <tr>
+                    <td colspan="5"></td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="right">Totale</td>
+                    <td><?php echo number_format($tot[0], 2, ',', '.'); ?> &euro;</td>
+                    <td><?php echo number_format($tot[1], 2, ',', '.'); ?> &euro;</td>
+                </tr>
+                <tr>
+                    <td colspan="3" align="right" style="font-weight: bold;">Totale a Pagare</td>
+                    <td colspan="2" id="totale_a_pagare" style="font-weight: bold;"><?php echo number_format($tot[0] + $tot[1], 2, ',', '.'); ?> &euro;</td>
+                </tr>
+            </table>
+
+            <br />
+            <h3>Scadenze rate e relativo importo</h3>
+            <table class="detail fluid">
+                <thead>
+                <tr>
+                    <th>Scadenza</th>
+                    <th>Importo</th>
+                    <th>Stato</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach($this->invoice->tranches as $tranche) : ?>
+                <tr>
+                    <td width="200">
+                        <a href="<?php echo $this->baseUrl('/administration/tranche/id/' . $tranche['tranche_id']); ?>" title="vai al dettaglio della rata"><?php echo Maco_Utils_DbDate::fromDb($tranche['date_expected']); ?></a>
+                    </td>
+                    <td>
+                        <?php echo number_format($tranche['importo'], 2, ',', '.'); ?> &euro;
+                    </td>
+                    <td>
+                        <?php echo Model_Tranche::getStatoDescriptionByStatusId($tranche['status']); ?>
+                    </td>
+                </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/administration/invoice.js')); ?>

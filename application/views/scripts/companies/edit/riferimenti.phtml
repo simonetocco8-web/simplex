@@ -1,0 +1,58 @@
+<fieldset>
+    <legend>Inserisci le informazioni relative ai riferimenti della azienda</legend>
+    <br />
+
+    <?php /*
+
+    <div class="fieldset-container clear2">
+        <h4>Stato</h4>
+        <dl class="fleft">
+            <dt><label for="status">Stato:</label></dt>
+            <dd><?php echo $this->formSelect('status', $this->data['status'], array('class' => 'input-medium', 'multiple' => ''), $this->statusList); ?></dd>
+        </dl>
+    </div>
+
+   */ ?>
+    
+    <div class="fieldset-container clear2">
+        <h4>Collegamenti</h4>
+        <dl class="fleft with-margin">
+	        <dt><label for="status">RCO:</label></dt>
+	        <dd><?php echo $this->formSelect('rco', $this->data['rco'], array('class' => 'input-medium required', 'multiple' => ''), $this->users); ?></dd>
+        </dl>
+        <dl class="fleft with-margin">
+            <dt><label for="status">Segnalata da:</label></dt>
+            <?php /* TODO SEGNALATO_DA */ ?>
+            <dd><?php 
+            if(!is_null($this->offer) && is_array($this->offer) && isset($this->offer['segnalato_da']))
+            echo $this->formText($this->inputNamePrefix . 'segnalato_da', $this->offer['segnalato_da'], array('class' => 'input-big'));
+            else
+            echo $this->formText($this->inputNamePrefix . 'segnalato_da', " ", array('class' => 'input-big'));
+            ?></dd>
+        </dl>
+        <div class="clear"></div>
+        <dl class="fleft with-margin">
+            <dt><label for="status">Categoria:</label></dt>
+            <dd><?php echo $this->formSelect('categoria', $this->data['categoria'], array('class' => 'input-medium required', 'multiple' => ''), $this->categorie); ?></dd>
+        </dl>
+        <dl class="fleft with-margin">
+            <dt><label for="status">EA:</label></dt>
+            <dd><?php echo $this->formSelect('ea', $this->data['ea'], array('class' => 'input-medium', 'multiple' => ''), $this->eas); ?></dd>
+        </dl>
+        <div class="clear"></div>
+        <dl class="fleft with-margin">
+            <dt><label for="status"><span class="red">*</span> Organico Medio:</label></dt>
+            <dd><?php echo $this->formSelect('organico_medio', $this->data['organico_medio'], array('class' => 'input-medium required', 'multiple' => ''), $this->organici_medi); ?></dd>
+        </dl>
+        <dl class="fleft with-margin">
+            <dt><label for="fatturato"><span class="red">*</span> Fatturato:</label></dt>
+            <dd><?php echo $this->formSelect('fatturato', $this->data['fatturato'], array('class' => 'input-medium required', 'multiple' => ''), $this->fatturati); ?></dd>
+        </dl>
+        <dl class="fleft with-margin">
+            <dt><label for="conosciuto_come">Conosciuto Come:</label></dt>
+            <dd><?php echo $this->formSelect('conosciuto_come', $this->data['conosciuto_come'], array('class' => 'input-medium', 'multiple' => ''), $this->come); ?></dd>
+        </dl>
+    </div>
+
+    <div class="clear"></div>
+</fieldset>

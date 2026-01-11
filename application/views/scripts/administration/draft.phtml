@@ -1,0 +1,243 @@
+<div id="tabs_main">
+<div class="submenu">
+    <a class="heading_tab advanced_link active tab1" href="#">Dati</a>
+    <a class="heading_tab advanced_link tab2" href="#">Draft Fattura</a>
+</div>
+
+<div class="tab_contents">
+
+<div id="detail" class="tab_content">
+<h2>Commessa: <?php echo $this->moments[0]->order['code_order']; ?></h2>
+<!--
+             <ul class="contextual-menu">
+                <li><a href="#"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/>  Stampa</a></li>
+                <?php if($this->moments[0]['fatturato'] == 0) : ?>
+                    <li><a href="<?php echo $this->baseUrl('administration/dofattura/id/' . $this->moments[0]['moment_id']); ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> Fattura</a></li>
+                <?php endif; ?>
+                <?php if($this->moments[0]['fatturato'] == 1 && $this->data['closed'] == 0) : ?>
+                    <li><a href="<?php echo $this->baseUrl('administration/close/id/' . $this->moments[0]['moment_id']); ?>"><?php echo $this->baseUrl('img/edit.png'); ?>"/> Chiudi</a></li>
+                <?php endif; ?>
+            </ul>
+            -->
+
+<form action="<?php echo $this->baseUrl(); ?>/administration/draft" method="post" id="edit" name="edit">
+
+    <?php echo $this->formHidden('invoice_id', $this->invoice->invoice_id); ?>
+
+    <table class="detail fluid">
+        <tr>
+            <th colspan="4">Dati Azienda</th>
+        </tr>
+        <tr>
+            <td class="label">Ragione Sociale:</td>
+            <td>
+                <a href="<?php echo $this->baseUrl('companies/detail/id/'
+                        . $this->moments[0]->order->offer->company->company_id); ?>" title="dettaglio azienda">
+                    <?php echo $this->moments[0]->order->offer->company['ragione_sociale']; ?>
+                </a>
+            </td>
+            <td class="label">Partita IVA:</td>
+            <td><?php echo $this->moments[0]->order->offer->company['partita_iva']; ?></td>
+        </tr>
+        <tr>
+            <td class="label">Codice Fiscale:</td>
+            <td><?php echo $this->moments[0]->order->offer->company['cf']; ?></td>
+            <td class="label">IBAN Azienda:</td>
+            <td><?php echo $this->moments[0]->order->offer->company['iban']; ?></td>
+        </tr>
+        <tr>
+            <th colspan="4">Dati Offerta</th>
+        </tr>
+        <tr>
+            <td class="label">Codice:</td>
+            <td>
+                <a href="<?php echo $this->baseUrl('offers/detail/id/'
+                        . $this->moments[0]->order->offer->offer_id); ?>" title="dettaglio offerta">
+                    <?php echo $this->moments[0]->order->offer['code_offer']; ?>
+                </a>
+            </td>
+            <td class="label"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th colspan="4">Dati Commessa</th>
+        </tr>
+        <tr>
+            <td class="label">Codice:</td>
+            <td><?php echo $this->moments[0]->order['code_order']; ?></td>
+            <td class="label">Data R.A.L.I.:</td>
+            <td>
+                <a href="<?php echo $this->baseUrl('orders/detail/id/'
+                        . $this->moments[0]->order->order_id); ?>" title="dettaglio commessa">
+                    <?php echo Maco_Utils_DbDate::fromDb($this->moments[0]->order['rali_date']); ?>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td class="label">Servizio:</td>
+            <td><?php echo $this->moments[0]->order->offer['service_name']; ?></td>
+            <td class="label">Sotto Servizio:</td>
+            <td><?php echo $this->moments[0]->order->offer['subservice_name']; ?></td>
+        </tr>
+        <tr>
+            <td class="label">Tipologia di pagamento:</td>
+            <td>
+                <?php echo $this->formSelect(   'id_tipo_pagamento', $this->id_tipo_pagamento, array('class' => 'input-medium required', 'multiple' => ''), $this->pagamenti); ?>
+            </td>
+            <td class="label">Banca di Appoggio:</td>
+            <td>
+                <?php echo $this->formSelect('id_iban', $this->invoice->id_iban, array('class' => 'input-medium required', 'multiple' => ''), $this->ibans); ?>
+            </td>
+            </tr>
+        <tr>
+            <td class="label">Data Fattura:</td>
+            <td>
+                <?php echo $this->formText('date_invoice', Maco_Utils_DbDate::fromDb($this->invoice->date_invoice), array('class' => 'input-small required validate-date')); ?>
+            </td>
+            <td class="label"><b>Progressivo Fattura:</b><br /><span class="info">(Se lasciato vuoto verrà generato automaticamente)</span></td>
+            <td>
+                <?php echo $this->formText('code_invoice', $this->invoice->code_invoice, array('class' => 'input-small')); ?>
+            </td>
+        </tr>
+    </table>
+
+    <br />
+    <h3>Momenti di Fatturazione</h3>
+    <table class="detail fluid">
+        <tr>
+            <th>Tipologia</th>
+            <th>Data</th>
+            <th>Importo da Contratto</th>
+            <th>Importo da Consuntivo</th>
+            <th>Prezzo</th>
+            <th>Sconto</th>
+            <th>Imponibile</th>
+            <th>IVA (%)</th>
+        </tr>
+        <?php $tot = array(0, 0); ?>
+        <?php foreach($this->moments as $moment) : ?>
+        <?php
+        $tot[0] += $moment->getImportoScontato();
+        $tot[1] += $moment->getImportoConsuntivo();
+        ?>
+        <tr>
+            <td>
+                <?php echo $this->formHidden('moment_id[]', $moment->moment_id); ?>
+                <?php echo $moment['tipologia']; ?>
+            </td>
+            <td><?php echo Maco_Utils_DbDate::fromDb($moment['expected_date']); ?></td>
+            <td><?php echo number_format($moment->getImportoScontato(), 2, ',', '.'); ?> &euro;</td>
+            <td><?php echo number_format($moment->getImportoConsuntivo(), 2, ',', '.'); ?> &euro;</td>
+            <td>
+                <?php echo $this->formText($this->inputNamePrefix . 'importo_' . $moment->moment_id, $moment->getImportoForInvoice(), array('class' => 'input-small moment-importo')); ?>
+            </td>
+            <td><?php echo $this->formText($this->inputNamePrefix . 'sconto_' . $moment->moment_id, $moment['i_sconto'], array('class' => 'input-plus maxLength:2 validate-integer moment-sconto')); ?></td>
+            <td class="moment-scontato"></td>
+            <td><?php echo $this->formText($this->inputNamePrefix . 'iva_' . $moment->moment_id, $moment->getIvaForInvoice(), array('class' => 'input-plus maxLength:2 validate-integer moment-iva')); ?></td>
+        </tr>
+        <?php endforeach; ?>
+        <tr>
+            <td colspan="2" align="right">Totale</td>
+            <td><?php echo number_format($tot[0], 2, ',', '.'); ?> &euro;</td>
+            <td><?php echo number_format($tot[1], 2, ',', '.'); ?> &euro;</td>
+            <td></td>
+            <td></td>
+            <td id="imponibile"></td>
+            <td id="tiva"></td>
+        </tr>
+        <tr><td colspan="8"></td></tr>
+        <tr>
+            <th colspan="2">Spese di Traferta</th>
+            <th colspan="6">Spese Varie</th>
+        </tr>
+        <tr>
+            <td class="label">
+                Spese di Trasferta:<br />
+                <span class="info">non soggette ad iva</span>
+            </td>
+            <td>
+                <input type="text" class="input-small spese" value="<?php echo $this->invoice->trasferta; ?>" id="trasferta" name="trasferta">
+            </td>
+            <td class="label">
+                Spese Varie:<br />
+                <span class="info">soggette ad iva</span>
+            </td>
+            <td>
+                <input type="text" class="input-small spese" value="<?php echo $this->invoice->varie; ?>" id="varie" name="varie">
+            </td>
+            <td class="label">
+                IVA Spese Varie:
+            </td>
+            <td>
+                <input type="text" class="input-plus spese" value="<?php echo $this->invoice->varie_iva != '' ? $this->invoice->varie_iva : '21' ; ?>" id="varie_iva" name="varie_iva">
+            </td>
+            <td class="label">
+                Totale Spese Varie:
+            </td>
+            <td id="varie-tot">
+
+            </td>
+        </tr>
+        <tr><td colspan="8"></td></tr>
+        <tr>
+            <td colspan="6" align="right"><b>Totale a Pagare</b></td>
+            <td colspan="2" id="totale_a_pagare" style="font-weight: bold;"></td>
+        </tr>
+    </table>
+
+
+    <br />
+    <h3>Scadenze rate e relativo importo</h3>
+    <table class="detail fluid">
+        <thead>
+        <tr>
+            <th>Scadenza</th>
+            <th>Importo</th>
+            <th><a href="#" class="add-more" id="add-more">aggiungi</a></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <?php if($this->invoice->invoice_id != '') : ?>
+            <?php foreach($this->invoice->tranches as $index => $tranche) : ?>
+                <tr class="tr-to-add" <?php if($index == 0) echo 'id="tr-to-add"'; ?>>
+                    <td width="200">
+                        <?php echo $this->formText('date-rata[]', Maco_Utils_DbDate::fromDb($tranche['date_expected']), array('class' => 'input-small validate-date')); ?>
+                    </td>
+                    <td>
+                        <?php echo $this->formText('importo-rata[]', $tranche['importo'], array('class' => 'input-small importo-rata')); ?>
+                    </td>
+                    <td>
+                        <a href="#" class="remove-more-td">elimina</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else : ?>
+        <tr class="tr-to-add" id="tr-to-add">
+            <td width="200">
+                <?php echo $this->formText('date-rata[]', Maco_Utils_DbDate::fromDb($this->moments[count($this->moments) - 1]->expected_date), array('class' => 'input-small validate-date')); ?>
+            </td>
+            <td>
+                <?php echo $this->formText('importo-rata[]', '', array('class' => 'input-small importo-rata')); ?>
+            </td>
+            <td>
+                <a href="#" class="remove-more-td">elimina</a>
+            </td>
+        </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+
+    <br />
+    <input class="button" type="submit" value="crea fattura" />
+
+</form>
+
+</div>
+
+</div>
+
+
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/administration/draft.js')); ?>

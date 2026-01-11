@@ -1,0 +1,31 @@
+<div id="tabs_main">
+<div class="submenu"><a class="heading_tab advanced_link active tab1"
+	href="#">Dettaglio <?php echo $this->labels['singolare']; ?></a> <a
+	class="heading_tab advanced_link tab4"
+	href="<?php echo $this->baseUrl('admin/common/item/' . $this->item . '/task/list'); ?>">Elenco
+<?php echo $this->labels['plurale']; ?></a></div>
+
+<div class="submenu right"><a class="heading_tab advanced_link tab4"
+	href="<?php echo $this->baseUrl('admin/common/item/' . $this->item . '/task/edit/id/' . $this->data[$this->pk]); ?>">Modifica</a>
+</div>
+</div>
+<h2>Dettaglio <?php echo $this->labels['singolare']; ?></h2>
+<div class="fieldset-container">
+	<?php foreach($this->fields['fields'] as $k => $v) : ?>
+	<dl class="detail">
+		<dt><?php echo $v['label']; ?>:</dt>
+		<dd>
+			<?php
+				if(isset($v['depends']))
+				{
+					echo $this->data[key($v['depends']['field'])];	
+				}
+				else
+				{ 
+					echo $this->data[$k];
+				} 
+			?>
+		</dd>
+	</dl>
+	<?php endforeach; ?>
+</div>

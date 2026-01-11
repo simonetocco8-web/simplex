@@ -1,0 +1,19 @@
+    <form name="mod_review_form" id="mod_review_form"
+          action="<?php echo $this->baseUrl(); ?>/sdm/mrv/save/1/format/json"
+          method="post">
+    <?php echo $this->formHidden('id', $this->data['sdm_id']); ?>
+ <div class="fieldset-container">
+    <h4>Informazioni sulla nuova revisione SDM</h4>
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'cause'; ?>">Aggiornamento:</label></dt>
+        <dd>
+            <?php echo $this->formTextarea($this->inputNamePrefix . 'cause', $this->data['cause'], array('class' => 'input-big', 'rows' => 4)); ?>
+        </dd>
+    </dl>
+
+    <div class="clear"></div>
+                                                            
+    <p class="submit"><input class="button" type="submit" value="salva" /></p>  
+                                                            
+</div>        
+</form>

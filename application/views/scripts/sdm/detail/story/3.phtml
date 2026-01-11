@@ -1,0 +1,31 @@
+<tr><th colspan="4">Segnalazione In Trattamento</th></tr>
+<tr>
+    <td class="label">Responsabile del Trattamento</td>
+    <td>
+        <?php echo $this->story['user']; ?>
+    </td>
+    <td class="label">Data Messa in Trattamento:</td>
+    <td>
+        <?php echo Maco_Utils_DbDate::fromDb($this->story['date1']); ?>
+    </td>
+</tr>
+<tr>
+    <td class="label">Data Attesa Risoluzione:</td>
+    <td>
+        <?php echo Maco_Utils_DbDate::fromDb($this->story['date2']); ?>
+    </td>
+    <td class="label"></td>
+    <td></td>
+</tr>
+<tr>
+    <td class="label">Causa:</td>
+    <td colspan="3">
+        <?php echo nl2br($this->story['text1']); ?>
+    </td>
+</tr>
+<tr>
+    <td class="label">Note:</td>
+    <td colspan="3">
+        <?php echo nl2br($this->story['text2']); ?>
+    </td>
+</tr>

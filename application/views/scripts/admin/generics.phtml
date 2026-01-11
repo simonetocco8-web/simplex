@@ -1,0 +1,151 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Generiche e Aziende</a>
+        <a class="heading_tab advanced_link tab2" href="#">Offerte e Commesse</a>
+
+    </div>
+
+    <div class="tab_contents">
+
+        <div class="tab_content" id="gen">
+
+            <h2 class="jquery_tab_title">Generiche e Aziende</h2>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/internals/task/list'; ?>" class="dashboard_button internals">
+                <span class="dashboard_button_heading two_lines">Aziende Interne</span>
+                <span>Gestisci le aziende interne</span>
+            </a><!--end dashboard_button-->
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/offices/task/list'; ?>" class="dashboard_button offices">
+                <span class="dashboard_button_heading">Sedi</span>
+                <span>Gestisci le sedi releative alle aziende interne</span>
+            </a><!--end dashboard_button-->
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/categories/task/list'; ?>" class="dashboard_button categories">
+                <span class="dashboard_button_heading">Categorie</span>
+                <span>Gestisci le categorie di aziende</span>
+            </a><!--end dashboard_button-->
+
+            <!-- NON PIU' NECESSARIO
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/status/task/list'; ?>" class="dashboard_button status">
+                <span class="dashboard_button_heading">Stati Aziende</span>
+                <span>Gestisci gli stati delle aziende</span>
+            </a>
+            -->
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/contact_titles/task/list'; ?>" class="dashboard_button contact_titles">
+                <span class="dashboard_button_heading two_lines">Titoli Contatto</span>
+                <span>Gestisci i possibili titotli per i contatti (Sig., Ing., etc..)</span>
+            </a><!--end dashboard_button-->
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/ea/task/list'; ?>" class="dashboard_button question">
+                <span class="dashboard_button_heading">EA</span>
+                <span>???</span>
+            </a><!--end dashboard_button-->
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/fatturati/task/list'; ?>" class="dashboard_button fatturati">
+                <span class="dashboard_button_heading two_lines">Fatturati Aziende</span>
+                <span>Gestisci i range di fatturati delle aziende</span>
+            </a><!--end dashboard_button-->
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/organici_medi/task/list'; ?>" class="dashboard_button workers">
+                <span class="dashboard_button_heading two_lines">Organici Aziende</span>
+                <span>Gestisci i range di organici delle aziende</span>
+            </a><!--end dashboard_button-->
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/conosciuto_come/task/list'; ?>" class="dashboard_button unknown">
+                <span class="dashboard_button_heading two_lines">Conosciuto Come</span>
+                <span>Gestisci le modalit&agrave; di *** aziende</span>
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/ibans/task/list'; ?>" class="dashboard_button ibans">
+                <span class="dashboard_button_heading two_lines">Banche e Iban</span>
+                <span>Gestisci i diversi IBAN da associare alle fatture</span>
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/templates'; ?>" class="dashboard_button templates">
+                <span class="dashboard_button_heading two_lines">Template di Stampa</span>
+                <span>Gestisci i template per la stampe delle varie schede</span>
+            </a>
+
+
+            <h2 class="jquery_tab_title">Regioni, Province e Comuni</h2>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/regioni/task/list'; ?>" class="dashboard_button unknown">
+                <span class="dashboard_button_heading">Regioni</span>
+                <span>Gestisci le regioni</span>
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/province/task/list'; ?>" class="dashboard_button unknown">
+                <span class="dashboard_button_heading">Province</span>
+                <span>Gestisci le province italiane</span>
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/comuni/task/list'; ?>" class="dashboard_button unknown">
+                <span class="dashboard_button_heading">Comuni</span>
+                <span>Gestisci i comuni italiani</span>
+            </a>
+
+        </div>
+
+        <div class="tab_content" id="off">
+
+            <h2 class="jquery_tab_title">Offerte e Commesse</h2>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/services/task/list'; ?>" class="dashboard_button services">
+                <span class="dashboard_button_heading">Servizi</span>
+                <span>Gestisci i servizi per le offerte</span>
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/subservices'; ?>" class="dashboard_button subservices">
+                <span class="dashboard_button_heading">Sotto Servizi</span>
+                <span>Gestisci i sotto servizi per le offerte</span>
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/moment_defs/task/list'; ?>" class="dashboard_button subservices">
+                <span class="dashboard_button_heading two_lines">Momenti di Lavorazione</span>
+                <span>Gestisci i momenti di lavorazione per le offerte</span>
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/interests/task/list'; ?>" class="dashboard_button programs">
+                <span class="dashboard_button_heading two_lines">Programmi di Interesse</span>
+                <span>Gestisci i programmi di interesse</span>
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/interests_levels/task/list'; ?>" class="dashboard_button levels">
+                <span class="dashboard_button_heading two_lines">Livelli di Interesse</span>
+                <span>Alto, medio, basso...</span>
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/pagamenti/task/list'; ?>" class="dashboard_button levels">
+                <span class="dashboard_button_heading two_lines">Metodi di Pagamento</span>
+                <span>Gestisci i metodi di pagamento per le offerte</span>
+            </a>
+
+            <?php /*
+            
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/offer_status/task/list'; ?>" class="dashboard_button status">
+                <span class="dashboard_button_heading two_lines">Stati Offerte</span> 
+                <span>Gestisci i possibili stati delle offerte</span> 
+            </a>
+
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/order_status/task/list'; ?>" class="dashboard_button status">
+                <span class="dashboard_button_heading two_lines">Stati Commesse</span> 
+                <span>Gestisci i possibili stati delle commesse</span> 
+            </a>
+            
+            */ ?>
+
+            <?php /*
+            <a href="<?php echo $this->baseUrl() . '/admin/common/item/decorators/task/list'; ?>" class="dashboard_button decorators">
+                <span class="dashboard_button_heading">Decoratori</span> 
+                <span>Gestisci i vari decoratori per le diverse esportazioni</span> 
+            </a>
+            */ ?>
+            <!--end dashboard_button-->
+        </div>
+    </div>
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabPane.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabs.js')); ?>

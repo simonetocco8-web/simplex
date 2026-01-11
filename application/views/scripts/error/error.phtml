@@ -1,0 +1,20 @@
+<h1>Ooops...</h1>
+<br />
+<b><?php echo $this->frontMessage; ?></b>
+<br />
+<br />
+<?PHP if (APPLICATION_ENV != 'production'): ?>
+<div id="error_details"><?php echo $this->message; ?>
+<h3>Exception information:</h3>
+<p><b>Message:</b> <?PHP echo $this->exception->getMessage(); ?></p>
+<h3>Stack trace:</h3>
+<pre>
+<?PHP echo $this->exception->getTraceAsString(); ?>
+    </pre>
+<h3>Request Parameters:</h3>
+<pre>
+<?PHP
+//    echo var_dump($this->requestParams);
+?>
+    </pre></div>
+<?PHP endif ?>

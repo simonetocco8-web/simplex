@@ -1,0 +1,28 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#"><?php echo $this->contact['nome'] . ' ' . $this->contact['cognome']; ?></a>
+        <a class="heading_tab advanced_link tab1" href="<?php echo $this->baseUrl('companies/detail/id/' . $this->contact->id_company); ?>">Dettaglio Azienda</a>
+    </div>
+</div>
+
+<h2>Dettaglio Contatto</h2>
+
+<ul class="contextual-menu">
+    <?php if($this->acl('contacts', 'modify') || ($this->acl('contacts', 'modify_own') && $this->contact->created_by == $this->loggedUser()->user_id)) : ?>
+    <li>
+      <a href="<?php echo $this->baseUrl('companies/editcontact/id/' . $this->contact->id_company . '/idc/' . $this->contact['contact_id']); ?>" ><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> modifica</a> 
+    </li>
+    <li>
+      <a href="<?php echo $this->baseUrl('companies/deletecontact/id/' . $this->contact->id_company . '/idc/' . $this->contact['contact_id']); ?>" ><img src="<?php echo $this->baseUrl('img/delete.png'); ?>"/> elimina</a>
+    </li>
+    <?php /*
+    <li>
+      <a href="<?php echo $this->baseUrl('admin/users/task/delete/id/' . $this->contact['contact_id']); ?>" ><img src="<?php echo $this->baseUrl('img/delete.png'); ?>"/> elimina</a>
+    </li>
+    */ ?>
+    <?php endif; ?>
+</ul>
+
+<div class="relative">
+    <?php echo $this->partial('contacts/detail/main.phtml', array('contact' => $this->contact)); ?>
+</div>

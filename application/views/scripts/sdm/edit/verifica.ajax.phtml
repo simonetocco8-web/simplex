@@ -1,0 +1,46 @@
+<form name="mod_verifica_form" id="mod_verifica_form"
+      action="<?php echo $this->baseUrl(); ?>/sdm/mv/save/1/format/json"
+      method="post">
+    <?php echo $this->formHidden('id', $this->data['sdm_id']); ?>
+    <div class="fieldset-container">
+        <h4>Dati Verifica</h4>
+        <dl>
+            <dt><label for="descrizione">Verifica della Risoluzione:</label></dt>
+            <dd>
+                <?php echo $this->formTextarea($this->inputNamePrefix . 'verification', $this->data['verification'], array('class' => 'input-big required', 'rows' => 4)); ?>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label for="descrizione">Responsabili:</label></dt>
+            <dd>
+            <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_user[]', '', array('class' => 'input-medium', 'multiple' => 'multiple'), $this->users); ?></dd>
+        </dl>
+
+        <hr />
+
+        <dl>
+            <dt><label for="descrizione">Azione Preventiva:</label></dt>
+            <dd>
+            <dd><?php echo $this->formCheckbox($this->inputNamePrefix . 'prevenzione', 1, array('id' => 'prevenzione')); ?></dd>
+        </dl>
+
+        <dl style="display: none" id="preventer-select">
+            <dt><label for="descrizione">Responsabile Azione Preventiva:</label></dt>
+            <dd>
+            <dd>
+                <?php $id_preventer = (isset($this->data['id_preventer']) && $this->data['id_preventer'])
+                    ? $this->data['id_preventer']
+                    : ((isset($this->id_preventer) && $this->id_preventer) ? $this->id_preventer : null); ?>
+                <?php echo $this->formSelect($this->inputNamePrefix . 'id_preventer', $id_preventer, array('class' => 'input-medium required', 'multiple' => ''), $this->preventers); ?>
+
+            </dd>
+        </dl>
+
+
+        <div class="clear"></div>
+
+        <p class="submit"><input class="button" type="submit" value="salva" /></p>
+
+    </div>
+</form>

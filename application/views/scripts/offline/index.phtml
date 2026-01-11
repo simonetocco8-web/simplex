@@ -1,0 +1,28 @@
+<div id="login-main">
+    <div id="login-cont">
+        <div id="login-out">
+
+            <div id="login-in">
+                <h2>Simplex &egrave; offline</h2>
+            </div>
+        </div>
+    </div>
+    <div id="result">
+        <h1>Simplex</h1>
+        <dl class="clear-no-margin"></dl>
+        <dl>
+            <p class="success">
+                Stai per essere reindirizzato al nuovo sito!<br />
+                Se non vieni reindirizzato automaticamente clicca o visita <a href="http://93.64.220.140/">http://93.64.220.140/</a>
+                <script type="text/javascript">
+                    setTimeout('window.location="http://93.64.220.140/"', 2000);
+                </script>
+            </p>
+        </dl>
+        <div>
+    </div>
+</div>
+
+<?php
+
+$this->headScript()->appendFile($this->baseUrl('/js/offline/index.js')); ?>

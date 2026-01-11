@@ -1,0 +1,12 @@
+<select name="<?php echo $this->_column->getField(); ?>" class="autosubmit"
+	onchange="submit();" class="input">
+	<option value=""></option>
+	<option value="1" <?php 
+        if(isset($_GET[$this->_column->getField()]) && $_GET[$this->_column->getField()] == 1)
+            echo 'selected="selected" '; 
+    ?>>si</option>
+	<option value="0" <?php 
+        if(isset($_GET[$this->_column->getField()]) && $_GET[$this->_column->getField()] === '0')
+            echo 'selected="selected" '; 
+    ?> >no</option>
+</select>

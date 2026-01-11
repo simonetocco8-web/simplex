@@ -1,0 +1,12 @@
+<div id="tabs_main">
+<div class="submenu">
+    <a class="heading_tab advanced_link active tab1" href="#">Elenco Offerte</a> 
+    <!-- <a class="heading_tab advanced_link tab4 important" href="<?php echo $this->baseUrl('offers/edit'); ?>">Nuova Offerta</a> -->
+</div>
+<div>
+    <h2>Elenco Offerte</h2>
+    <div id="all" class="tab_content"><?php $this->dag->deploy('offers.phtml'); ?> </div>
+</div>
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/offers/list.js')); ?>

@@ -1,0 +1,13 @@
+<div class="to-be-added <?php echo ($this->index == 0) ?: 'added'; ?>">
+    <?php echo $this->formHidden($this->inputNamePrefix . 'mail_id[]', $this->mail['mail_id']); ?>
+    <dl class="fleft">
+	    <dt><label for="mail[]">Email:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix . 'mail[]', $this->mail['mail'], array('class' => 'input-medium validate-email')); ?></dd>
+    </dl>
+    <dl>
+        <dt><label for="email-description[]">Descrizione:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'description[]', $this->mail['description'], array('class' => 'input-medium')); ?></dd>
+    </dl>
+    <a class="remove-more link-button" name="removemail" id="removemail">Cancella</a>
+    <div style="clear: both;"></div>
+</div>

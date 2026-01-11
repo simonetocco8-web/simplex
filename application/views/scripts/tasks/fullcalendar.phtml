@@ -1,0 +1,211 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <ul id="actiosns-menu">
+
+            <li><a class="heading_tab advanced_link tab1" href="<?php echo $this->baseUrl(); ?>/tasks">Elenco Impegni <span class="info">(default da svolgere)</span></a></li>
+            <li><a class="heading_tab advanced_link active tab1" href="<?php echo $this->baseUrl(); ?>/tasks/list">Calendario Incontri e Riunioni</a></li>
+<?php /*
+            <li><a class="heading_tab advanced_link active tab1" href="<?php echo $this->baseUrl(); ?>/tasks">Calendario Impegni</a></li>
+            <li><a class="heading_tab advanced_link tab1" href="<?php echo $this->baseUrl(); ?>/tasks/table">Elenco Impegni</a></li>
+            <li><a class="heading_tab advanced_link tab1" href="<?php echo $this->baseUrl(); ?>/tasks/agenda">Agenda</a></li>
+ */ ?>
+        </ul>
+    </div>
+    <div class="tab_contents">
+        <h2>Calendario Impegni</h2>
+
+        <div id="tasks-search" class="search-wrapper">
+
+            <h3>Filtri di Ricerca</h3>
+
+            <form action="<?php echo $this->_uri; ?>" method="post" name="dag_form_<?php echo $this->_id; ?>" id="tasks-calendar">
+                <input type="hidden" name="dalist" value="tasks" />
+                <input type="hidden" name="_export" id="_export" value="0" />
+
+
+                <input type="hidden" name="ashidden" id="ashidden" value="0" />
+                <?php echo $this->search->render(); ?>
+
+                <div style="clear: both;"></div>
+                <div class="search-element">
+                    <div class="search-element-label">&nbsp;</div>
+                    <div class="search-element-field">
+                        <input type="reset" value="annulla" />
+                        <input type="submit" value="cerca" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <?php /* ADVANCED SEARCH STUFF */ ?>
+
+        <?php $this->headScript()->prependFile($this->baseUrl('/js/common/jdatepicker/daterangepicker.jQuery.js')); ?>
+        <?php $this->headScript()->prependFile($this->baseUrl('/js/common/jquery.multiselect.min.js')); ?>
+        <?php $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.8.7.custom.min.js')); ?>
+
+        <?php $this->headLink()->appendStylesheet($this->baseUrl('/js/common/jdatepicker/css/ui.daterangepicker.css', true)); ?>
+        <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/jquery/smoothness/jquery-ui-1.8.7.custom.css', true)); ?>
+        <?php $this->headLink()->appendStylesheet($this->baseUrl('/css/multiselect/multiselect.css', true)); ?>
+
+        <?php $this->textboxList(); ?>
+
+        <hr style="clear:both" />
+        
+        <div id="all" class="tab_content">
+
+            <div data-events-url="<?php echo $this->baseUrl(); ?>calendar/format/json" id='calendar'></div>
+
+            <?php $this->calendar(); ?>
+
+            <div style="clear: both;"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var formData = {};
+    jQuery(document).ready(function() {
+        function getProps(element){
+            var vals = element.get('class').split(' ').filter(function(cls){
+                return cls.test(':');
+            });
+            if (!vals.length){
+                return {};
+            } else {
+                props = {};
+                vals.each(function(cls){
+                    var split = cls.split(':');
+                    if (split[1]){
+                        try {
+                            props[split[0]] = JSON.decode(split[1]);
+                        } catch(e){}
+                    }
+                });
+                return props;
+            }
+        }
+        jQuery('.multiple-select').each(function(i,e){
+            jQuery(e).multiselect({
+                selectedList: 3,
+                checkAllText: 'tutte',
+                uncheckAllText: 'nessuna',
+                noneSelectedText: 'Scegli una o piu\' opzione',
+                selectedText: '# selezionati'
+            });
+        });
+        jQuery('.date-range').each(function(i,e){
+            jQuery(e).daterangepicker({
+                dateFormat: 'dd/mm/yy',
+                rangeStartTitle: 'Data Da',
+                rangeEndTitle: 'Data a',
+                doneButtonText: 'fatto',
+                prevLinkText: 'prec',
+                nextLinkText: 'succ',
+                doneButtonText: 'fatto'
+            });
+        });
+
+        $$('.search-autocomplete').each(function(ac){
+            var props = getProps(ac);
+            new TextboxList(ac, {
+                unique: true,
+                max: (props.m ? 10 : 1),
+                plugins: {
+                    autocomplete: {
+                        minLength: 0,
+                        queryRemote: true,
+                        remote: {
+                            url: baseUrl + props.u + '/format/json',
+                            extraParams: props
+                        }
+                    }
+                }
+            });
+        }, this);
+
+        $cal = jQuery('#calendar');
+        $cal.fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            timeFormat: {
+                agenda: 'H:mm{ - H:mm}', // 5:00 - 6:30
+                '': 'H(:mm)'
+            },
+            axisFormat: 'H:mm',
+         //   theme: true,
+            editable: true,
+            firstDay: 1,
+            buttonText:{
+                today: 'oggi',
+                month: 'mese',
+                week: 'settimana',
+                day: 'giorno'
+            },
+            monthNames: ['Gennaio', 'Febraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio',
+                'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
+            monthNamesShort: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug',
+                'Ago', 'Set', 'Ott', 'Nov', 'Dic'],
+            events:{
+                url: $cal.attr('data-events-url'),
+                data: formData
+            },
+            eventBackgroundColor: '#f2f2f2',
+            eventTextColor: '#444444',
+            eventRender: function(event, element) {
+                element.tipsy({
+                    gravity: 's',
+                    fallback: event.description
+                });
+            },
+            allDayText: 'tutto il giorno',
+            dayNames: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì',
+                'Giovedì', 'Venerdì', 'Sabato'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mer',
+                'Gio', 'Ven', 'Sab'],
+            eventDrop: function(event, delta) {
+                alert(event.title + ' was moved ' + delta + ' days\n' +
+                    '(should probably update your database)');
+            },
+            loading: function(bool) {
+               // if (bool) $('#loading').show();
+               // else $('#loading').hide();
+            }
+        });
+
+        jQuery.fn.serializeObject = function()
+        {
+           var o = {};
+           var a = this.serializeArray();
+           jQuery.each(a, function() {
+               if (o[this.name]) {
+                   if (!o[this.name].push) {
+                       o[this.name] = [o[this.name]];
+                   }
+                   o[this.name].push(this.value || '');
+               } else {
+                   o[this.name] = this.value || '';
+               }
+           });
+           return o;
+        };
+
+        jQuery('#tasks-calendar').submit(function(){
+            var d = jQuery(this).serializeObject();
+            for(p in formData){
+                delete formData[p];
+            }
+            for(p in d){
+                formData[p] = d[p];
+            }
+            $cal.fullCalendar('refetchEvents');
+            return false;
+        });
+
+        jQuery('#tasks-calendar').trigger('submit');
+    });
+</script>

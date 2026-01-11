@@ -1,0 +1,30 @@
+<h2>Dettaglio delle Revisioni</h2>    
+    <div class="fieldset-container floating">
+        <?php foreach ($this->revisions as $rev) : ?>
+            <h4 <?php if($rev['active']) echo 'class="important"'; ?>>
+                <a href="<?php echo $this->baseUrl('offers/detail/id_offer/' . $this->offer->id_offer . '/r/' . $rev['revision']); ?>">
+                    Revisione <?php echo $rev['revision']; ?>
+                </a>
+            </h4>
+            <dl class="detail ">
+                <dt>Creata da:</dt>
+                <dd><?php echo $rev['cusername']; ?></dd>
+            </dl>
+            <dl class="detail ">
+                <dt>Data:</dt>
+                <dd><?php echo Maco_Utils_DbDate::fromDb($rev['date_created']); ?></dd>
+            </dl>
+            <div class="clear"></div>
+            <?php if($rev['date_modified'] != '' && $rev['date_modified'] != '0000-00-00') : ?>
+                <dl class="detail ">
+                    <dt>Modificata da:</dt>
+                    <dd><?php echo $rev['musername']; ?></dd>
+                </dl>
+                <dl class="detail ">
+                    <dt>Data:</dt>
+                    <dd><?php echo Maco_Utils_DbDate::fromDb($rev['date_modified']); ?></dd>
+                </dl>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <br />
+    </div>

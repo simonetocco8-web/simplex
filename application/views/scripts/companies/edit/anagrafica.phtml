@@ -1,0 +1,98 @@
+<fieldset>
+    <legend></legend>
+    
+    <div class="fieldset-container">
+        <h4>Informazioni Azienda</h4>
+
+        <dl>
+            <dt><label for="cf">Codice Fiscale:</label></dt>
+            <dd><?php echo $this->formText('cf', $this->data['cf'], array('class' => 'input-medium')); ?></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="iban"><span class="red">*</span> Ragione Sociale:</label></dt>
+            <dd><?php echo $this->formText('ragione_sociale', $this->data['ragione_sociale'], array('class' => 'input-big required')); ?></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="iban">IBAN:</label></dt>
+            <dd><?php echo $this->formText('iban', $this->data['iban'], array('class' => 'input-big', 'data-meiomask' => '(00) 000 000', 'data-meiomask-options' => '')); ?></dd>
+        </dl>
+    </div>
+    <hr />
+
+    <div class="fieldset-container">
+        <h4>Tipologia</h4>
+        <dl>
+            <dt><label for="id_company_contact">Seleziona almeno una tipologia:<br /><br /></label></dt>
+                <dd class="checkbox-container" id="tipologia_info">
+                    <?php if($this->data['is_cliente'] == 2) : ?>
+                    <?php echo $this->formHidden('is_cliente', 2); ?>
+                    <label><input disabled="disabled" readonly="readonly" class="validate-reqchk-bynode nodeId:'tipologia_info'" name="is_cliente" checked="checked" type="checkbox" value="2" /> Cliente</label>
+                    <?php else : ?>
+                    <label><input class="validate-reqchk-bynode nodeId:'tipologia_info'" name="is_cliente" <?php if($this->data['is_cliente'] === '' || $this->data['is_cliente'] != 0) echo 'checked="checked"'; ?> type="checkbox" value="1" /> Potenziale Cliente</label>
+                    <?php endif; ?>
+                    <label><input class="validate-reqchk-bynode nodeId:'tipologia_info'" name="is_promotore" id="is_promotore" <?php if($this->data['is_promotore'] == 1) echo 'checked="checked"'; ?> type="checkbox" value="1" /> Promotore</label>
+                    <label><input class="validate-reqchk-bynode nodeId:'tipologia_info'" name="is_fornitore" <?php if($this->data['is_fornitore'] == 1) echo 'checked="checked"'; ?> type="checkbox" value="1" /> Fornitore</label>
+                    <label><input class="validate-reqchk-bynode nodeId:'tipologia_info'" name="is_partner" <?php if($this->data['is_partner'] == 1) echo 'checked="checked"'; ?> type="checkbox" value="1" /> Partner</label>
+                </dd>
+            </dl>
+        </dl>
+        <dl>
+            <dt><label for="status">Percentuale al promotore <span class="info">(default)</span></label></dt>
+            <dd><?php echo $this->formText('promotore_percent', $this->data['promotore_percent'], array('class' => 'input-small validate-number')); ?> %</dd>
+        </dl>
+    </div>
+    <div class="clear"></div>
+    <hr />
+
+    <div class="fieldset-container with-more">
+        <h4>Recapiti telefonici</h4>
+        <?php foreach($this->data['telephones'] as $key => $item) : ?>
+            <?php echo $this->partial('contacts/edit/telephone.phtml', array('telephone' => $item, 'index' => $key, 'inputNamePrefix' => 'telephones_')); ?>
+        <?php endforeach; ?>
+        <a class="more-button link-button" name="morenumbers" id="morenumbers">Aggiungi un altro recapito telefonico</a>
+    </div>
+
+    <hr />
+
+    <div>
+        <dl>
+            <dt><label for="pec"><span class="red">?</span> PEC (posta elettronica certificata):</label></dt>
+            <dd><?php echo $this->formText('pec', $this->data['pec'], array('class' => 'input-big suggested', 'data-suggested-label' => 'PEC (posta elettronica certificata)')); ?></dd>
+        </dl>
+    </div>
+
+
+    <div class="fieldset-container with-more">
+        <h4>Email</h4>
+
+        <?php foreach($this->data['mails'] as $key => $item) : ?>
+            <?php echo $this->partial('contacts/edit/email.phtml', array('mail' => $item, 'index' => $key, 'inputNamePrefix' => 'mails_')); ?>
+        <?php endforeach; ?>
+        <a class="more-button link-button" name="moremails" id="moremails">Aggiungi un'altra email</a>
+    </div>
+
+    <hr />
+
+
+    <div class="fieldset-container with-more">
+        <h4>Siti Web</h4>
+        <?php foreach($this->data['websites'] as $key => $item) : ?>
+            <?php echo $this->partial('websites/edit.phtml', array('website' => $item, 'index' => $key, 'inputNamePrefix' => 'websites_')); ?>
+        <?php endforeach; ?>
+        <a class="more-button link-button" name="morewebsites" id="morewebsites">Aggiungi un altro sito web</a>
+    </div>
+    <hr />
+
+    <div class="fieldset-container with-more">
+        <h4>Indirizzi</h4>
+        <?php foreach($this->data['addresses'] as $key => $item) : ?>
+            <?php echo $this->partial('contacts/edit/address.phtml', array('address' => $item, 'index' => $key, 'province' => $this->province, 'inputNamePrefix' => 'addresses_')); ?>
+        <?php endforeach; ?>
+        <a class="more-button link-button" name="moreaddresses" id="moreaddresses">Aggiungi un altro indirizzo</a>
+    </div>
+    <hr />
+
+</fieldset>
+

@@ -1,0 +1,50 @@
+
+<div id="cs" class="overflow-scroll">
+<h2>Modifica Pianificazione Momento di Lavorazione</h2>
+                                            
+<form name="mpm_form" id="mpm_form" action="<?php echo $this->baseUrl(); ?>/orders/mpms/format/json" method="post">
+    <?php echo $this->formHidden('moment_id', $this->data['moment_id']); ?>
+    <?php echo $this->formHidden('id_order', $this->id_order); ?>
+    <?php echo $this->formHidden('total', $this->data['order']->offer['total']); ?>
+        
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"><span class="red">*</span> Valore Giorn. Uomo:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'valore_g_uomo', $this->data['p_valore_g_uomo'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Ore / hM:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'ore_hm', $this->data['p_ore_hm'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Giorni / hM:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'gg_hm', $this->data['p_gg_hm'], array('class' => 'input-small')); ?></dd>
+</dl>
+<div class="clear"></div>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"># incontri:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'n_incontri', $this->data['p_n_incontri'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"># ore di studio:</label></dt>
+    <dd><?php echo $this->formTime($this->inputNamePrefix . 'n_ore_studio', $this->data['p_ore_studio']); ?></dd>
+</dl>
+<?php /*
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"># ore previste in offerta:</label></dt>
+    <dd><?php echo $this->data['o_ore_previste']; ?></dd>
+</dl>
+*/ ?>
+<div class="clear"></div>
+<dl class="">
+    <dt><label for="oldpw">Data Prevista:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'expected_date', Maco_Utils_DbDate::fromDb($this->data['expected_date']), array('class' => 'input-small validate-date')); ?></dd>
+</dl>
+
+<div class="clear"></div>
+    
+<br />
+<p class="submit">
+    <input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+</form>
+</div>

@@ -1,0 +1,61 @@
+<?PHP /* TODO: SE CAMBI QUESTO CAMBIA ANCHE offers.phtml e default.phtml */ ?>
+
+<div class="dagrid_container" id="<?php echo $this->_id . '-list-container'; ?>">
+
+<form action="<?php echo $this->_pathInfo; ?>" method="get" name="dag_form_<?php echo $this->_id; ?>">
+    <input type="hidden" name="format" value="html" />
+    <input type="hidden" name="dalist" value="<?php echo $this->_id; ?>" />
+    <input type="hidden" name="sfl" value="<?php echo $this->getSortFieldLabel(); ?>" />
+    <input type="hidden" name="sdl" value="<?php echo $this->getSortDirLabel(); ?>" /> 
+    <input type="hidden" value="<?php echo $this->getSortField(); ?>" name="<?php echo $this->getSortFieldLabel(); ?>" id="<?php echo $this->getSortFieldLabel(); ?>" />
+    <input type="hidden" value="<?php echo $this->getSortDir(); ?>" name="<?php echo $this->getSortDirLabel(); ?>" id="<?php echo $this->getSortDirLabel(); ?>" />
+    <input type="hidden" name="_export" id="_export" value="0" />
+
+<?php if($this->with_export || $this->_advancedSearch) : ?>
+<ul class="contextual-menu">
+    <?php if($this->with_export) : ?>
+    <li>
+      <a href="#" class="list-export" ><img src="<?php echo $this->_view->baseUrl('img/export.png'); ?>"/> esporta</a>
+    </li>
+    <?php endif; ?>
+    <?php if($this->_advancedSearch) : ?>
+    <li>
+      <a href="#" id="switch-companies-search" ><img src="<?php echo $this->_view->baseUrl('img/search.png'); ?>"/> ricerca avanzata</a>
+    </li>
+    <?php endif; ?>
+</ul>
+<?php endif; ?>
+
+<?php if($this->_advancedSearch) : ?>
+    <?php echo $this->render('search-default.phtml'); ?>
+<?php endif; ?>
+
+<h3>
+    Percorso: /<?php echo $this->files_path; ?>
+</h3>
+
+<?php if($this->_paginator !== NULL) : ?>
+    <?php echo $this->_paginator->getRenderer()->render(); ?> 
+<?php endif; ?>
+
+<div class="da_list_container" id="dg_<?php echo $this->_id; ?>">
+
+<table class="<?php echo implode(' ', $this->_cssClasses); ?>"
+	id="<?php echo $this->_id; ?>">
+
+	<?php echo $this->render('head-default.phtml'); ?>
+
+	<?php  foreach($this->getSource()->getRows() as $row) : ?>
+
+	<?php $this->renderRow($row); ?>
+
+	<?php endforeach; ?>
+
+</table>
+
+</div>
+
+<input type="submit" <?php /* name="s_<?php echo $this->_id; ?>" */  ?> value="" class="dummy" />
+</form>
+
+</div>

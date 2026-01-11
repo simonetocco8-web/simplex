@@ -1,0 +1,10 @@
+<?php 
+    $values = array('' => '') + Model_Tranche::getStatues();
+?>
+<select name="<?php echo $this->_column->getField(); ?>" id="<?php echo $this->_column->getField(); ?>" class="input-small autosubmit">
+
+<?php  foreach($values as $k => $v) : ?>
+    <option value="<?php echo $k; ?>" <?php echo ((isset($_POST[$this->_column->getField()]) && $_POST[$this->_column->getField()] === "$k") ? 'selected="selected"' : ''); ?>><?php echo $v; ?></option>
+<?php endforeach; ?>
+
+</select>

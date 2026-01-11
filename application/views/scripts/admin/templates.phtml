@@ -1,0 +1,42 @@
+<div id="tabs_main">
+
+<h2>Gestione Template di Stampa</h2>
+
+<table class="fluid">
+    <thead>
+    <tr>
+        <th>
+            File
+        </th>
+        <th>
+            Azioni
+        </th>
+        <th>
+            Carica
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->templates as $key => $template) : ?>
+        <tr>
+            <td>
+                <a href="<?php echo $this->baseUrl('admin/templated/id/' . $key); ?>">
+                    <?php echo $template; ?>
+                </a>
+            </td>
+            <td>
+                <a href="<?php echo $this->baseUrl('admin/templater/id/' . $key); ?>">ripristina default</a>
+            </td>
+            <td>
+                <form method="POST" action="<?php echo $this->baseUrl('admin/templateu'); ?>" enctype="multipart/form-data">
+                    <input type="file" name="Filedata">
+                    <input type="hidden" name="id" value="<?php echo $key; ?>">
+                    <input type="submit" class="button submit" value="upload">
+                </form>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+</div>

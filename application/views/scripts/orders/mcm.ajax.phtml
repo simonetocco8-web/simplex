@@ -1,0 +1,86 @@
+
+<div id="cs" class="overflow-scroll">
+<h2>Modifica Consuntivo per fase: <?php echo $this->data['tipologia']; ?></h2>
+
+<form name="mcm_form" id="mcm_form" action="<?php echo $this->baseUrl(); ?>/orders/mcms/format/json" method="post">
+    <?php echo $this->formHidden('moment_id', $this->data['moment_id']); ?>
+    <?php echo $this->formHidden('id_order', $this->id_order); ?>
+    <h4>Ore / hM</h4>
+<dl class="fleft with-margin" style="width: 132px">
+    <dt><label for="oldpw">Studio:</label></dt>
+    <dd><?php echo $this->formTime($this->inputNamePrefix . 'c_ore_studio', $this->data['c_ore_studio']); ?></dd>
+</dl>
+<dl class="fleft with-margin" style="width: 132px">
+    <dt><label for="oldpw">Azienda:</label></dt>
+    <dd><?php echo $this->formTime($this->inputNamePrefix . 'c_ore_azienda', $this->data['c_ore_azienda']); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Certificazione:</label></dt>
+    <dd><?php echo $this->formTime($this->inputNamePrefix . 'c_ore_certificazione', $this->data['c_ore_certificazione']); ?></dd>
+</dl>
+<div class="clear"></div>
+
+<h4>Varie</h4>
+<dl class="fleft with-margin" style="margin-right: 47px">
+    <dt><label for="oldpw"># Incontri <span class="info">(inclusa certificazione)</span>:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'c_n_incontri', $this->data['c_n_incontri'], array('class' => 'input-small')); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Km A/R totali:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'c_n_km', $this->data['c_n_km'], array('class' => 'input-small')); ?></dd>
+</dl>
+<div class="clear"></div>
+<dl class="fleft with-margin" style="width: 132px">
+    <dt><label for="oldpw"> # ore di viaggio:</label></dt>
+    <dd><?php echo $this->formTime($this->inputNamePrefix . 'c_ore_viaggio', $this->data['c_ore_viaggio']); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Costo / Km:</label></dt>
+    <dd>
+        <?php echo $this->formText($this->inputNamePrefix . 'c_costo_km', $this->data['c_costo_km'], array('class' => 'input-small')); ?>
+        <span id="tot_km_cost" class="info" style="font-weight: bold;"></span>
+    </dd>
+</dl>
+
+
+<div class="clear"></div>
+
+<h4>Pi&eacute; di Lista</h4>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Descrizione:</label></dt>
+    <dd><?php echo $this->formTextarea($this->inputNamePrefix . 'c_pl_note', $this->data['c_pl_note'], array('class' => 'input-medium', 'rows' => '2', 'style' => 'width: 332px')); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Importo (&euro;):</label></dt>
+    <dd><dd><?php echo $this->formText($this->inputNamePrefix . 'c_pl_importo', $this->data['c_pl_importo'], array('class' => 'input-small')); ?></dd></dd>
+</dl>
+<div class="clear"></div>
+
+        <br />
+<dl>
+    <dt><label for="oldpw">Note consuntivo:</label></dt>
+    <dd><?php echo $this->formTextarea($this->inputNamePrefix . 'c_note', $this->data['c_note'], array('class' => 'input-big', 'rows' => '2')); ?></dd>
+</dl>
+
+<div class="clear"></div>
+<hr />
+    <?php if($this->can_close) : ?>
+<dl>
+    <dt><label for="oldpw">Data chiusura: <span class="info">L'inserimento della data comporta la chiusura definitiva della fase</span> </label></dt>
+    <dd>
+        <?php echo $this->formText('date_done', Maco_Utils_DbDate::fromDb($this->data['date_done']), array('class' => 'input-small validate-date')); ?>
+    </dd>
+</dl>
+    <?php else : ?>
+        <div class="message warning">
+            <p>Per poter chiudure questa fase occore chiudere quelle precedenti!</p>
+        </div>
+    <?php endif; ?>
+
+<div class="clear"></div>
+
+<p class="submit">
+    <input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+</form>
+</div>

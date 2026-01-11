@@ -1,0 +1,81 @@
+<?php
+
+/* Set locale to Dutch */
+setlocale(LC_ALL, 'ita', 'it_IT', 'it', 'it_IT.utf8');
+
+$refdate = new DateTime(date('Y-m-d'));
+$old = false;
+$old_day = null;
+foreach($this->tasks as $key => $task)
+{
+    if($task['when'] == '' || $task['when'] == '0000-00-00' || $task['when'] == '0000-00-00 00:00:00') continue;
+    $when = new DateTime(substr($task['when'], 0, 10));
+    if($when >= $refdate)
+    {
+        break;
+    }
+    if(!$old)
+    {
+        echo '<h2>Impegni non svolti precedenti</h2>';
+        $old = true;
+    }
+
+    if($when != $old_day)
+    {
+        echo '<h3>' . (strftime("%A %d/%m/%Y", $when->getTimestamp())) . '</h3>';
+        $old_day = $when;
+    }
+    
+    echo $this->partial('tasks/detail/info.phtml', array('task' => $task, 'with_date' => true));
+    unset($this->tasks[$key]);
+}
+
+if($old)
+{
+    echo '<hr />';
+}
+
+echo '<h2>Impegni dei prossimi 7 giorni</h2>';
+
+for($i = 0; $i < 7; $i++)
+{
+   //echo $date->format('l d/m/Y');
+   //echo '<br />';
+   $ref_day = $refdate->format('l d/m/Y'); 
+   echo '<h3>' . (strftime("%A %d/%m/%Y", $refdate->getTimestamp())) . '</h3>';
+   
+   $added_for_this_day = 0;
+?>
+
+<?php foreach($this->tasks as $key => $task) : ?>
+    <?php 
+        if($task['when'] == '' || $task['when'] == '0000-00-00' || $task['when'] == '0000-00-00 00:00:00') continue;
+        
+        $when = new DateTime($task['when']);
+        
+        $this_day = $when->format('l d/m/Y');
+        
+        if($this_day == $ref_day)
+        {
+            ++$added_for_this_day;
+            
+            echo $this->partial('tasks/detail/info.phtml', array('task' => $task));
+            
+            unset($this->tasks[$key]);
+        }
+    ?>
+    
+<?php endforeach; ?>
+
+<?php   
+    
+    if($added_for_this_day == 0)
+    {
+        echo '<div class="task info">Nessun impegno in questo giorno</div>';
+    }
+    $added_for_this_day = 0;
+
+   $refdate = $refdate->add(new DateInterval('P1D'));
+}
+
+?>

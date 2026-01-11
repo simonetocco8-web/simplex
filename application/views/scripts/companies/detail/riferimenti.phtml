@@ -1,0 +1,29 @@
+<table class="detail fluid">
+    <tr><th colspan="4">Riferimenti</th></tr>
+    <tr>
+        <td class="label">Tipologia</td>
+        <td>
+            <?php echo $this->company->getTipologia(); ?>
+        </td>
+        <td class="label">RCO:</td>
+        <td class="value"><?php echo $this->company['rco_name']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Segnalato Da:</td>
+        <td class="value"><?php echo $this->company['segnalato_da']; ?></td>
+        <td class="label">Categoria:</td>
+        <td class="value"><?php echo $this->company['categoria_name']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">EA:</td>
+        <td class="value"><?php echo $this->company['ea_name']; ?></td>
+        <td class="label">Organico Medio:</td>
+        <td class="value"><?php echo $this->company['organico_medio_name']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Fatturato:</td>
+        <td class="value"><?php echo $this->company['fatturato_name']; ?></td>
+        <td class="label">Conosciuto Come:</td>
+        <td class="value"><?php echo $this->company['conosciuto_come_name']; ?></td>
+    </tr>
+</table>

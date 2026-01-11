@@ -1,0 +1,11 @@
+<tr
+	class="<?php echo ($this->_source->getIndex() % 2) ? 'odd' : 'even'; ?>"
+	id="<?php echo $this->_idPrefix . $this->_source->getKey(); ?>">
+
+	<?php foreach($this->_columns as $column) : ?>
+
+	<?php $this->renderCell($column); ?>
+
+	<?php endforeach; ?>
+
+</tr>

@@ -1,0 +1,9 @@
+<td>
+    <?php
+        $val = $this->_source->getCellByFieldName($this->_column->getField());
+        if(!empty($val))
+        {
+            echo implode('<br /> ', $val);
+        }
+    ?>
+</td>

@@ -1,0 +1,209 @@
+<table class="detail fluid">
+    <tr style="font-weight: bold;">
+        <td class="label" style="width: 40%">Descrizione</td>
+        <td>#</td>
+        <td>&euro;</td>
+    </tr>
+
+    <tr>
+        <th colspan="3">Commerciale</th>
+    </tr>
+
+    <tr>
+        <td class="label">Aziende di cui l'utente risulta RCO:</td>
+        <td class="value"><?php echo $this->num_companies_rco; ?></td>
+        <td class="value">//</td>
+    </tr>
+
+    <tr>
+        <td class="label">Emesse in cui risulta "segnalatore":</td>
+        <td class="value"><?php echo $this->num_offers_1_seg; ?></td>
+        <td class="value"><?php echo number_format($this->tot_offers_1_seg, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Emesse in cui risulta RCO:</td>
+        <td class="value"><?php echo $this->num_offers_1_rco; ?></td>
+        <td class="value"><?php echo number_format($this->tot_offers_1_rco, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Emesse in cui risulta resp.le appr.:</td>
+        <td class="value"><?php echo $this->num_offers_1_app; ?></td>
+        <td class="value"><?php echo number_format($this->tot_offers_1_app, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Aggiudicate in cui risulta "segnalatore":</td>
+        <td class="value"><?php echo $this->num_offers_2_seg; ?></td>
+        <td class="value"><?php echo number_format($this->tot_offers_2_seg, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Aggiudicate in cui l'Utente risulta RCO:</td>
+        <td class="value"><?php echo $this->num_offers_2_rco; ?></td>
+        <td class="value">
+            <?php echo number_format($this->tot_offers_2_rco, 2, ',', '.'); ?>
+            <br />
+            <span class="info">(al promotore:
+                <?php echo number_format($this->tot_offers_2_rco_promotors, 2, ',', '.'); ?>
+                )</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label">Aggiudicate in cui l'Utente risulta resp.le appr.:</td>
+        <td class="value"><?php echo $this->num_offers_2_app; ?></td>
+        <td class="value"><?php echo number_format($this->tot_offers_2_app, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <th colspan="3">Produzione</th>
+    </tr>
+
+    <tr>
+        <td class="label">Completate in cui risulta RCO:</td>
+        <td class="value"><?php echo $this->num_orders_3o_ass; ?></td>
+        <td class="value">
+            <?php echo number_format($this->tot_orders_3o_ass, 2, ',', '.'); ?>
+            <br />
+            <span class="info">(al promotore:
+                <?php echo number_format($this->tot_orders_3o_ass_promotors, 2, ',', '.'); ?>
+                )</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label">Assegnate in cui risulta RC:</td>
+        <td class="value"><?php echo $this->num_orders_2_ass; ?></td>
+        <td class="value"><?php echo number_format($this->tot_orders_2_ass, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Completate in cui risulta RC:</td>
+        <td class="value"><?php echo $this->num_orders_3_ass; ?></td>
+        <td class="value">
+            <?php echo number_format($this->tot_orders_3_ass, 2, ',', '.'); ?>
+            <br />
+            <span class="info">(al promotore:
+                <?php echo number_format($this->tot_orders_3_ass_promotors, 2, ',', '.'); ?>
+            )</span>
+        </td>
+    </tr>
+
+    <tr>
+        <td class="label">Sospese in cui risulta RC:</td>
+        <td class="value"><?php echo $this->num_orders_4_ass; ?></td>
+        <td class="value"><?php echo number_format($this->tot_orders_4_ass, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Annullate in cui risulta RC:</td>
+        <td class="value"><?php echo $this->num_orders_5_ass; ?></td>
+        <td class="value"><?php echo number_format($this->tot_orders_5_ass, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Completate in cui risulta DTG:</td>
+        <td class="value"><?php echo $this->num_orders_dtg; ?></td>
+        <td class="value"><?php echo number_format($this->tot_orders_dtg, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Momenti di lavorazione completati in cui risulta RC:</td>
+        <td class="value"><?php echo $this->num_moments_1_rc; ?></td>
+        <td class="value"><?php echo number_format($this->tot_moments_1_rc, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <th colspan="3">Amministrazione</th>
+    </tr>
+
+    <tr>
+        <td class="label">Momenti di fatturazione in cui l'utente risulta RC (FILTRO PER DATA NON FUNZIONANTE):</td>
+        <td class="value"><?php echo $this->num_moments_2_rc; ?></td>
+        <td class="value"><?php echo number_format($this->tot_moments_2_rc, 2, ',', '.'); ?></td>
+    </tr>
+    <?php /*
+    <tr>
+        <td class="label">Incassi sui contratti di cui l'utente risulta RCO:</td>
+        <td class="value">//</td>
+        <td class="value"><?php echo number_format($this->incasso_rco, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Incassi sui contratti di cui l'utente risulta RC:</td>
+        <td class="value">//</td>
+        <td class="value"><?php echo number_format($this->incasso_rc, 2, ',', '.'); ?></td>
+    </tr>
+
+    <tr>
+        <td class="label">Incassi sui contratti di cui l'utente risulta DTG:</td>
+        <td class="value">//</td>
+        <td class="value"><?php echo number_format($this->incasso_dtg, 2, ',', '.'); ?></td>
+    </tr>
+    */ ?>
+
+    <tr>
+        <th colspan="3">Impegni</th>
+    </tr>
+
+    <tr>
+        <td class="label">Registrati di cui risulta autore:</td>
+        <td class="value"><?php echo $this->task_creator; ?></td>
+        <td class="value">//</td>
+    </tr>
+
+    <tr>
+        <td class="label">Registrati di cui risulta responsabile:</td>
+        <td class="value"><?php echo $this->task_who; ?></td>
+        <td class="value">//</td>
+    </tr>
+
+    <tr>
+        <td class="label">Eseguiti di cui risulta responsabile:</td>
+        <td class="value"><?php echo $this->task_who_done; ?></td>
+        <td class="value">//</td>
+    </tr>
+
+    <tr>
+        <td class="label">"Incontri" di cui risulta responsabile:</td>
+        <td class="value"><?php echo $this->task_who_incontro; ?></td>
+        <td class="value">//</td>
+    </tr>
+
+    <tr>
+        <th colspan="3">SDM</th>
+    </tr>
+
+    <tr>
+        <td class="label">Autore:</td>
+        <td class="value"><?php echo $this->sdm_creator; ?></td>
+        <td class="value">//</td>
+    </tr>
+
+    <tr>
+        <td class="label">Verificatore:</td>
+        <td class="value"><?php echo $this->sdm_rsq; ?></td>
+        <td class="value">//</td>
+    </tr>
+
+    <tr>
+        <td class="label">Risolutore:</td>
+        <td class="value"><?php echo $this->sdm_risolutore; ?></td>
+        <td class="value">//</td>
+    </tr>
+<?php /*
+    <tr>
+        <td class="label">SDM di cui l'utente essere responsabile del trattamento:</td>
+        <td class="value"><?php echo $this->sdm_trattamento; ?></td>
+        <td class="value">//</td>
+    </tr>
+*/ ?>
+    <tr>
+        <td class="label">RESPONSABILE:</td>
+        <td class="value"><?php echo $this->sdm_responsible; ?></td>
+        <td class="value">//</td>
+    </tr>
+
+</table>

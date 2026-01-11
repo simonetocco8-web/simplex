@@ -1,0 +1,24 @@
+    <form name="mod_trattamento_form" id="mod_trattamento_form"
+          action="<?php echo $this->baseUrl(); ?>/sdm/mt/save/1/format/json"
+          method="post">
+    <?php echo $this->formHidden('id', $this->data['sdm_id']); ?>
+ <div class="fieldset-container">
+    <h4>Dati Trattamento</h4>
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'resolution'; ?>">Azione Correttiva:</label></dt>
+        <dd>
+            <?php echo $this->formTextarea($this->inputNamePrefix . 'resolution', $this->data['resolution'], array('class' => 'input-big required', 'rows' => 4)); ?>
+        </dd>
+    </dl>
+    <dl>
+          <dt><label for="<?php echo $this->inputNamePrefix . 'date_resolution'; ?>"><span class="red">*</span> Data risoluzione:</label></dt>
+          <dd>
+              <?php echo $this->formText($this->inputNamePrefix . 'date_resolution', date('d/m/Y'), array('class' => 'input-medium validate-date date-field required')); ?>
+          </dd>
+    </dl>
+
+                                                            
+    <p class="submit"><input class="button" type="submit" value="salva" /></p>  
+                                                            
+</div>        
+</form>

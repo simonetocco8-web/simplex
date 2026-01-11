@@ -1,0 +1,100 @@
+    <table class="detail fluid">
+        <tr>
+            <th colspan="8">Ore di lavoro</th>
+        </tr>
+        <tr>
+            <td class="label">Studio:</td>
+            <td><?php echo Maco_Utils_Time::getFormattedFromValue($this->data['c_ore_studio']); $t_ore = $this->data['c_ore_studio']; ?></td>
+            <td class="label">Azienda:</td>
+            <td><?php echo Maco_Utils_Time::getFormattedFromValue($this->data['c_ore_azienda']); $t_ore += $this->data['c_ore_azienda']; ?></td>
+            <td class="label">Certificazione:</td>
+            <td><?php echo Maco_Utils_Time::getFormattedFromValue($this->data['c_ore_certificazione']); $t_ore += $this->data['c_ore_certificazione']; ?></td>
+            <td class="label"><b>Totale</b></td>
+            <td><b></b><?php echo Maco_Utils_Time::getFormattedFromValue($t_ore); ?></b></td>
+        </tr>
+        <tr>
+            <th colspan="8">Incontri e ore viaggio</th>
+        </tr>
+        <tr>
+            <td class="label">numero incontri <br /><span class="info">(inclusa certificazione)</span>:</td>
+            <td><?php echo $this->data['c_n_incontri'] ; ?></td>
+            <td class="label"># ore di viaggio:</td>
+            <td><?php echo Maco_Utils_Time::getFormattedFromValue($this->data['c_ore_viaggio']); ?></td>
+            <td class="label">Km A/R totali:</td>
+            <td><?php echo number_format($this->data['c_n_km'], 2); ?></td>
+            <td class="label">Costo / Km</td>
+            <td><?php echo number_format($this->data['c_costo_km'], 2); ?> &euro;</td>
+        </tr>
+        <?php if(true ||( $this->data['c_pl_importo'] != '' && $this->data['c_pl_importo'] != 0)) : ?>
+        <tr>
+            <th colspan="8">Pi&eacute; di Lista</th>
+        </tr>
+        <tr>
+            <td class="label">Descrizione</td>
+            <td><?php echo $this->data['c_pl_note']; ?></td>
+            <td class="label">Costo</td>
+            <td><?php echo number_format($this->data['c_pl_importo'], 2); ?> &euro;</td>
+            <td colspan="4"></td>
+        </tr>
+        <?php endif; ?>
+        <tr>
+            <th colspan="8">Costi</th>
+        </tr>
+        <?php
+
+        $val1 = $val2 = $val3 = 0;
+
+        ?>
+        <tr>
+            <td class="label">Valore Reale Commessa:</td>
+            <td>
+                <?php if($this->data['p_valore_g_uomo'] != '') : ?>
+                <?php
+                        $val1 = ($this->data['c_ore_studio'] + $this->data['c_ore_azienda'] + $this->data['c_ore_certificazione']) * $this->data['p_valore_g_uomo'] / 8;
+                        echo number_format($val1, 2) . ' &euro;';
+                ?>
+                <?php else : ?>
+                    impostare "valore giornata uomo"
+                <?php endif; ?>
+            </td>
+            <td class="label">Rimborso Km:</td>
+            <td><?php $val3 = $this->data['c_n_km'] * $this->data['c_costo_km'];  echo number_format($val3, 2); ?> &euro;</td>
+            <td class="label"><b>Totale:</b></td>
+            <td colspan="3"><b>
+                <?php $val4 = $this->data['c_pl_importo']; ?>
+                <b id="imp_cons_<?php echo $this->data['moment_id']; ?>"><?php $tot = $val1 + $val2 + $val3 + $val4; echo number_format($tot, 2); ?> &euro;</b>
+            </b></td>
+        </tr>
+        <?php if($this->data['importo'] != '' && $this->data['importo'] != 0 && $tot != 0) : ?>
+            <tr>
+                <th colspan="8">Da offerta</th>
+            </tr>
+            <tr>
+                <td class="label">Importo da contratto:</td>
+                <td>
+                    <?php echo number_format(Simplex_Helper_Amount::withDiscount($this->data['importo'], $this->data['order']->offer->sconto), 2); ?> &euro;
+                </td>
+                <td class="label">Delta:</td>
+                <td colspan="4">
+                    <?php
+                        $delta = $this->data['importo'] - $tot;
+                        $classDelta = ($delta < 0) ? 'red_text' : '';
+                    ?>
+                        <span class="red_text">
+                    <?php echo number_format(Simplex_Helper_Amount::withDiscount($this->data['importo'], $this->data['order']->offer->sconto) - $tot, 2); ?> &euro;
+                            </span>
+                </td>
+            </tr>
+        <?php endif; ?>
+    </table>
+
+    <div class="fieldset-container">
+        <h4>Note</h4>
+        <?php echo $this->data['c_note'] ; ?>
+    </div>
+<?php /*
+<?php if($this->data['done'] == 0) : ?>
+    <a href="#" id="mcm_<?php echo $this->data['moment_id']; ?>">Modifica</a>
+<?php endif; ?>
+*/ ?>
+    

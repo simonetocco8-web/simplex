@@ -1,0 +1,16 @@
+<div class="to-be-added <?php echo ($this->index == 0) ?: 'added'; ?>">
+
+    <?php echo $this->formHidden($this->inputNamePrefix . 'telephone_id[]', $this->telephone['telephone_id']); ?>
+
+    <dl class="fleft">
+	    <dt><label for="number[]">Numero:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix . 'number[]', $this->telephone['number'], array('class' => 'input-medium')); ?></dd>
+    </dl>
+    <dl>
+        <dt><label for="telephone-description[]">Descrizione:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'description[]', $this->telephone['description'], array('class' => 'input-medium')); ?></dd>
+    </dl>
+
+    <a class="remove-more link-button" name="removenumber" id="removenumber">Cancella</a>
+    <div style="clear: both;"></div>
+</div>

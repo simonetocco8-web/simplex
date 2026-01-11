@@ -1,0 +1,44 @@
+<div id="nc">
+<h2>Nuova Nota Credito</h2>
+<form name="nc_form" id="nc_form" action="<?php echo $this->baseUrl(); ?>/administration/ncs/format/json" method="post">
+
+<dl>
+    <dt><label for="oldpw">Cliente:</label></dt>
+    <dd>
+        <?php echo $this->formHidden('id_company', $this->invoice->order->offer->id_company); ?>
+        <b><?php echo $this->invoice->order->offer->company->ragione_sociale; ?></b>
+    </dd>
+</dl>
+
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"><span class="red">*</span> Importo <span class="info"></span>:</label></dt>
+    <dd>                                                                                            
+    <dd><?php echo $this->formText('importo', $this->payment->importo, array('class' => 'input-small required')); ?></dd>
+    </dd>
+</dl>
+
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"><span class="red">*</span> Tipologia di Pagamento:</label></dt>
+    <dd>
+        <?php echo $this->formSelect('id_tipo_pagamento', '', array('class' => 'input-medium required', 'multiple' => ''), $this->pagamenti); ?>
+    </dd>
+</dl>
+
+<div class="clear"></div>
+
+<dl class="fleft with-margin">
+    <dt><label for="oldpw"><span class="red">*</span> Data Emissione:</label></dt>
+    <dd><?php echo $this->formText('date_invoice', date('d-m-Y'), array('class' => 'input-small validate-date required')); ?></dd>
+</dl>
+<dl class="fleft with-margin">
+    <dt><label for="oldpw">Scadenza:</label></dt>
+    <dd><?php echo $this->formText('date_end', '', array('class' => 'input-small validate-date')); ?></dd>
+</dl>
+
+<div class="clear"></div>
+
+<p class="submit">
+    <input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+</form>
+</div>

@@ -1,0 +1,77 @@
+<div id="tabs_main">
+<div class="submenu">
+    <ul id="actiosns-menu">
+        <li><a class="heading_tab advanced_link active tab1" href="#">Elenco Impegniazzi</a></li>
+        <li> 
+             <a class="heading_tab advanced_link tab4 important" href="<?php echo $this->baseUrl('tasks/edit'); ?>">Nuovo impegno</a>
+        </li>
+        <li> 
+             <a class="heading_tab advanced_link tab4" href="<?php echo $this->baseUrl('tasks/where'); ?>">Dove sono?</a>
+        </li>
+    </ul>
+</div>
+<?php /* <div><?php $this->dag->deploy(); ?></div> */ ?>
+    
+    <h2>Elenco Impegni</h2>
+    
+    <ul class="contextual-menu">
+        <li>
+          <a href="#" id="switch-tasks-search" ><img src="<?php echo $this->baseUrl('img/search.png'); ?>"/> ricerca avanzata</a> 
+        </li>
+    </ul>
+
+    <?php echo $this->searchWrapper($this->baseUrl('tasks/list/format/html'), 'search-task', 'dagrid_container', 'tasks', $this->searchElements, 'tasks-search'); ?>
+    
+    <div id="tasks_per_day">
+        <?php echo $this->partial('tasks/list.ajax.phtml', $this); ?>
+    </div>
+    
+</div>
+
+<?php /* ADVANCED SEARCH STUFF */ ?>
+
+<?php $this->headScript()->prependFile($this->baseUrl('/js/common/jdatepicker/daterangepicker.jQuery.js')); ?>
+<?php $this->headScript()->prependFile($this->baseUrl('/js/common/jquery.multiselect.min.js')); ?>
+<?php $this->headScript()->prependFile($this->baseUrl('/js/jquery-ui-1.8.7.custom.min.js')); ?>
+
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/js/common/jdatepicker/css/ui.daterangepicker.css', true)); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/jquery/smoothness/jquery-ui-1.8.7.custom.css', true)); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/multiselect/multiselect.css', true)); ?>
+
+<?php $this->textboxList(); ?>
+
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/tasks/list.js')); ?>
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $.extend($.ech.multiselect.prototype.options, {
+            checkAllText: 'tutte',
+            uncheckAllText: 'nessuna',
+            noneSelectedText: 'Scegli una o piu\' opzione',
+            selectedText: '# selezionati'
+        });
+        $('.multiple-select').each(function(i,e){
+            $(e).multiselect({
+                selectedList: 3
+            });
+        });
+        $('.date-range').each(function(i,e){
+            $(e).daterangepicker({
+                dateFormat: 'dd/mm/yy', 
+                rangeStartTitle: 'Data Da',
+                rangeEndTitle: 'Data a',
+                doneButtonText: 'fatto',
+                prevLinkText: 'prec',
+                nextLinkText: 'succ',
+                doneButtonText: 'fatto'
+            });
+        });
+        //document.id('tasks-search').hide();
+        document.id('switch-tasks-search').addEvent('click', function(e){
+            e.preventDefault();
+            document.id('tasks-search').toggle();
+            //document.id('companies').getElement('tr#fast-search-tr').toggle();
+        });
+    });
+</script>

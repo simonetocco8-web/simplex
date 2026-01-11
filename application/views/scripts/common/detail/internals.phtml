@@ -1,0 +1,8 @@
+
+<?php if(!empty($this->data['internals'])) : ?>
+    <?php foreach($this->data['internals'] as $item) : ?> 
+        <span title="<?php echo $item['name']; ?>"><?php echo $item['abbr']; ?></span>
+    <?php endforeach; ?>
+<?php else : ?>
+    O a nessuna o a tutti!!!
+<?php endif; ?>

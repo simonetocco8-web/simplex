@@ -1,0 +1,38 @@
+<thead>
+	<tr>
+
+	<?php if(!empty($this->_columns)) : ?>
+	<?php foreach($this->_columns as $column) : ?>
+
+		<th>
+			<?php if($column->isSortable()) : ?> 
+				<a href="<?php echo $this->getSortUriForColumn($column); ?>" class="sorter ajax" />
+            <?php endif; ?>
+                <?php echo $column->getLabel(); ?>
+            <?php if($column->isSortable()) : ?>
+                </a>
+			    <?php echo $this->getSortStatusImgForColumn($column); ?>
+			<?php endif; ?>
+		</th>
+
+	<?php endforeach; ?>
+    <?php endif; ?>
+
+	</tr>
+    <?php if($this->withFastSearch()) : ?>
+	<tr id="fast-search-tr">
+	<?php if(!empty($this->_columns)) : ?>
+	    <?php foreach($this->_columns as $column) : ?>
+
+		<td>
+            <?php if($column->getSearchable() !== false) : ?> 
+            <?php $this->getSearchItemForColumn($column)->render(); ?>
+            <?php endif; ?>
+        </td>
+
+		<?php endforeach; ?>
+	<?php endif; ?>
+	</tr>
+    <?php endif; ?>
+</thead>
+

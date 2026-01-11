@@ -1,0 +1,29 @@
+
+<div class="fieldset-container">
+    <h4>Informazioni Personali</h4>
+    <?php echo $this->partial('contacts/edit/info.phtml', array('contact' => $this->contact, 'contact_titles' => $this->contact_titles, 'inputNamePrefix' => $this->inputNamePrefix)); ?>
+</div>
+
+<div class="fieldset-container with-more">
+    <h4>Recapiti telefonici</h4>
+    <?php foreach($this->contact['telephones'] as $key => $item) : ?> 
+        <?php echo $this->partial('contacts/edit/telephone.phtml', array('telephone' => $item, 'index' => $key, 'inputNamePrefix' => $this->inputNamePrefix . 'telephones_')); ?>
+    <?php endforeach; ?>
+    <a class="link-button more-button" name="morenumbers" id="morenumbers">Aggiungi un altro recapito telefonico</a>
+</div>
+
+<div class="fieldset-container with-more">
+    <h4>Email</h4>
+    <?php foreach($this->contact->mails as $key => $item) : ?>
+        <?php echo $this->partial('contacts/edit/email.phtml', array('mail' => $item, 'index' => $key, 'inputNamePrefix' => $this->inputNamePrefix . 'mails_')); ?>
+    <?php endforeach; ?>
+    <a class="link-button more-button" name="moremails" id="moremails">Aggiungi un'altra email</a>
+</div>
+
+<div class="fieldset-container with-more">
+    <h4>Indirizzi</h4>
+    <?php foreach($this->contact->addresses as $key => $item) : ?> 
+        <?php echo $this->partial('contacts/edit/address.phtml', array('address' => $item, 'index' => $key, 'province' => $this->province, 'inputNamePrefix' => $this->inputNamePrefix . 'addresses_')); ?>
+    <?php endforeach; ?> 
+    <a class="link-button more-button" name="moreaddresses" id="moreaddresses">Aggiungi un altro indirizzo</a>
+</div>

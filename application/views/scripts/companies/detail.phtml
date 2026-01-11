@@ -1,0 +1,169 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">
+            Dettaglio Azienda - Cod. <?php echo $this->company['company_id']; ?>
+        </a>
+
+        <a class="heading_tab advanced_link tab2" href="#">Impegni</a>
+        <a class="heading_tab advanced_link tab2" href="#">Modulistica</a>
+        <a class="heading_tab advanced_link tab2" href="<?php echo $this->baseUrl('files/get/p/' . base64_encode('/aziende/' . $this->layout()->user->internal_abbr . '_' . $this->company['company_id'])); ?>">Documenti</a>
+        <a class="heading_tab advanced_link tab2" href="<?php echo $this->baseUrl('offers?dalist=offers&format=html&id_company=' . $this->company['company_id']); ?>">Offerte</a>
+        <a class="heading_tab advanced_link tab2" href="<?php echo $this->baseUrl('orders?dalist=orders&format=html&id_company=' . $this->company['company_id']); ?>">Commesse</a>
+       <!--  <a class="heading_tab advanced_link tab3" href="#">Documenti</a> -->
+    </div>
+
+    <?php if($this->company['partita_iva'] == 'Provvisoria') : ?>
+
+        <div class="message warning">
+            <p>
+            <b>Attenzione!</b> Azienda registrata in maniera <b>provvisoria</b>.<br>
+
+            E' possibile registrare offerte ed impegni ma <b>non si potranno
+            aggiudicare offerte</b> fin quando non sar&agrave; inserita la Partita IVA.
+            </p>
+        </div>
+
+    <?php endif; ?>
+
+	 <div class="tab_contents">
+	 			 
+		<div class="tab_content" id="anagrafica-info">
+       <!--
+            <div class="submenu right">
+                <ul id="actions-menu-anagrafica">
+                    <?php // HARD CODED 4 = id stato offerta aggiudicata ?>
+                    <li><a class="heading_tab advanced_link tab4" href="<?php echo $this->baseUrl('companies/edit/id/' . $this->company['company_id']); ?>">Modifica</a></li>
+                    <li><a class="heading_tab advanced_link tab5 important" href="<?php echo $this->baseUrl('companies/delete/id/' . $this->company['company_id']); ?>">Elimina</a></li>
+                    <li>
+                        <a class="heading_tab advanced_link tab4 important" href="#">Altre Azioni</a>
+                        <ul class="action-menu">
+                            <li><a href="<?php echo $this->baseUrl('offers/edit/id_company/' . $this->company['company_id']); ?>">Nuova Offerta</a></li>
+                            <li><a href="<?php echo $this->baseUrl('tasks/edit/id_company/' . $this->company['company_id']); ?>">Nuovo Impegno</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+           -->
+			<h3>
+                <?php echo $this->company['ragione_sociale']; ?>
+
+                <!--
+                <?php if($this->company['is_promotore']) : ?>
+                    (promotore<?php if($this->company['promotore_percent'] != '' && $this->company['promotore_percent'] != 0) echo ' - ' . $this->company['promotore_percent'] . ' %'; ?>)
+                <?php endif; ?>
+                -->
+                <?php if($this->company['deleted']) : ?>
+                    -
+                    <span class="red_text">Esclusa</span>
+                <?php endif; ?>
+            </h3>
+            <ul class="contextual-menu">
+                <li>
+                    <a href="#"><img src="<?php echo $this->baseUrl('img/export.png'); ?>"/> esporta <span class="info">beta</span></a>
+                    <ul>
+                        <li><a href="<?php echo $this->baseUrl('companies/export/id/' . $this->company['company_id']); ?>">senza impegni</a></li>
+                        <li><a href="<?php echo $this->baseUrl('companies/export/id/' . $this->company['company_id']) . '/tasks/1'; ?>">con impegni</a></li>
+                    </ul>
+                </li>
+                <?php if($this->acl('companies', 'modify') || ($this->acl('companies', 'modify_own') && $this->company->created_by == $this->loggedUser()->user_id)) : ?>
+                <li>
+                  <a href="<?php echo $this->baseUrl('companies/edit/id/' . $this->company['company_id']); ?>" ><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> modifica</a> 
+                </li>
+                <?php endif; ?>
+                <?php if($this->acl('companies', 'exclude')) : ?>
+                <li>
+                    <a id="ms" href="<?php echo $this->baseUrl('companies/exclude/format/json/id/' . $this->company['company_id']); ?>" ><img src="<?php echo $this->baseUrl('img/delete.png'); ?>"/> <?php echo ($this->company['deleted'] == 1) ? 'ripristina' : 'escludi'; ?></a> 
+                </li>
+                <?php endif; ?>
+                <?php if(($this->company['is_cliente'] == 1 || $this->company['is_cliente'] == 2) && $this->acl('offers', 'create')) : ?>
+                <li>
+                    <a href="<?php echo $this->baseUrl('offers/edit/id_company/' . $this->company['company_id']); ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>" />Nuova Offerta</a>
+                </li>
+                <?php endif; ?>
+                <!--
+                <li>
+                  <a href="#" id="mdp5"><img src="<?php echo $this->baseUrl('img/arrow_down.png'); ?>" />altre azioni</a> 
+                  <ul>
+                    <li><a href="<?php echo $this->baseUrl('offers/edit/id_company/' . $this->company['company_id']); ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>" />Nuova Offerta</a></li>
+                    <li><a href="<?php echo $this->baseUrl('tasks/edit/id_company/' . $this->company['company_id']); ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> Nuovo Impegno</a></li>
+                  </ul>
+                </li>
+                -->
+            </ul>
+
+        
+			<?php echo $this->partial('companies/detail/main.phtml', $this); ?>
+
+            <?php if($this->acl('contacts', 'view')) : ?>
+
+                <h2>Referenti</h2>
+
+                <ul class="contextual-menu">
+                    <li>
+                        <?php if($this->acl('contacts', 'create')) : ?>
+                      <a href="<?php echo $this->baseUrl('companies/editcontact/id/' . $this->company['company_id']); ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> nuovo contatto</a>
+                        <?php endif; ?>
+                    </li>
+                </ul>
+
+                <div><?php $this->contactsList->deploy(); ?></div>
+
+            <?php endif; ?>
+
+
+		</div>
+	
+		<div class="tab_content" id="tasks">
+			
+			<h2>Impegni</h2>
+		
+            <ul class="contextual-menu">
+                <li>
+                  <a href="<?php echo $this->baseUrl('tasks/edit/id_company/' . $this->company['company_id']); ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> nuovo impegno</a></li>
+                </li>
+            </ul>
+
+            <div><?php echo $this->partial('tasks/list.ajax.phtml', array('tasks' => $this->tasks)); ?></div>
+		</div>
+
+         <div class="tab_content" id="modulistica">
+
+             <h2>Elenco documenti disponibili</h2>
+
+             <ul class="contextual-menu">
+                 <li>
+
+                 </li>
+             </ul>
+
+             <div>
+                 <table class="fluid">
+                     <tr>
+                         <td>Carta Intestata</td>
+                         <td></td>
+                         <td style="width: 100px">
+                             <a class="button" href="<?php echo $this->baseUrl('export/companies/id/' . $this->company['company_id'] . '/w/ci'); ?>">
+                                 scarica
+                             </a>
+                         </td>
+                     </tr>
+                 </table>
+             </div>
+         </div>
+	</div>
+
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/detail.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabPane.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabs.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/companies/detail.js')); ?>

@@ -1,0 +1,12 @@
+<div id="tabs_main">
+<div class="submenu">
+    <a class="heading_tab advanced_link <?php echo $this->deleted ? '' : 'active'; ?> tab1" href="<?php echo $this->baseUrl('admin/users/task/list'); ?>">Elenco Utenti</a>
+    <?php if(!isset($this->readonly) || !$this->readonly) : ?>
+    <a class="heading_tab advanced_link <?php echo $this->deleted ? 'active' : ''; ?> tab2" href="<?php echo $this->baseUrl('admin/users/task/bin'); ?>">Cestino</a>
+    <!--<a class="heading_tab advanced_link tab3" href="#">Cerca</a> -->
+    <a class="heading_tab advanced_link tab4 important" href="<?php echo $this->baseUrl('admin/users/task/edit'); ?>">Crea Nuovo Utente</a>
+    <?php endif; ?>
+</div>
+<div><?php $this->dag->deploy(); ?></div>
+
+</div>

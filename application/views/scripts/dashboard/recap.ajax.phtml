@@ -1,0 +1,51 @@
+<div class="dash-item-container">
+
+    <h2><?php echo $this->thisMonth . ' ' . $this->thisYear; ?></h2>
+
+    <ul>
+        <li class="change-month-item">
+            <a class="recap-link" href="<?php echo $this->baseUrl(); ?>/dashboard/recap/format/html?<?php echo $this->prevUrlQuery; ?>">
+                <h3><?php echo $this->prevMonth . ' ' . $this->prevYear; ?></h3>
+                <p>&laquo;</p>
+            </a>
+        </li>
+        <li class="dash-item">
+            <h3>Offerte Aggiudicate</h3>
+            <p class="number"><?php echo $this->num_offers_rco; ?></p>
+            <p class="amount"><?php echo number_format($this->tot_offers_rco, 2, ',', '.'); ?>€</p>
+        </li>
+
+        <li class="dash-item">
+            <h3>Commesse Completate (RCO)</h3>
+            <p class="number"><?php echo $this->num_orders_rco_com; ?></p>
+            <p class="amount"><?php echo number_format($this->tot_orders_rco_com, 2, ',', '.'); ?>€</p>
+        </li>
+
+        <li class="dash-item">
+            <h3>Commesse Completate (RC)</h3>
+            <p class="number"><?php echo $this->num_orders_rc_com; ?></p>
+            <p class="amount"><?php echo number_format($this->tot_orders_rc_com, 2, ',', '.'); ?>€</p>
+        </li>
+
+        <li class="dash-item">
+            <h3>Commesse Assegnate (RC)</h3>
+            <p class="number"><?php echo $this->num_orders_rc_ass; ?></p>
+            <p class="amount"><?php echo number_format($this->tot_orders_rc_ass, 2, ',', '.'); ?>€</p>
+        </li>
+
+        <li class="dash-item">
+            <h3>SDM create</h3>
+            <p class="number"><?php echo $this->sdm_creator; ?></p>
+            <p class="amount">&nbsp;</p>
+        </li>
+
+        <li class="change-month-item">
+            <a  class="recap-link" href="<?php echo $this->baseUrl(); ?>/dashboard/recap/format/html?<?php echo $this->nextUrlQuery; ?>">
+                <h3><?php echo $this->nextMonth . ' ' . $this->nextYear; ?></h3>
+                <p>&raquo;</p>
+            </a>
+        </li>
+    </ul>
+
+    <div style="clear: both"></div>
+</div>

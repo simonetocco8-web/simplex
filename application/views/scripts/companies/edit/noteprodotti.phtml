@@ -1,0 +1,28 @@
+<fieldset>
+    <legend>Altra informazioni sull'azienda</legend>
+    <br />
+    
+    <div class="fieldset-container clear2">
+        
+        <dl>
+            <dt><label for="status">Principali prodotti:</label></dt>
+            <dd><?php echo $this->formTextarea('prodotti', $this->data['prodotti'], array('class' => 'input-big', 'rows' => 4)); ?></dd>
+        </dl>
+        
+        <dl>
+            <dt><label for="status">Note:</label></dt>
+            <dd><?php echo $this->formTextarea('note', $this->data['note'], array('class' => 'input-big', 'rows' => 4)); ?></dd>
+        </dl>
+        
+        <dl>
+            <dt><label for="status">Promotore:</label></dt>
+            <dd>
+                <input type="hidden" name="id_promotore2" id="id_promotore2" value="<?php echo $this->data['id_promotore']; ?>" />
+                <input type="hidden" name="promotore_name" id="promotore_name" value="<?php echo $this->data['promotore_name']; ?>" />
+                <?php echo $this->formText('id_promotore', '', array('class' => 'input-medium')); ?>
+            </dd>
+        </dl>
+        
+    </div>
+
+</fieldset>

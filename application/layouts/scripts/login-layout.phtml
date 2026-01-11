@@ -1,0 +1,23 @@
+<?PHP echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title><?php echo $this->layout()->title; ?></title>
+<?PHP
+$this->headLink()->appendStylesheet($this->baseUrl('/css/reset.css'));
+$this->headLink()->appendStylesheet($this->baseUrl('/css/global.css', true));
+$this->headLink()->headLink(array('rel' => 'icon', 'href' => $this->baseUrl('/img/favicon2.ico'), 'type' => 'image/x-icon'));
+echo $this->headLink();
+
+$this->headScript()->prependFile($this->baseUrl('/js/jquery-1.4.4.js'));
+
+echo $this->headScript();
+?>
+<script type="text/javascript">
+            var baseUrl = '<?php echo $this->baseUrl(); ?>';
+        </script>
+</head>
+<body class="login">
+    <?PHP echo $this->layout()->content; ?>
+</body>
+</html>

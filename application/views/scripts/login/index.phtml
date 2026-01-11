@@ -1,0 +1,50 @@
+<div id="login-main">
+    <div id="login-cont">
+        <div id="login-out">
+        <?php
+        $this->form->setAction($this->url());
+        ?>
+            <div id="login-in">
+                <h2>Accedi al sistema</h2>
+                <form action="<?php echo $this->baseUrl(); ?>/login/index/format/json" method="post" enctype="application/x-www-form-urlencoded" id="login-form">
+                    <input type="hidden" name="id_internal" value="" id="id_internal" />
+                    <dl class="zend-form">
+                        <dt id="uname-label"><label class="required" for="uname">username</label></dt>
+                        <dd id="uname-element"><input type="text" class="input-medium required" value="" id="uname" name="uname"></dd>
+                    </dl>
+                    <dl class="zend-form">
+                        <dt id="pword-label"><label class="required" for="pword">password</label></dt>
+                        <dd id="pword-element"><input type="password" class="input-medium required" value="" id="pword" name="pword"></dd>
+                    </dl>
+                    <dl class="zend-form">
+                        <dt id="submit-label">&nbsp;</dt><dd id="submit-element"><input type="submit" class="button" value="Login" id="submit" name="submit"></dd>
+                    </dl>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="result">
+        <h1>Simplex</h1>
+        <dl class="clear-no-margin"></dl>
+        <div>
+        <?php if (isset($this->message)) : ?>
+            <dl>
+                <p class="error"><?php echo $this->message; ?></p>
+            </dl>
+        <?php endif; ?>
+        </div>
+    </div>
+</div>
+<!--
+<div class="rounded border1 shadowed center" id="login_form">
+<h1>Simplex</h1>
+<h3>Accedi al sistema</h3>
+
+<?php if (isset($this->message)) : ?>
+    <p class="error"><?php echo $this->message; ?></p>
+<?php endif; ?></div>
+
+-->
+<?php
+
+$this->headScript()->appendFile($this->baseUrl('/js/login/index.js')); ?>

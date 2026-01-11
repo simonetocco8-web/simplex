@@ -1,0 +1,209 @@
+
+
+    <h2>Dati consuntivi globali</h2>
+
+
+    <ul class="contextual-menu">
+        <?php if((($this->order['id_status'] == 1 || $this->order['id_status'] == 2) && $this->acl('orders', 'work', true)) || $this->acl('orders', 'modify_always')) : ?>
+        <li>
+            <a href="#" id="mc"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> modifica</a>
+        </li>
+        <?php endif; ?>
+    </ul>
+
+
+    <table class="detail fluid">
+        <tr><th colspan="4">Dati Consuntivi</th></tr>
+        <tr>
+            <td class="label">SAL:</td>
+            <td colspan="3" class="cs3"><?php if ($this->order['sal'] != '') echo $this->order['sal'] . '&nbsp;%'; ?></td>
+        </tr>
+        <tr>
+            <td class="label">Ente:</td>
+            <td colspan="3" class="cs3"><?php echo $this->order['ente']; ?></td>
+        </tr>
+        <tr>
+            <td class="label">Note Consuntivo:</td>
+            <td colspan="3" class="cs3"><?php echo $this->order['note_consuntivo']; ?></td>
+        </tr>
+    </table>
+
+        <br />
+
+
+<h2>Dati Momenti di Lavorazione a Consuntivo</h2>
+
+<!--
+    <div class="fieldset-container floating">
+        <h4>Ore / hM</h4>
+        <dl class="detail">
+            <dt>Studio:</dt>
+            <dd><?php echo $this->order['c_ore_studio']; $t_ore = $this->order['c_ore_studio']; ?></dd>
+        </dl>
+        <dl class="detail">
+            <dt>Azienda:</dt>
+            <dd><?php echo $this->order['c_ore_azienda']; $t_ore += $this->order['c_ore_azienda']; ?></dd>
+        </dl>
+        <dl class="detail">
+            <dt>Certificazione:</dt>
+            <dd><?php echo $this->order['c_ore_certificazione']; $t_ore += $this->order['c_ore_certificazione']; ?></dd>
+        </dl>
+        <dl class="detail">
+            <dt>Totale:</dt>
+            <dd><?php echo $t_ore; ?></dd>
+        </dl>
+        
+        <h4>Costi</h4>
+        <dl class="detail">
+            <dt>Valore Certificazione:</dt>
+            <dd><?php echo $this->order['c_val_cert'] ; ?> &euro;</dd>
+        </dl>
+        <dl class="detail">
+            <dt>Valore Reale Comm.:</dt>
+            <dd><?php echo '???'; ?></dd>
+        </dl>
+    </div>
+    <div class="fieldset-container floating">
+        <h4>Vari</h4>
+        <dl class="detail">
+            <dt># Incontri Vis. Cert.:</dt>
+            <dd><?php echo $this->order['c_n_incontri'] ; ?></dd>
+        </dl>
+        <dl class="detail">
+            <dt># ore di viaggio:</dt>
+            <dd><?php echo $this->order['c_ore_viaggio']; ?></dd>
+        </dl>
+        <br />
+        <dl class="detail">
+            <dt>Km A/R totali:</dt>
+            <dd><?php echo $this->order['c_n_km']; ?></dd>
+        </dl>
+        <dl class="detail">
+            <dt>Costo / Km:</dt>
+            <dd><?php echo $this->order['c_costo_km']; ?> &euro;</dd>
+        </dl>
+        <dl class="detail">
+            <dt>Rimborso Km:</dt>
+            <dd><?php echo $this->order['c_n_km'] * $this->order['c_costo_km']; ?> &euro;</dd>
+        </dl>
+    </div>
+    
+    <div class="clear"></div>
+
+    <div class="fieldset-container">
+        <h4>Note</h4>
+        <?php echo $this->order['c_note'] ; ?>
+    </div>
+
+    <h2>Fasi di Lavorazione</h2>
+
+    -->
+
+<div class="fieldset-container">
+    <?php $tot = 0; ?>
+    <table class="fluid">
+        <thead>
+        <tr>
+            <th>Tipologia</th>
+            <th>Importo</th>
+            <th>Costo</th>
+            <th>Delta</th>
+            <th>Data prevista</th>
+            <th>Data effettiva</th>
+            <th>Fatturazione</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $importo_totale = $costo_totale = 0;
+        ?>
+        <?php foreach($this->order['offer']['moments'] as $i => $moment) : ?>
+        <tr class="">
+            <td>
+                <?php /* <a id="mo_<?php echo $moment['moment_id']; ?>" href="<?php echo $this->baseUrl('/orders/momentcons/id/' . $moment['moment_id']); ?>" class="moment_open"> */ ?><?php echo $moment['tipologia']; ?> <?php /* </a> */ ?>
+            </td>
+            <td align="right">
+                <?php if($moment['importo'] != '' && $moment['importo'] != 0) : ?>
+                <?php $importo_totale += Simplex_Helper_Amount::withDiscount($moment['importo'], $this->order->offer->sconto); ?>
+                <?php echo number_format(Simplex_Helper_Amount::withDiscount($moment['importo'], $this->order->offer->sconto), 2); ?>&nbsp;&euro;
+                <?php endif; ?>
+            </td>
+            <td align="right">
+                <?php if($moment['importo_real'] != '' && $moment['importo_real'] != 0) : ?>
+                <?php $costo_totale += $moment['importo_real']; ?>
+                <?php echo number_format($moment['importo_real'], 2); ?>&nbsp;&euro;
+                <?php endif; ?>
+            </td>
+            <td align="right">
+                <?php if(($moment['importo'] != '' && $moment['importo'] != 0) && $moment['importo_real'] != '' && $moment['importo_real'] != 0) : ?>
+                <span class="<?php if($moment['importo_real'] > $moment['importo']) echo 'red_text'; ?>">
+	                    	    <?php echo number_format(Simplex_Helper_Amount::withDiscount($moment['importo'], $this->order->offer->sconto) - $moment['importo_real'], 2); ?>&nbsp;&euro;
+	                    	</span>
+                <?php endif; ?>
+            </td>
+            <?php $tot+= $moment['importo']; ?>
+            <td>
+                <?php echo Maco_Utils_DbDate::fromDb($moment['expected_date']); ?>
+            </td>
+            <td id="date_effective_<?php echo $moment['moment_id']; ?>">
+                        <span class="<?php echo (($diffdays = (new Maco_Utils_DbDate)->dbDiffInDays($moment['expected_date'], $moment['date_done'])) > 0) ? 'red_text' : ''; ?>">
+                        <?php echo Maco_Utils_DbDate::fromDb($moment['date_done']); ?>
+                        </span>
+                <?php if($diffdays) : ?>
+                <span class="info"><?php echo $diffdays; ?>&nbsp;gg</span>
+                <?php endif; ?>
+            </td>
+            <td>
+                <?php echo ($moment['fatturazione'] == 1) ? 'si' : 'no'; ?>
+            </td>
+            <td class="list-links">
+                <?php /* if($moment['date_done'] == '' || $moment['date_done'] == '0000-00-00') : */ ?>
+                <a href="#" id="mm_<?php echo $moment['moment_id']; ?>" class="mm_update">
+                    <img alt="dettaglio" src="<?php echo $this->baseUrl() . '/img/detail_24.png'; ?>" title="dettaglio" id="mo_<?php echo $moment['moment_id']; ?>" class="moment_open" />
+                </a>
+                <?php if(($moment['done'] == 0 && $this->acl('orders', 'work', true)) || $this->acl('orders', 'modify_always')) : ?>
+                <a href="#" id="mm_<?php echo $moment['moment_id']; ?>" class="m_edit">
+                    <img alt="modifica" src="<?php echo $this->baseUrl() . '/img/edit_24.png'; ?>" title="modifica" id="m_<?php echo $moment['moment_id']; ?>" />
+                </a>
+                <?php /*
+		                	<a href="#" id="d_<?php echo $moment['moment_id']; ?>" class="m_done">
+		                		<img alt="chiudi" src="<?php echo $this->baseUrl() . '/img/done_24.png'; ?>" title="chiudi" id="i_<?php echo $moment['moment_id']; ?>" />
+		                	</a>
+                        */ ?>
+                <?php endif; ?>
+                <?php if($moment['done'] != 0) : ?>
+                <img alt="chiusa" src="<?php echo $this->baseUrl() . '/img/success.png'; ?>" title="chiusa" id="i_<?php echo $moment['moment_id']; ?>" />
+                <?php endif; ?>
+            </td>
+        </tr>
+            <?php endforeach; ?>
+        <tr>
+            <td colspan="8"></td>
+        </tr>
+        <tr style="font-weight: bold; background-color: #f2f2f2;">
+            <td></td>
+            <td><?php echo ($importo_totale != 0) ? (number_format($importo_totale, 2) . '&nbsp;&euro;') : ''; ?></td>
+            <td><?php echo ($costo_totale != 0) ? (number_format($costo_totale, 2) . '&nbsp;&euro;') : ''; ?></td>
+            <td>
+                <?php if($importo_totale != 0 && $costo_totale != 0) : ?>
+                <?php $delta = $importo_totale - $costo_totale; ?>
+                <span class="<?php if($delta < 0) echo 'red_text'; ?>">
+                            <?php echo number_format($delta, 2); ?>&nbsp;&euro;
+                        </span>
+                <?php endif; ?>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <a href="#" id="dm_<?php echo $this->order['order_id']; ?>" class="dm_detail">
+                    <img alt="dettaglio" src="<?php echo $this->baseUrl() . '/img/detail_24.png'; ?>" title="dettaglio" id="mo_<?php echo $this->order['order_id']; ?>" class="corder_open" />
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+        

@@ -1,0 +1,21 @@
+<table class="detail fluid">
+    <tr><th colspan="4">Altre informazioni</th></tr>
+    <tr>
+        <td class="label">Principali Prodotti:</td>
+        <td class="value" colspan="3"><?php echo $this->company['prodotti']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Note:</td>
+        <td class="value" colspan="3"><?php echo $this->company['note']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Promotore:</td>
+        <td class="value" colspan="3">
+            <?php if($this->company['id_promotore']) : ?>
+                <a href="<?php echo $this->baseUrl('companies/detail/id/' . $this->company['id_promotore']); ?>" title="vai al dettaglio del promotore">
+                    <?php echo $this->company['promotore_name']; ?>
+                </a>
+            <?php endif; ?>
+        </td>
+    </tr>
+</table>

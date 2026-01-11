@@ -1,0 +1,11 @@
+<td class="list-links"><?php foreach($this->_links as $link) : ?> <a
+	href="<?php echo $link['base']; ?><?php 
+            foreach($link['linkData'] as $k => $v)
+                echo '/' . $k . '/' . $this->_source->getCellByFieldName($v); 
+            ?>
+    "> <?php if($link['img'] !== FALSE) : ?> <img
+	class="list-<?php echo $link['title']; ?>"
+	src="<?php echo $this->_baseUrl . $link['img'];?>"
+	alt="<?php echo $link['title']; ?>"
+	title="<?php echo $link['title']; ?>"> <?php endif; ?> <?php echo $this->_source->getCellByFieldName($this->_field); ?>
+</a> &nbsp; <?php endforeach; ?></td>

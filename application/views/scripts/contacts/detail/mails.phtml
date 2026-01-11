@@ -1,0 +1,9 @@
+<table class="detail fluid">
+    <tr><th colspan="4">Recapiti Mail</th></tr>
+    <?php foreach($this->mails as $mail) : ?>
+        <tr>
+            <td class="label"><?php echo $mail['description']; ?></td>
+            <td class="cs3" colspan="3"><a href="mailto:<?php echo $mail['mail']; ?>"><?php echo $mail['mail']; ?></a></td>
+        </tr>
+    <?php endforeach; ?>
+</table>

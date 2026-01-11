@@ -1,0 +1,47 @@
+<div class="to-be-added <?php echo ($this->index == 0) ? '' : 'added'; ?>">
+    <?php echo $this->formHidden($this->inputNamePrefix . 'moment_id[]', $this->data['moment_id']); ?>
+    <?php echo $this->formHidden($this->inputNamePrefix . 'id_offer[]', $this->data['id_offer']); ?>
+    <dl>
+        <dt><label for="tipologia[]">Tipologia:</label></dt>
+        <dd>
+        	<input type="hidden" name="moments_idx[]" value="<?php echo $this->index; ?>" class="moment_index" />
+        	<input type="text" name="<?php echo $this->inputNamePrefix . 'tipologia[]'; ?>" value="<?php echo $this->data['tipologia']; ?>" class="input-big moment-tipologia required" />
+        </dd>
+    </dl>
+    <dl class="fleft">
+        <dt><label for="importo[]">Importo:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'importo[]', $this->data['importo'], array('class' => 'input-small moment-importo')); ?></dd>
+    </dl>
+    <dl class="fleft">
+        <dt><label for="expected_date[]">Data prevista:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'expected_date[]', Maco_Utils_DbDate::fromDb($this->data['expected_date']), array('class' => 'input-small validate-date moment_date')); ?></dd>
+    </dl>
+    <dl class="fleft">
+        <dt><label for="fatturazione[]">Fatturazione:</label></dt>
+        <dd><?php echo $this->formCheckbox($this->inputNamePrefix . 'fatturazione_' . $this->index, $this->data['fatturazione'], array('class' => 'input-small mmf'), array(1, 0)); ?></dd>
+    </dl>
+    <dl class="fleft ">
+        <dt><label for="o_ore_previste[]">Valore Giorn. Uomo:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'p_valore_g_uomo[]', $this->data['p_valore_g_uomo'], array('class' => 'input-small valore-g-uomo')); ?></dd>
+    </dl>
+    <?php
+        $ore_hm = null;
+        $giorni_hm = null;
+        if($this->data['importo'] != '' && $this->data['importo'] != 0 && $this->data['p_valore_g_uomo'] != '' && $this->data['p_valore_g_uomo'] != 0)
+        {
+            $giorni_hm = number_format($this->data['importo'] / $this->data['p_valore_g_uomo'], 2);
+            $ore_hm = number_format($giorni_hm * 8, 2);
+        }
+    ?>
+    <dl class="fleft ">
+        <dt><label for="o_ore_previste[]">Ore / Hm:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'p_ore_hm[]', $ore_hm, array('class' => 'input-small moment-ore')); ?></dd>
+    </dl>
+    <dl class="fleft ">
+        <dt><label for="o_ore_previste[]">Giorni / Hm:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'p_giorni_hm[]', $giorni_hm, array('class' => 'input-small moment-giorni')); ?></dd>
+    </dl>
+    <a class="remove-more link-button" name="removemail" id="removemail">Cancella</a>
+    <div style="clear: both"></div>
+</div>
+

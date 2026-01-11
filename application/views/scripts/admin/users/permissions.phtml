@@ -1,0 +1,36 @@
+<h2>Permessi per <?php echo $this->user['username']; ?></h2>
+<form action="<?php echo $this->baseUrl(); ?>/admin/users/task/permissions/id/<?php echo $this->user['user_id']; ?>" method="post" id="edit" name="edit">
+<fieldset><legend>Associa i permessi a questo utente</legend>
+<br />
+
+<?php echo $this->formHidden('user_id', $this->user['user_id']); ?>
+
+<div class="fieldset-container">
+    <?php $index = 0; ?>
+    <?php foreach($this->permissions as $pid => $permission) : ?>
+        <table style="width:45%; float:<?php echo ((++$index % 2 == 0) ? 'right' : 'left'); ?>;" id="<?php echo $pid; ?>">
+            <tr class="check_all">                                        
+                <th><?php echo $permission['label']; ?></th>
+            </tr>
+            <?php foreach($permission['actions'] as $key => $action) : ?>
+            <?php
+                $has_this_per = $this->user->has_permission($pid, $key);
+            ?>
+            <tr class="check <?php echo ($has_this_per) ? 'focused' : 'blurred'; ?>">
+                <td class="check <?php echo ($has_this_per) ? 'focused' : 'blurred'; ?>">
+                    <input childs="<?php echo implode(',', $action['childs']); ?>" parents="<?php echo implode(',', $action['parents']); ?>" type="checkbox" class="links_cb" name="<?php echo $pid . '__' . $key; ?>" value="1" <?php if($has_this_per) echo 'checked="checked"'; ?> />
+                    <?php echo $action['label']; ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+        <?php if($index % 2 == 0) echo '<div class="clear"></div>'; ?>
+    <?php endforeach; ?>
+        
+    <div class="clear"></div>
+<br />
+<p class="submit"><input class="button" type="submit" value="salva" /></p>
+</fieldset>
+</form>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/admin/users/permissions.js')); ?>

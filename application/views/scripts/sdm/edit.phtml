@@ -1,0 +1,44 @@
+<div id="tabs_main">    
+
+    <h2><?php echo $this->contentTitle; ?></h2>
+    <form action="<?php echo $this->baseUrl('/sdm/save'); ?>" method="post" id="edit" name="edit">
+        <?php echo $this->formHidden('sdm_id', $this->data['sdm_id']); ?>
+    <div id="sdm_div" class="tab_content">
+    
+        <div class="fieldset-container">
+            <h4>Dati segnalazione</h4>
+            <?php /*
+            <dl>
+                <dt><label for="riferimento">Riferimento:</label></dt>
+                <dd>
+                    <?php echo $this->formText($this->inputNamePrefix . 'riferimento', $this->data['riferimento'], array('class' => 'input-big required')); ?>
+                </dd>
+            </dl>
+            */ ?>
+            
+            <dl>
+                <dt><label for="descrizione"><span class="red">*</span> Descrizione:</label></dt>
+                <dd>
+                    <?php echo $this->formTextarea($this->inputNamePrefix . 'problem', $this->data['problem'], array('class' => 'input-big required', 'rows' => 4)); ?>
+                </dd>
+            </dl>
+            <dl>
+                <dt><label for="responsabile"><span class="red">*</span> Responsabile Qualit&agrave;:</label></dt>
+                <dd>
+                    <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_responsible', $this->data['id_responsible'], array('class' => 'input-medium required', 'multiple' => ''), $this->users); ?></dd>
+                </dd>
+            </dl>
+                                                                    
+        </div>        
+    </div>
+            
+    <p class="submit"><input class="button" type="submit" value="salva" /></p>  
+    
+    </form>
+
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/edit.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/sdm/edit.js')); ?>
+

@@ -1,0 +1,78 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Dati</a>
+    </div>
+
+    <div class="tab_contents">
+    
+        <div id="detail" class="tab_content">
+        
+            <div id="tranche-detail">
+        
+                <?php echo $this->partial('administration/tranche/detail.phtml', $this); ?>            
+                
+            </div>
+            
+             <hr />
+            <h3>Informazioni utili</h3>
+            
+            <table class="detail fluid">
+                <tr>
+                    <th colspan="4">Dati Fattura</th>
+                </tr>
+                <tr>
+                    <td class="label">Fattura:</td>
+                    <td><a href="<?php echo $this->baseUrl('administration/invoice/id/' . $this->tranche->invoice->invoice_id); ?>" title="vai al dettaglio fattura"><?php echo $this->tranche->invoice->code_invoice; ?></a></td>
+                    <td class="label">Data Scadenza:</td>
+                    <td><?php echo Maco_Utils_DbDate::fromDb($this->tranche->invoice->date_end); ?></td>
+                </tr>
+                <tr>
+                    <th colspan="4">Dati Azienda</th>
+                </tr>
+                <tr>
+                    <td class="label">Ragione Sociale:</td>
+                    <td>
+                        <a href="<?php echo $this->baseUrl('companies/detail/id/' 
+                            . $this->tranche->invoice->order->offer->company->company_id); ?>" title="dettaglio azienda">
+                            <?php echo $this->tranche->invoice->order->offer->company['ragione_sociale']; ?>
+                        </a>
+                    </td>
+                    <td class="label">Partita IVA:</td>
+                    <td><?php echo $this->tranche->invoice->order->offer->company['partita_iva']; ?></td>
+                </tr>
+                <tr>
+                    <th colspan="4">Dati Offerta - Commessa</th>
+                </tr>
+                <tr>
+                    <td class="label">Offerta:</td>
+                    <td>
+                        <a href="<?php echo $this->baseUrl('offers/detail/id/' 
+                            . $this->tranche->invoice->order->offer->offer_id); ?>" title="dettaglio offerta">
+                            <?php echo $this->tranche->invoice->order->offer['code_offer']; ?>
+                        </a>
+                    </td>
+                    <td class="label">Commessa:</td>
+                    <td>
+                        <a href="<?php echo $this->baseUrl('orders/detail/id/' 
+                            . $this->tranche->invoice->order->order_id); ?>" title="dettaglio commessa">
+                            <?php echo $this->tranche->invoice->order['code_order']; ?>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            
+        </div>  
+        
+    </div>
+        
+        
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/administration/tranche.js')); ?>

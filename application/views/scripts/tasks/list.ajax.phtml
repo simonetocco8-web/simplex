@@ -1,0 +1,52 @@
+<?php
+                                        
+/* Set locale to Dutch */
+setlocale(LC_ALL, 'ita', 'it_IT', 'it', 'it_IT.utf8');
+
+$ref_day = null;
+
+if($this->tasks instanceof Zend_Paginator)
+{
+    echo $this->paginationControl($this->tasks, 'Sliding', 'common/pagination.phtml', array(
+        'per_page' => $this->per_page,
+        'per_page_options' => array(
+            5=>5, 10 => 10, 25 => 25, 50 => 50, 100 => 100
+        ),
+        'view' => $this
+    )); 
+}
+
+?><br /><?php
+                                       
+foreach($this->tasks as $task)
+{
+    if($task['when'] == '' || $task['when'] == '0000-00-00' || $task['when'] == '0000-00-00 00:00:00') continue;
+        
+    $when = new DateTime($task['when']);
+        
+    $this_day = $when->format('l d/m/Y');
+        
+    if($this_day != $ref_day)
+    {
+        echo '<h3>' . (strftime("%A %d/%m/%Y", $when->getTimestamp())) . '</h3>';
+        $ref_day = $this_day;
+    }
+        
+    echo $this->partial('tasks/detail/info.phtml', array('task' => $task));
+}
+
+?><br /><?php
+
+if($this->tasks instanceof Zend_Paginator)
+{
+
+    echo $this->paginationControl($this->tasks, 'Sliding', 'common/pagination.phtml', array(
+        'per_page' => $this->per_page,
+        'per_page_options' => array(
+            5=>5, 10 => 10, 25 => 25, 50 => 50, 100 => 100
+        ),
+        'view' => $this
+    )); 
+
+}
+

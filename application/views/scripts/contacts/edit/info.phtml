@@ -1,0 +1,20 @@
+<?php echo $this->formHidden($this->inputNamePrefix . 'contact_id', $this->contact['contact_id']); ?>
+<dl class="fleft">
+    <dt><label for="nome">Titolo:</label></dt>
+    <dd><?php echo $this->formSelect($this->inputNamePrefix . 'id_contact_title', $this->contact['id_contact_title'], array('class' => 'input-small', 'multiple' => ''), $this->contact_titles); ?></dd>
+</dl>
+<dl class="fleft with">
+	<dt><label for="nome">Nome:</label></dt>
+	<dd><?php echo $this->formText($this->inputNamePrefix . 'nome', $this->contact['nome'], array('class' => 'input-medium')); ?></dd>
+</dl>
+<dl class="fleft">
+	<dt><label for="cognome"><span class="red">*</span> Cognome:</label></dt>
+	<dd>
+		<?php echo $this->formText($this->inputNamePrefix . 'cognome', $this->contact['cognome'], array('class' => 'input-medium required')); ?>
+	</dd>
+</dl>
+<div class="clear"></div>
+<dl>
+    <dt><label for="address-description[]">Descrizione:</label></dt>
+    <dd><?php echo $this->formText($this->inputNamePrefix . 'description', $this->contact['description'], array('class' => 'input-big')); ?></dd>
+</dl>

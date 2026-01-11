@@ -1,0 +1,25 @@
+
+<div id="cco">
+	<h2>Creazione Commessa</h2>
+	<form name="cco_form" id="cco_form" action="<?php echo $this->baseUrl(); ?>/offers/ccos/format/json" method="post">
+		<?php echo $this->formHidden('id', $this->id); ?> 
+		<dl>
+			<dt><label for="dtg"><span class="red">*</span> Seleziona un DTG:</label></dt>
+			<dd>
+				<?php echo $this->formSelect('dtg', $this->dtg, array('class' => 'input-medium required', 'multiple' => ''), $this->dtgs); ?>
+			</dd>
+		</dl>
+<?php /*
+		<dl>
+			<dt><label for="new_state"><span class="red">*</span> Seleziona lo stato che assumer&agrave; l'offerta:</label></dt>
+			<dd>
+				<?php echo $this->formSelect('new_state', 4, array('class' => 'input-medium required', 'multiple' => ''), $this->status); ?>
+			</dd>
+		</dl>
+*/ ?>
+	
+		<p class="submit">
+			<input class="button" type="submit" id="spw_button" value="Salva" />
+		</p>
+	</form>
+</div>

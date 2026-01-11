@@ -1,0 +1,140 @@
+<h2>
+    Stato: <?php echo Model_Sdm2::getStatoDescription($this->sdm['id_status']); ?>
+
+    <?php if($this->sdm['with_prevention']) : ?>
+        - <?php echo Model_Sdm2::getStatoDescription($this->sdm['with_prevention']); ?>
+    <?php endif; ?>
+</h2>
+
+<?php echo $this->formHidden('sdm_id', $this->sdm['sdm_id']); ?>
+
+<ul class="contextual-menu">
+
+    <li>
+        <a href="<?php echo $this->baseUrl('sdm/export/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/export.png'); ?>"/> esporta</a>
+    </li>
+
+    <?php if($this->sdm['id_status'] == 0) :?>
+        <li>
+            <a href="<?php echo $this->baseUrl('sdm/edit/id/' . $this->sdm['sdm_id']); ?>" id="done_button" ><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> modifica</a>
+        </li>
+        <li>
+            <a href="<?php echo $this->baseUrl('sdm/v/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/16_tick.png'); ?>"/> valida</a>
+        </li>
+    <?php endif; ?>
+    <?php if($this->sdm['id_status'] == 1) :?>
+        <li>
+            <a id="mod_responsabile" href="<?php echo $this->baseUrl('sdm/mr/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/personal.png'); ?>"/> responsabile</a>
+        </li>
+    <?php endif; ?>
+
+
+
+
+
+
+    <?php if($this->sdm['id_status'] == Model_Sdm2::STATUS_SENDBACK && $this->sdm['created_by'] == $this->loggedUser()->user_id) :?>
+        <li>
+            <a id="mod_review" href="<?php echo $this->baseUrl('sdm/mrv/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> revisiona</a>
+        </li>
+    <?php endif ; ?>
+
+    <?php if($this->acl('sdm', 'responsabile')  && ($this->sdm['id_status'] == Model_Sdm2::STATUS_NEW)
+        && ((isset($this->sdm->stories[Model_Sdm2::STATUS_NEW]) && isset($this->sdm->stories[Model_Sdm2::STATUS_NEW]['active']) && $this->sdm->stories[Model_Sdm2::STATUS_NEW]['active']['id_user'] == $this->loggedUser()->user_id)) ) :?>
+        <li>
+            <a id="mod_solver" href="<?php echo $this->baseUrl('sdm/ms/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> accetta</a>
+        </li>
+        <li>
+            <a id="mod_sendback" href="<?php echo $this->baseUrl('sdm/mssb/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/back.png'); ?>"/> rimanda</a>
+        </li>
+        <li>
+            <a id="mod_reject" href="<?php echo $this->baseUrl('sdm/msr/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/chk_off.png'); ?>"/> rifiuta</a>
+        </li>
+        <?php /*
+        <li>
+            <a id="mod_sendback" href="<?php echo $this->baseUrl('sdm/msb/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/sendback.png'); ?>"/> rimanda</a>
+        </li>
+        <li>
+            <a id="mod_reject" href="<?php echo $this->baseUrl('sdm/msr/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/chk_off.png'); ?>"/> rifiuta</a>
+        </li>
+        */ ?>
+
+    <?php endif; ?>
+
+    <?php if($this->acl('sdm', 'risolutore')  && ($this->sdm['id_status'] == Model_Sdm2::STATUS_WORKING)
+    && ((isset($this->sdm->stories[Model_Sdm2::STATUS_WORKING]) && isset($this->sdm->stories[Model_Sdm2::STATUS_WORKING]['active']) && $this->sdm->stories[Model_Sdm2::STATUS_WORKING]['active']['id_user'] == $this->loggedUser()->user_id)) ) :?>
+        <li>
+            <a id="mod_trattamento" href="<?php echo $this->baseUrl('sdm/mt/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/work.png'); ?>"/> azione correttiva</a>
+        </li>
+    <?php endif; ?>
+
+    <?php if($this->acl('sdm', 'responsabile')  && ($this->sdm['id_status'] == Model_Sdm2::STATUS_SOLVED)
+        && ((isset($this->sdm->stories[Model_Sdm2::STATUS_NEW]) && isset($this->sdm->stories[Model_Sdm2::STATUS_NEW]['active']) && $this->sdm->stories[Model_Sdm2::STATUS_NEW]['active']['id_user'] == $this->loggedUser()->user_id)) ) :?>
+        <li>
+            <a id="mod_verifica" href="<?php echo $this->baseUrl('sdm/mv/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/finished-work.png'); ?>"/> verifica</a>
+        </li>
+        <li>
+            <a id="mod_noverify" href="<?php echo $this->baseUrl('sdm/mnv/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/back.png'); ?>"/> rimanda</a>
+        </li>
+
+    <?php endif; ?>
+
+    <?php if($this->acl('sdm', 'preventer')  && ($this->sdm['id_status'] == Model_Sdm2::STATUS_VERIFIED) && $this->sdm['with_prevention'] == Model_Sdm2::PREVENTION_NEW
+        && ((isset($this->sdm->stories[Model_Sdm2::PREVENTION_NEW]) && isset($this->sdm->stories[Model_Sdm2::PREVENTION_NEW]['active']) && $this->sdm->stories[Model_Sdm2::PREVENTION_NEW]['active']['id_user'] == $this->loggedUser()->user_id)) ) :?>
+        <li>
+            <a id="mod_prevention_action" href="<?php echo $this->baseUrl('sdm/mpa/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/work.png'); ?>"/> azione preventiva</a>
+        </li>
+    <?php endif; ?>
+
+    <?php if($this->acl('sdm', 'responsabile')  && ($this->sdm['id_status'] == Model_Sdm2::STATUS_VERIFIED) && $this->sdm['with_prevention'] == Model_Sdm2::PREVENTION_DONE
+        && ((isset($this->sdm->stories[Model_Sdm2::STATUS_NEW]) && isset($this->sdm->stories[Model_Sdm2::STATUS_NEW]['active']) && $this->sdm->stories[Model_Sdm2::STATUS_NEW]['active']['id_user'] == $this->loggedUser()->user_id)) ) :?>
+        <li>
+            <a id="mod_prevention_verifica" href="<?php echo $this->baseUrl('sdm/mpv/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/finished-work.png'); ?>"/> verifica azione preventiva</a>
+        </li>
+        <li>
+            <a id="mod_prevention_noverify" href="<?php echo $this->baseUrl('sdm/mpnv/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/back.png'); ?>"/> rimanda</a>
+        </li>
+
+    <?php endif; ?>
+
+
+
+
+
+
+
+
+    <?php if($this->sdm['id_status'] == 3  && $this->acl('sdm', 'risolutore') && $this->sdm['id_solver'] == $this->loggedUser()->user_id) :?>
+        <li>
+            <a id="mod_trattamento" href="<?php echo $this->baseUrl('sdm/mt/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/work.png'); ?>"/> risoluzione</a>
+        </li>
+    <?php endif; ?>
+    <?php if($this->sdm['id_status'] == 4 && $this->acl('sdm', 'responsabile') && $this->sdm['id_responsible'] == $this->loggedUser()->user_id) :?>
+        <li>
+            <a id="mod_verifica" href="<?php echo $this->baseUrl('sdm/mv/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/finished-work.png'); ?>"/> verifica</a>
+        </li>
+    <?php endif; ?>
+
+
+    <?php /*
+    <li>
+      <a href="<?php echo $this->baseUrl('sdm/edit/id/' . $this->sdm['sdm_id']); ?>" id="done_button" ><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> modifica</a>
+    </li>
+    <li>
+      <a id="mod_responsabile" href="<?php echo $this->baseUrl('sdm/mr/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/personal.png'); ?>"/> responsabile</a>
+    </li>
+    <?php if($this->sdm['id_responsible']) :?>
+    <li>
+      <a id="mod_trattamento" href="<?php echo $this->baseUrl('sdm/mt/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/work.png'); ?>"/> trattamento</a>
+    </li>
+    <?php endif; ?>
+    <?php if(trim($this->sdm['treatment']) != '') :?>
+    <li>
+      <a id="mod_verifica" href="<?php echo $this->baseUrl('sdm/mv/id/' . $this->sdm['sdm_id']); ?>"><img src="<?php echo $this->baseUrl('img/finished-work.png'); ?>"/> verifica</a>
+    </li>
+    <?php endif; ?>
+    */ ?>
+</ul>
+
+
+<?php echo $this->partial('sdm/detail/main.phtml', array('sdm' => $this->sdm)); ?>

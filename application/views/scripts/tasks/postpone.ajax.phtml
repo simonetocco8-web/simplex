@@ -1,0 +1,20 @@
+<div id="done_div">
+    <h2>Rinvia Impegno</h2>
+
+    <form name="pp_form" id="pp_form"
+          action="<?php echo $this->baseUrl(); ?>/tasks/postpone/save/1/format/json"
+          method="post">
+        <?php echo $this->formHidden('id', $this->data['task_id']); ?>
+
+        <dl>
+            <dt><label for="when">Quando:</label></dt>
+            <dd>
+				<?php echo $this->formText('when', Maco_Utils_DbDate::fromDb($this->data['when']), array('class' => 'input-small required validate-datetime')); ?>
+			</dd>
+        </dl>
+
+        <p class="submit">
+            <input class="button" type="submit" id="spw_button" name="b1submit" value="Salva"/>
+        </p>
+    </form>
+</div>

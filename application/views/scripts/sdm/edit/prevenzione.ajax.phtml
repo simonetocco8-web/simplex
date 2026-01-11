@@ -1,0 +1,24 @@
+    <form name="mod_prevenzione_form" id="mod_prevenzione_form"
+          action="<?php echo $this->baseUrl(); ?>/sdm/mpa/save/1/format/json"
+          method="post">
+    <?php echo $this->formHidden('id', $this->data['sdm_id']); ?>
+ <div class="fieldset-container">
+    <h4>Dati Azione Preventiva</h4>
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'prevention'; ?>">Azione Preventiva:</label></dt>
+        <dd>
+            <?php echo $this->formTextarea($this->inputNamePrefix . 'prevention', $this->data['prevention'], array('class' => 'input-big required', 'rows' => 4)); ?>
+        </dd>
+    </dl>
+    <dl>
+          <dt><label for="<?php echo $this->inputNamePrefix . 'date_prevention'; ?>"><span class="red">*</span> Data Azione Preventiva:</label></dt>
+          <dd>
+              <?php echo $this->formText($this->inputNamePrefix . 'date_prevention', date('d/m/Y'), array('class' => 'input-medium validate-date date-field required')); ?>
+          </dd>
+    </dl>
+
+                                                            
+    <p class="submit"><input class="button" type="submit" value="salva" /></p>  
+                                                            
+</div>        
+</form>

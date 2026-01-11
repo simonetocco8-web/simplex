@@ -1,0 +1,29 @@
+<h2><?php echo $this->contentTitle; ?></h2>
+<form action="<?php echo $this->baseUrl(); ?>/contacts/save" method="post" id="edit" name="edit">
+    <fieldset>
+        <legend>
+            Inserisci le informazioni relative al nuovo contatto.<br />
+            Puoi inserire <b>pi&ugrave;</b> recapiti o riferimenti telefonici/mail.
+        </legend>
+    <br />
+
+<?php echo $this->partial('common/warning-messages.phtml', array('messages' => $this->messages)); ?>
+
+<?php echo $this->partial('contacts/edit/main.phtml', $this); ?>
+
+<p class="submit"><input class="button" type="submit" value="salva" /></p>
+</fieldset>
+</form>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/edit.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/autocomplete/Meio.Autocomplete.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/contacts/edit.js')); ?>
+
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/autocomplete/meio.aucomplete.css', true)); ?>

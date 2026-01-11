@@ -1,0 +1,20 @@
+<div class="submenu">
+    <ul id="actiosns-menu">
+        <li><a class="heading_tab advanced_link tab1" href="<?php echo $this->baseUrl(); ?>/tasks">Calendario Impegni</a></li>
+        <li><a class="heading_tab advanced_link tab1" href="<?php echo $this->baseUrl(); ?>/tasks/table">Elenco Impegni</a></li>
+        <li><a class="heading_tab advanced_link active tab1" href="<?php echo $this->baseUrl(); ?>/tasks/agenda">Agenda</a></li>
+    </ul>
+</div>
+<div class="tab_contents">
+
+    <h2>Agenda Impegni</h2>
+
+    <div id="agenda_cont">
+        <?php
+        echo $this->partial('tasks/agenda.ajax.phtml', $this);
+        ?>
+    </div>
+
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/tasks/agenda.js')); ?>

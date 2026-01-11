@@ -1,0 +1,46 @@
+
+<div id="cs">
+<h2>Cambia Stato</h2>
+<form name="cs_form" id="cs_form"
+	action="<?php echo $this->baseUrl(); ?>/offers/css/format/json"
+	method="post">
+    <?php if(!$this->provvisoria) : ?>
+    <?php echo $this->formHidden('id', $this->id); ?>
+<dl>
+	<dt><label for="status"><span class="red">*</span> Nuovo Stato:</label></dt>
+	<dd>
+		<?php echo $this->formSelect('status', $this->status, array('class' => 'input-medium required', 'multiple' => ''), $this->statuses); ?>
+	</dd>
+
+</dl>
+
+<?php if($this->with_approver) : ?>
+<dl>
+	<dt><label for="id_approver"><span class="red">*</span> Sar&agrave; approvata da:</label></dt>
+	<dd>
+		<?php echo $this->formSelect('id_approver', $this->id_approver, array('class' => 'input-medium required', 'multiple' => ''), $this->users); ?>
+	</dd>
+</dl>
+<?php else: ?>
+    <?php echo $this->formHidden('id_approver', $this->id_approver); ?>
+    <?php echo $this->formHidden('hidden', 1); ?>
+<?php endif; ?>
+
+<p class="submit">
+	<input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+    <?php else : ?>
+
+        <div class="message warning">
+            <p>
+            <b>Attenzione!</b> L'azienda legata all'offerta risulta registrata in maniera <b>provvisoria</b>.<br>
+
+            Non è possibile registrare l'accettazione dell'offerta fin quando
+                non sar&agrave; inserita la Partita IVA.
+            </p>
+
+        </div>
+
+    <?php endif; ?>
+</form>
+</div>

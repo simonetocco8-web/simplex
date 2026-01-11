@@ -1,0 +1,149 @@
+<h2>Dati Pianificazione</h2>
+   <!--
+<ul id="actions-menu" style="top:30px">
+    <li>
+      <a href="#" id="mp">Modifica</a> 
+    </li>
+</ul>
+-->
+<ul class="contextual-menu">
+    <?php if((($this->order['id_status'] == 1 || $this->order['id_status'] == 2) && $this->acl('orders', 'assign')) || $this->acl('orders', 'modify_always')) : ?>
+    <li>
+      <a href="#" id="mp"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> modifica</a>
+    </li>
+    <?php endif; ?>
+</ul>
+
+    <table class="detail fluid">
+    <!--
+        <tr><th colspan="4">Valori</th></tr>
+        <tr>
+            <td class="label">Valore Giornata Uomo:</td>
+            <td colspan="3" class="cs3"><?php echo number_format($this->order['valore_g_uomo'], 2); ?></td>
+        </tr>
+        <tr>
+            <td class="label">Ore / hM:</td>
+            <td><?php echo ($this->order['valore_g_uomo'] != '' && $this->order['valore_g_uomo'] != 0) ? number_format($this->order['offer']['total'] / $this->order['valore_g_uomo'] * 8, 2) : ''; ?></td>
+            <td class="label">Giorni / hM:</td>
+            <td><?php echo ($this->order['valore_g_uomo'] != '' && $this->order['valore_g_uomo'] != 0) ? number_format($this->order['offer']['total'] / $this->order['valore_g_uomo'], 2) : ''; ?></td>
+        </tr>
+        <tr>
+            <td class="label">Numero Incontri:</td>
+            <td><?php echo $this->order['n_incontri'] ; ?></td>
+            <td class="label">Ore di Studio:</td>
+            <td><?php echo $this->order['n_ore_studio']; ?></td>
+        </tr>
+        -->
+        <tr><th colspan="4">Dati Pianificazione</th></tr>
+        <tr>
+            <td class="label">Data Chiusura Richiesta:</td>
+            <td colspan="3" class="cs3"><?php echo Maco_Utils_DbDate::fromDb($this->order['date_chiusura_richiesta']); ?></td>
+        </tr>
+        <tr>
+            <td class="label">Note di Pianificazione:</td>
+            <td colspan="3" class="cs3"><?php echo $this->order['note_pianificazione']; ?></td>
+        </tr>
+        <tr><th colspan="4">Responsabili</th></tr>
+        <?php foreach($this->order->rcos as $rco) : ?>
+        	<?php if($rco['rco'] != '') : ?>
+                <tr>
+                    <td class="label">RC:</td>
+                    <td>
+                        assegnato il <?php echo Maco_Utils_DbDate::fromDb($rco['date_assigned']); ?> a <b><?php echo $rco['rco']; ?></b>
+                        <?php if($rco['incarico'] != 1) : ?>
+                            <?php if($this->loggedUser()->username . ' - ' . $this->loggedUser()->contact->nome . ' ' . $this->loggedUser()->contact->cognome == $rco['rco']) : ?>
+                            &nbsp; <a href="<?php echo $this->baseUrl() . '/orders/incarico/id_order/' . $this->order->order_id . '/rco/' . base64_encode($rco['rco']); ?>" class="button incarico-link">prendi incarico</a>
+                            <?php endif; ?>
+                        <?php else : ?>
+                            - presa in carico il <?php echo Maco_Utils_DbDate::fromDb($rco['date_incarico']); ?>
+                        <?php endif; ?>
+                    </td>
+                    <td class="label">Note responsabile:</td>
+                    <td><?php echo $rco['note']; ?></td>
+                </tr>
+		    <?php endif; ?>
+		<?php endforeach; ?>
+    </table>
+    
+    <br />
+    <h4>Momenti di Lavorazione</h4>
+    
+    <div class="fieldset-container">
+        <?php $tot = 0; ?>
+        <table class="fluid">
+            <thead>
+                <tr>
+                    <th>Tipologia</th>
+                    <th>Data Prevista</th>
+                    <th>Valore Giornata Uomo</th>
+                    <th>Ore / hM</th>
+                    <th>Giorni / hM</th>
+                    <th>Numero Incontri</th>
+                    <th>Ore di Studio</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php $val_g_u_media = 0; ?>
+            <?php foreach($this->order['offer']['moments'] as $i => $moment) : ?>
+                <tr class="">
+                    <td>
+                        <?php echo $moment['tipologia']; ?>
+                    </td>
+                    <td>
+                        <?php echo Maco_Utils_DbDate::fromDb($moment['expected_date']); ?>
+                    </td>
+                    <td align="right">
+                        <?php if($moment['p_valore_g_uomo'] != '' && $moment['p_valore_g_uomo'] != 0) : ?>
+                            <?php $val_g_u_media += $moment['p_valore_g_uomo']; ?>
+                            <?php echo number_format($moment['p_valore_g_uomo'], 2); ?>&nbsp;&euro;
+                        <?php endif; ?>
+                    </td>
+                    <td align="right">
+                        <?php if($moment['p_valore_g_uomo'] != '' && $moment['p_valore_g_uomo'] != 0) : ?>
+                            <?php echo number_format($moment->getImportoScontato() / $moment['p_valore_g_uomo'] * 8, 2); ?>
+                        <?php endif; ?>
+                    </td>
+                    <td align="right">
+                        <?php if($moment['p_valore_g_uomo'] != '' && $moment['p_valore_g_uomo'] != 0) : ?>
+                            <?php echo number_format($moment->getImportoScontato() / $moment['p_valore_g_uomo'], 2); ?>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <?php if($moment['p_n_incontri'] != '' && $moment['p_n_incontri'] != 0) : ?>
+                            <?php echo $moment['p_n_incontri']; ?>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <?php if($moment['p_ore_studio'] != '' && $moment['p_ore_studio'] != 0) : ?>
+                            <?php echo Maco_Utils_Time::getFormattedFromValue($moment['p_ore_studio']); ?>
+                        <?php endif; ?>
+                    </td>
+                    <td class="list-links">
+                        <?php if((($this->order['id_status'] == 1 || $this->order['id_status'] == 2) && $this->acl('orders', 'assign')) || $this->acl('orders', 'modify_always')) : ?>
+                        <a style="white-space: nowrap" href="#" id="mpm_<?php echo $moment['moment_id']; ?>" class="mpm">
+                            <img alt="modifica" src="<?php echo $this->baseUrl() . '/img/edit.png'; ?>" title="aggiorna" id="i_<?php echo $moment['moment_id']; ?>" />&nbsp;modifica
+                        </a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+                <tr>
+                    <td colspan="8"></td>
+                </tr>
+                <tr class="" style="font-weight: bold; background-color: #f2f2f2;">
+                    <td>
+                        Globale
+                    </td>
+                    <td></td>
+                    <td align="right"><?php echo (count($this->order['offer']['moments'])) ? (number_format($val_g_u_media / count($this->order['offer']['moments']), 2) . '&nbsp;&euro;') : ''; ?></td>
+                    <td align="right"><?php echo ($this->order['valore_g_uomo'] != '' && $this->order['valore_g_uomo'] != 0) ? number_format($this->order['offer']['total'] / $this->order['valore_g_uomo'] * 8, 2) : ''; ?></td>
+                    <td align="right"><?php echo ($this->order['valore_g_uomo'] != '' && $this->order['valore_g_uomo'] != 0) ? number_format($this->order['offer']['total'] / $this->order['valore_g_uomo'], 2) : ''; ?></td>
+                    <td><?php echo $this->order['n_incontri'] ; ?></td>
+                    <td><?php echo Maco_Utils_Time::getFormattedFromValue($this->order['n_ore_studio']); ?></td>
+                    <td class="list-links">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>     

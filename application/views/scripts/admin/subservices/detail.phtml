@@ -1,0 +1,46 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Dettaglio Sotto-Servizio</a>
+        <a class="heading_tab advanced_link tab4" href="<?php echo $this->baseUrl('admin/subservices/task/list'); ?>">Elenco Sotto-Servizi</a>
+    </div>
+
+    <div class="submenu right">
+        <a class="heading_tab advanced_link tab4" href="<?php echo $this->baseUrl('admin/subservices/task/edit/id/' . $this->data['subservice_id']); ?>">Modifica</a>
+    </div>
+</div>
+<h2>Dettaglio Sotto-Servizio</h2>
+<div class="fieldset-container">
+    <dl class="detail">
+        <dt>Nome:</dt>
+        <dd><?php echo $this->data['name']; ?></dd>
+    </dl>
+    <dl class="detail">
+        <dt>Servizio:</dt>
+        <dd><?php echo $this->data['service']; ?></dd>
+    </dl>
+    <dl class="detail">
+        <dt>Codice:</dt>
+        <dd><?php echo $this->data['cod']; ?></dd>
+    </dl>
+    <dl class="detail">
+        <dt>Descrizione:</dt>
+        <dd><?php echo $this->data['description']; ?></dd>
+    </dl>
+    <dl class="detail">
+        <dt>Template:</dt>
+        <dd>
+            <?php if($this->data['path']) : ?>
+                <a href="<?php echo $this->baseUrl('files/get/p/' . $this->data['path']); ?>" title="scarica il template">scarica</a>
+            <?php else : ?>
+                <span class="info">nessun template caricato</span> 
+            <?php endif; ?>
+        </dd>
+    </dl>
+</div>
+
+<input type="hidden" name="sid" id="sid" value="<?php echo session_id(); ?>" />
+<input type="hidden" name="p" id="p" value="<?php echo $this->template_path; ?>" />
+<input type="hidden" name="r" id="r" value="<?php echo $this->template_name; ?>" />
+
+<?php $this->upload(); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/admin/subservices/upload.js')); ?>

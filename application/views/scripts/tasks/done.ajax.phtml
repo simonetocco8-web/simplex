@@ -1,0 +1,21 @@
+<div id="done_div">
+    <h2>Aggiorna</h2>
+
+    <form name="done_form" id="done_form"
+          action="<?php echo $this->baseUrl(); ?>/tasks/done/save/1/format/json"
+          method="post">
+        <?php echo $this->formHidden('id', $this->data['task_id']); ?>
+        <?php echo $this->formHidden('cancel_task', 0); ?>
+
+        <dl>
+            <dt><label id="label-done" for="oldpw">Note di Esecuzione:</label></dt>
+            <dd>
+            <?php echo $this->formTextarea('note_done', $this->data['note_done'], array('class' => 'input-big', 'rows' => 4)); ?>
+            </dd>
+        </dl>
+
+        <p class="submit">
+            <input class="button" type="submit" id="spw_button" name="b1submit" value="Salva"/>
+        </p>
+    </form>
+</div>

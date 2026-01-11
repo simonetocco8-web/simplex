@@ -1,0 +1,22 @@
+<div id="header">
+    <div class="fright" id="user_info">
+        <span class="fleft">
+            <form id="gsearch-form" method="GET" action="<?php echo $this->baseUrl('search'); ?>">
+                <input type="text" name="q" id="gsearch" placeholder="cerca su simplex..." value="" /><input type="submit" value="cerca" />
+            </form>
+        </span>
+        <span>
+            <?php echo $this->formSelect('_cinternal', $this->layout()->user->internal_id, null, $this->layout()->user->internals); ?>
+
+            <?php if($this->layout()->user->office_id) : ?>
+                <?php echo $this->layout()->user->office_name; ?>
+            <?php endif; ?>
+        </span>
+        <span> benvenuto <a href="<?php echo $this->baseUrl(); ?>/admin/users/task/detail/id/<?php echo $this->layout()->user->user_id; ?>"><?php echo $this->layout()->user->username; ?></a></span>
+        <span style="border-right: 0"> <a href="<?php echo $this->baseUrl('login/out'); ?>">Esci</a></span>
+    </div>
+    <a href="<?php echo $this->baseUrl('/'); ?>"><h1>Simplex</h1></a>
+    <div id="back-button"><a href="javascript:history.back();"
+                             title="torna indietro">indietro</a></div>
+    <div class="clear"></div>
+</div>

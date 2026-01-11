@@ -1,0 +1,9 @@
+<table class="detail fluid">
+    <tr><th colspan="4">Siti Web</th></tr>
+    <?php foreach($this->websites as $website) : ?>
+        <tr>
+            <td class="label"><?php echo $website['description']; ?></td>
+            <td class="cs3" colspan="3"><?php echo $website['url']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>

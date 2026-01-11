@@ -1,0 +1,12 @@
+- hosts: all
+  sudo: yes
+
+  vars:
+  # git repo url
+    git repo url: "bla bla bla"
+
+  roles:
+    - pull
+    - dependencies
+    - prepare
+    - privileges

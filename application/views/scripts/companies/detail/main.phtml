@@ -1,0 +1,27 @@
+
+<?php echo $this->partial('companies/detail/info.phtml', array('company' => $this->company)); ?>
+
+<?php echo $this->partial('companies/detail/riferimenti.phtml', array('company' => $this->company)); ?>
+
+<?php echo $this->partial('companies/detail/noteprodotti.phtml', array('company' => $this->company)); ?>
+
+<?php echo $this->partial('contacts/detail/telephones.phtml', array('telephones' => $this->company->telephones)); ?>
+
+<table class="detail fluid">
+    <tr><th colspan="4">PEC (posta elettronica certificata)</th></tr>
+    <tr>
+        <td class="label">Indirizzo:</td>
+        <td colspan="3" class="value">
+            <?php if(trim($this->company['pec'])) : ?>
+            <a href="mailto:<?php echo $this->company['pec']; ?>"><?php echo $this->company['pec']; ?></a>
+            <?php endif; ?>
+        </td>
+    </tr>
+</table>
+
+
+<?php echo $this->partial('contacts/detail/mails.phtml', array('mails' => $this->company->mails)); ?>
+
+<?php echo $this->partial('websites/detail.phtml', array('websites' => $this->company->websites)); ?>
+
+<?php echo $this->partial('contacts/detail/addresses.phtml', array('addresses' => $this->company->addresses)); ?>

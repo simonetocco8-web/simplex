@@ -1,0 +1,15 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <ul id="actiosns-menu">
+            <li><a class="heading_tab advanced_link active tab1" href="#">Elenco Momenti di Pagamento</a></li>
+        </ul>
+    </div>
+    <div>
+        <h2>Elenco Momenti</h2>
+        
+        <?php $this->dag->deploy(); ?>
+        <div style="text-align:right;margin-right: 40px">
+            <h3>Totale: <?php echo number_format($this->total, 2, ',', '.'); ?> &euro;</h3>
+        </div>
+    </div>
+</div>

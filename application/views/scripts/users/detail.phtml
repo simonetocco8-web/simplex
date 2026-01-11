@@ -1,0 +1,74 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#"><?php echo $this->user['username']; ?></a>
+    </div>
+    <div class="submenu right">
+        <?php foreach($this->user['internals'] as $item) : ?>
+            <a class="heading_tab advanced_link tab4" href="#">
+                <span title="<?php echo $item['full_name']; ?>">
+                    <?php echo $item['abbr']; ?>
+                    <?php if($item['office_name']) echo ' - ' . $item['office_name']; ?>
+                </span>
+            </a>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="tab_contents">
+
+        <div class="tab_content" id="anagrafica-info">
+
+            <h2>Dettaglio Utente</h2>
+
+            <ul class="contextual-menu">
+
+                <?php if($this->acl('admin', 'modify') || $this->acl('admin', 'view')) : ?>
+                    <li>
+                        <a href="<?php echo $this->baseUrl('admin/users/task/edit/id/' . $this->user['user_id']); ?>" ><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> modifica</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->baseUrl('admin/users/task/links/id/' . $this->user['user_id']); ?>" ><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> collegamenti</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->baseUrl('admin/users/task/permissions/id/' . $this->user['user_id']); ?>" ><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> permessi</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->baseUrl('admin/users/task/active/id/' . $this->user['user_id']) . '/active/' . ($this->user['active'] == 1 ? '0' : '1'); ?>" ><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> <?php echo ($this->user['active'] == 1 ? 'non attivo' : 'attivo'); ?></a>
+                    </li>
+                    <?php if($this->layout()->user->user_id != $this->user['user_id'] && FALSE) : ?>
+                        <li>
+                            <a href="<?php echo $this->baseUrl('admin/users/task/delete/id/' . $this->user['user_id']); ?>" ><img src="<?php echo $this->baseUrl('img/delete.png'); ?>"/> elimina</a>
+                        </li>
+                    <?php endif; ?>
+                <?php endif; ?>
+            </ul>
+
+            <table class="detail fluid">
+                <tr><th colspan="4">Informazioni Account</th></tr>
+                <tr>
+                    <td class="label">User Name:</td>
+                    <td class="value"><?php echo $this->user['username']; ?></td>
+                    <td class="label"><?php /*Ruolo: */ ?></td>
+                    <td class="value"><?php /* echo $this->user['role_name']; */ ?></td>
+                </tr>
+            </table>
+
+            <div class="relative">
+                <?php echo $this->partial('contacts/detail/main.phtml', array('contact' => $this->user->contact)); ?>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php /* $this->headScript()->appendFile($this->baseUrl('/js/common/messages/Notimoo.js')); */ ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/messages/Notimoo.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/admin/users/detail.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabPane.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabs.js')); ?>

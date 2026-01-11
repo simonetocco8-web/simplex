@@ -1,0 +1,70 @@
+<table class="detail fluid">
+    <tr>
+        <th colspan="8">Ore di lavoro</th>
+    </tr>
+    <tr>
+        <td class="label">Studio:</td>
+        <td><?php echo number_format($this->data['c_ore_studio'], 2); $t_ore = $this->data['c_ore_studio']; ?></td>
+        <td class="label">Azienda:</td>
+        <td><?php echo number_format($this->data['c_ore_azienda'], 2); $t_ore += $this->data['c_ore_azienda']; ?></td>
+        <td class="label">Certificazione:</td>
+        <td><?php echo number_format($this->data['c_ore_certificazione'], 2); $t_ore += $this->data['c_ore_certificazione']; ?></td>
+        <td class="label"><b>Totale</b></td>
+        <td><b></b><?php echo number_format($t_ore, 2); ?></b></td>
+    </tr>
+    <tr>
+        <th colspan="8">Incontri e ore viaggio</th>
+    </tr>
+    <tr>
+        <td class="label">numero incontri <br /><span class="info">(inclusa certificazione)</span>:</td>
+        <td><?php echo $this->data['c_n_incontri'] ; ?></td>
+        <td class="label"># ore di viaggio:</td>
+        <td><?php echo number_format($this->data['c_ore_viaggio'], 2); ?></td>
+        <td class="label">Km A/R totali:</td>
+        <td><?php echo number_format($this->data['c_n_km'], 2); ?></td>
+        <td class="label">Costo / Km</td>
+        <td><?php echo number_format($this->data['c_costo_km'], 2); ?> &euro;</td>
+    </tr>
+    <?php foreach($this->data['pl'] as $pl) : ?>
+        <?php if(( $pl['c_pl_importo'] != '' && $pl['c_pl_importo'] != 0)) : ?>
+        <tr>
+            <th colspan="8">Pi&eacute; di Lista</th>
+        </tr>
+        <tr>
+            <td class="label">Descrizione</td>
+            <td><?php echo $pl['c_pl_note']; ?></td>
+            <td class="label">Costo</td>
+            <td><?php echo number_format($pl['c_pl_importo'], 2); ?> &euro;</td>
+            <td colspan="4"></td>
+        </tr>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    <tr>
+        <th colspan="8">Costi</th>
+    </tr>
+    <?php
+
+    $val1 = $val2 = $val3 = 0;
+
+    ?>
+    <tr>
+        <td class="label">Valore Reale Commessa:</td>
+        <td>
+            <?php if($this->data['p_valore_g_uomo'] != '') : ?>
+            <?php
+                    $val1 = $this->data['valore_reale_tot'];
+                    echo number_format($val1, 2) . ' &euro;';
+            ?>
+            <?php else : ?>
+                impostare "valore giornata uomo"
+            <?php endif; ?>
+        </td>
+        <td class="label">Rimborso Km:</td>
+        <td><?php $val3 = $this->data['c_costo_km_tot']; echo number_format($val3, 2); ?> &euro;</td>
+        <td class="label"><b>Totale:</b></td>
+        <td colspan="3"><b>
+            <?php $val4 = $this->data['c_pl_importo_tot']; ?>
+            <b id="imp_cons_<?php if (isset($this->data['moment_id'])) echo $this->data['moment_id']; ?>"><?php $tot = $val1 + $val2 + $val3 + $val4; echo number_format($tot, 2); ?> &euro;</b>
+        </b></td>
+    </tr>
+</table>

@@ -1,0 +1,18 @@
+<?php foreach($this->messages as $message) : ?>
+    <?php echo $this->partial('messages/detail.phtml', array('message' => $message)); ?>
+<?php endforeach; ?>
+
+<?php if(!is_array($this->messages)) : ?>
+
+    <?php $pages = $this->messages->getPages(); ?>
+
+    <?php if(isset($pages->next)) : ?>
+
+        <div class="message-more-container">
+            <?php $typeQs = isset($this->type) && ($this->type !== false) ? '&type=' . $this->type : ''; ?>
+            <a class="message-more-link" href="<?php echo $this->baseUrl(); ?>/messages/list/format/html?page=<?php echo $pages->next . $typeQs; ?>">carica successivi...</a>
+        </div>
+
+    <?php endif; ?>
+
+<?php endif; ?>

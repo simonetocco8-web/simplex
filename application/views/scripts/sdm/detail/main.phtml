@@ -1,0 +1,138 @@
+<table class="detail fluid">
+
+    <tr><th colspan="4">Formalizzazione</th></tr>
+    <tr>
+        <td class="label">Progressivo:</td>
+        <td><?php echo $this->sdm['code']; ?></td>
+        <td class="label">Emittente:</td>
+        <td><?php echo $this->sdm['creator']; ?></td>
+    </tr>
+
+    <?php foreach($this->sdm->newStories as $story) : ?>
+
+        <?php echo $this->partial('sdm/detail/story/' . $story['id_status'] . '.phtml', array('story' => $story)); ?>
+
+    <?php endforeach; ?>
+
+</table>
+
+<?php /*
+
+<hr />
+<hr />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<table class="detail fluid">
+    <tr><th colspan="4">Formalizzazione</th></tr>
+    <tr>
+        <td class="label">Progressivo:</td>
+        <td><?php echo $this->sdm['code']; ?></td>
+        <td class="label">Emittente:</td>
+        <td><?php echo $this->sdm['creator']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Data Emissione:</td>
+        <td>
+            <?php if(isset($this->sdm->stories[Model_Sdm2::STATUS_NEW])
+                && isset($this->sdm->stories[Model_Sdm2::STATUS_NEW]['active'])) : ?>
+            <?php echo Maco_Utils_DbDate::fromDb($this->sdm->stories[Model_Sdm2::STATUS_NEW]['active']['date1'], Maco_Utils_DbDate::DBDATE_DATE); ?>
+            <?php endif; ?>
+        </td>
+        <td class="label"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="label">Descrizione:</td>
+        <td colspan="3">
+            <?php if(isset($this->sdm->stories[Model_Sdm2::STATUS_NEW])
+                && isset($this->sdm->stories[Model_Sdm2::STATUS_NEW]['active'])) : ?>
+                <?php echo nl2br($this->sdm->stories[Model_Sdm2::STATUS_NEW]['active']['text1']); ?>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <tr><th colspan="4">Responsabile</th></tr>
+    <tr>
+        <td class="label">Responsabile:</td>
+        <td><?php echo $this->sdm['responsible']; ?></td>
+        <td class="label">Data associazione responsabile:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->sdm['date_set_responsible']); ?></td>
+    </tr>
+    <tr>
+        <td class="label">Data di feedback:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->sdm['date_feedback']); ?></td>
+        <td class="label"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="label">Area:</td>
+        <td colspan="3"><?php echo nl2br($this->sdm['area']); ?></td>
+    </tr>
+    <tr><th colspan="4">Trattamento</th></tr>
+    <tr>
+        <td class="label">Risolutore:</td>
+        <td><?php echo $this->sdm['solver']; ?></td>
+        <td class="label">Data associazione risolutore:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->sdm['date_set_solver']); ?></td>
+    </tr>
+    <tr>
+        <td class="label">Data prevista risoluzione:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->sdm['date_expected_resolution']); ?></td>
+        <td class="label"></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="label">Causa:</td>
+        <td colspan="3"><?php echo nl2br($this->sdm['cause']); ?></td>
+    </tr>
+    <tr>
+        <td class="label">Note:</td>
+        <td colspan="3"><?php echo nl2br($this->sdm['treatment']); ?></td>
+    </tr>
+    <tr><th colspan="4">Lavorazione</th></tr>
+    <tr>
+        <td class="label">Risoluzione:</td>
+        <td colspan="3"><?php echo nl2br($this->sdm['resolution']); ?></td>
+    </tr>
+    <tr>
+        <td class="label">Data risoluzione:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->sdm['date_resolution']); ?></td>
+        <td class="label"></td>
+        <td></td>
+    </tr>
+    <tr><th colspan="4">Verifica</th></tr>
+    <tr>
+        <td class="label">Verifica della Risoluzione:</td>
+        <td colspan="3"><?php echo nl2br($this->sdm['verification']); ?></td>
+    </tr>
+    <tr>
+        <td class="label">Data Verifica:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->sdm['date_verification']); ?></td>
+
+        <?php if($this->acl('sdm', 'view_responsibles')) : ?>
+
+            <td class="label">Responsabili:</td>
+            <td>
+            <?php foreach($this->sdm['responsibles'] as $resp) : ?>
+
+                <?php echo $resp['username']; ?><br />
+
+            <?php endforeach; ?>
+            </td>
+
+        <?php else: ?>
+
+        <td class="label"></td>
+        <td></td>
+
+        <?php endif; ?>
+
+    </tr>
+
+</table>
+
+*/ ?>

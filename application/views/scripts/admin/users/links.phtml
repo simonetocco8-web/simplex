@@ -1,0 +1,60 @@
+<h2>Riferimenti per <?php echo $this->user['username']; ?></h2>
+<form action="<?php echo $this->baseUrl(); ?>/admin/users/task/links/id/<?php echo $this->user['user_id']; ?>" method="post" id="edit" name="edit">
+<fieldset><legend>Compila le informazioni relative ai riferimenti per questo utente</legend>
+<br />
+
+<?php echo $this->formHidden('user_id', $this->user['user_id']); ?>
+
+<?php 
+/*
+<div class="fieldset-container">
+    <h4>Aziende Interne</h4>
+    <?php echo $this->partial('common/internals-edit.phtml', array('user' => $this->user, 'internals' => $this->internals)); ?>
+</div>
+*/ 
+?>
+
+<div class="fieldset-container">
+    <table class="fluid">
+        <tr>
+            <th>Aziende Interne</th>
+        </tr>
+        <?php foreach($this->internals as $iid => $internal) : ?>
+            <?php
+                $has_this_int = in_array($internal['internal_id'], $this->internals_ids);
+            ?>
+            <tr id="tri_<?php echo $iid; ?>" class="check <?php echo ($has_this_int) ? 'focused' : 'blurred'; ?>">
+                <td class="check <?php echo ($has_this_int) ? 'focused' : 'blurred'; ?>">
+                    <input type="checkbox" class="links_cb is_internal" name="internal[]" value="<?php echo $iid; ?>" <?php if($has_this_int) echo 'checked="checked"'; ?> />
+                    <?php echo $internal['internal_abbr'] . ' - ' . $internal['internal_name']; ?>
+                </td>
+            </tr>
+            <?php if(!empty($internal['offices'])) : ?>
+            <tr id="of_<?php echo $internal['internal_id']; ?>" <?php if(!$has_this_int) echo 'style="display:none"'; ?>>
+                <td>
+                    <table class="fluid">
+                        <?php foreach($internal['offices'] as $oid => $office) : ?>
+                            <?php
+                                // ha questo ufficio
+                                $has_this_off = count($this->user->internals) > 0 && $this->user->internals[0]['office_id'] == $oid;
+                            ?>
+                            <tr class="radio <?php echo ($has_this_off) ? 'focused' : 'blurred'; ?>">
+                                <td class="check <?php echo ($has_this_off) ? 'focused' : 'blurred'; ?>">
+                                    <input type="radio" class="links_cb is_office" name="office" value="<?php echo $oid; ?>" <?php if($has_this_off) echo 'checked="checked"'; ?> />
+                                    <?php echo $office['office_name']; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </td>
+            </tr>    
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </table>    
+    
+<br />
+<p class="submit"><input class="button" type="submit" value="salva" /></p>
+</fieldset>
+</form>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/admin/users/links.js?v2')); ?>

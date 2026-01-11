@@ -1,0 +1,142 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Nuova Bacheca</a>
+        <?php if($this->has_messages) : ?>
+        <a class="heading_tab advanced_link tab1" href="#">Messaggi</a>
+        <?php endif; ?>
+        <a class="heading_tab advanced_link <?php echo ((!$this->has_messages) ? 'active' : ''); ?> tab1" href="#">Impegni</a>
+        <a class="heading_tab advanced_link tab1" href="#">Offerte</a>
+        <a class="heading_tab advanced_link tab3" href="#">Commesse</a>
+        <?php if($this->acl('administration', 'view')) : ?>
+        <a class="heading_tab advanced_link tab3" href="#">Amministrazione</a>
+        <?php endif; ?>
+        <!-- <a class="heading_tab advanced_link tab1" href="#">Messaggi</a> -->
+    </div>
+
+    <div class="tab_contents">
+
+        <div class="tab_content new-dashboard" id="new-dashboard">
+
+            <div id="recap-container">
+                <div style="height: 145px"></div>
+            </div>
+
+            <div style="float:left; width: 38%; padding-right: 1%; margin-right: 1%">
+
+                <h2>Impegni</h2>
+
+                <div data-events-url="<?php echo $this->baseUrl(); ?>/tasks/calendar/format/json" id='agenda'></div>
+
+                <?php $this->calendar(); ?>
+
+                <div style="clear: both;"></div>
+
+            </div>
+
+            <div style="float: left; width: 38%; margin-right: 1%">
+                <h2>Da fare</h2>
+
+                <div class="messagecontent message-list">
+                    <?php echo $this->partial('messages/list.phtml', array('messages' => $this->new_todo_array, 'type' => 1)); ?>
+                </div>
+
+            </div>
+
+            <div class="sticky" style="float:left; width: 17%; right: 0; padding-left: 1%; border-left: 1px solid #ccc; background-color: #f0f0f0">
+                <h2>Notifiche</h2>
+
+                <div class="messagecontent message-list nano">
+                    <div class="content">
+                    <?php echo $this->partial('messages/list.phtml', array('messages' => $this->new_notifications_array, 'type' => 0)); ?>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div style="clear: both"></div>
+
+        </div>
+
+        <?php if($this->has_messages) : ?>
+
+        <div class="tab_content" id="messagecontainer">
+
+            <div class="messagemenu" id="messagemenu">
+
+                <a class="messagemenu-tab" href="#"><h2>Da fare</h2></a>
+                <a class="messagemenu-tab" href="#"><h2>Importanti</h2></a>
+                <a class="messagemenu-tab" href="#"><h2>Notifiche</h2></a>
+
+            </div>
+
+            <div class="messagecontent">
+                <?php echo $this->partial('messages/list.phtml', array('messages' => $this->todo_array)); ?>
+            </div>
+            <div class="messagecontent">
+                <?php echo $this->partial('messages/list.phtml', array('messages' => $this->important_array)); ?>
+            </div>
+            <div class="messagecontent">
+                    <?php echo $this->partial('messages/list.phtml', array('messages' => $this->notifications_array)); ?>
+            </div>
+
+        </div>
+
+        <?php endif; ?>
+
+        <div class="tab_content" id="general">
+            <div id="impegni_settimana">
+
+                <?php /* echo $this->partial('tasks/list_per_day.phtml', array('tasks' => $this->tasks_array)); */ ?>
+
+                <?php /*
+                <div data-events-url="<?php echo $this->baseUrl(); ?>tasks/calendar/id_who/<?php echo $this->id_who ?>/format/json" id='calendar'></div>
+
+                <?php $this->calendar(); ?>
+
+                <div style="clear: both;"></div>
+                */ ?>
+
+                <h2>Storico impegni non svolti</h2>
+
+                <div>
+                    <?php $this->tasks->deploy(); ?>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="tab_content" id="general">
+            <h2>Offerte collegate all'utenza</h2>
+            <div>
+                <?php $this->offers->deploy(); ?>
+            </div>
+        </div>
+
+        <div class="tab_content" id="general">
+            <h2>Commesse collegate all'utenza</h2>
+            <div>
+                <?php $this->orders->deploy(); ?>
+            </div>
+        </div>
+
+        <?php if($this->acl('administration', 'view')) : ?>
+
+        <div class="tab_content" id="general">
+            <h2>Fasi di lavorazione eseguiti</h2>
+            <div>
+                <?php $this->moments->deploy(); ?>
+            </div>
+        </div>
+
+        <?php endif; ?>
+
+    </div>
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/tabPane.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery.nanoscroller.min.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/dashboard/common.js?v3')); ?>

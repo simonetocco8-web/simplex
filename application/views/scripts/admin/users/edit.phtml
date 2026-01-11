@@ -1,0 +1,72 @@
+<h2><?php echo $this->contentTitle; ?></h2>
+<form action="<?php echo $this->baseUrl(); ?>/admin/users/task/save" method="post" id="edit" name="edit">
+<fieldset><legend>Inserisci le informazioni relative al nuovo utente</legend>
+<br />
+
+<?php 
+/*
+<div class="fieldset-container">
+    <h4>Aziende Interne</h4>
+    <?php echo $this->partial('common/internals-edit.phtml', array('user' => $this->user, 'internals' => $this->internals)); ?>
+</div>
+*/ 
+?>
+
+<div class="fieldset-container">
+    <h4>Informazioni Account</h4>
+
+    <?php echo $this->formHidden('user_id', $this->user['user_id']); ?>
+    <?php echo $this->formHidden('active', $this->user['active']); ?>
+    <?php echo $this->formHidden('deleted', $this->user['deleted']); ?>
+
+    <dl class="fleft with-margin">
+        <dt><label for="username"><span class="red">*</span> User Name:</label></dt>
+        <dd>
+            <?php echo $this->formHidden('id_role', 1); ?>
+            <?php echo $this->formText('username', $this->user['username'], array('class' => 'input-medium required')); ?>
+        </dd>
+    </dl>
+    <?php if(!isset($this->user['user_id']) || empty($this->user['user_id'])) : ?>
+        <dl class="fleft">
+            <dt><label for="name"><span class="red">*</span> Password:</label></dt>
+            <dd><input type="password" name="password" id="password" class="input-medium required" /></dd>
+            <dt><label for="name"><span class="red">*</span> Conferma Password:</label></dt>
+            <dd><input type="password" name="cpassword" id="cpassword" class="input-medium required validate-match matchInput:'password' matchName:'Password'" /></dd>
+        </dl>
+        <div class="clear"></div>
+    <?php else : ?>
+    <?php if($this->layout()->user->id_role == 1 || $this->user['user_id'] == $this->layout()->user->user_id) : ?>
+        <dl class="fleft with-margin">
+            <dt><label for="ruolo">Password:</label></dt>
+            <dd><input type="button" class="button" value="cambia password" id="change_pw" title="<?php echo $this->baseUrl('admin/users/task/cpw/id/' . $this->user['user_id'] . '/format/html'); ?>" /></dd>
+        </dl>
+        <div class="clear"></div>
+    <?php endif; ?>
+    <?php endif; ?>
+    <?php if($this->layout()->user->id_role == 1 && false) : ?>
+        <dl class="fleft with-margin">
+            <dt><label for="ruolo">Ruolo:</label></dt>
+            <dd><?php echo $this->formSelect('id_role', $this->user['id_role'], array('class' => 'input-medium'), $this->roles); ?></dd>
+        </dl>
+        <div class="clear"></div>
+    <?php endif; ?>
+</div>
+
+	<?php echo $this->partial('contacts/edit/main.phtml', array('contact' => $this->user->contact, 'inputNamePrefix' => 'contacts_', 'province' => $this->province, 'contact_titles' => $this->contact_titles)); ?>
+
+<p class="submit"><input class="button" type="submit" value="salva" /></p>
+</fieldset>
+</form>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/edit.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/autocomplete/Meio.Autocomplete.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/admin/users/edit.js')); ?>
+
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/autocomplete/meio.aucomplete.css', true)); ?>

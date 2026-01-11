@@ -1,0 +1,21 @@
+<table class="detail fluid">
+    <tr><th colspan="4">Informazioni Personali</th></tr>
+    <tr>
+        <td class="label">Titolo:</td>
+        <td><?php echo $this->contact['contact_title']; ?></td>
+        <td class="label">Descrizione:</td>
+        <td><?php echo $this->contact['description']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Nome:</td>
+        <td class="value"><?php echo $this->contact['nome']; ?></td>
+        <td class="label">Cognome:</td>
+        <td class="value"><?php echo $this->contact['cognome']; ?></td>
+    </tr>
+</table>
+
+<?php echo $this->partial('contacts/detail/telephones.phtml', array('telephones' => $this->contact->telephones)); ?>
+
+<?php echo $this->partial('contacts/detail/mails.phtml', array('mails' => $this->contact->mails)); ?>
+
+<?php echo $this->partial('contacts/detail/addresses.phtml', array('addresses' => $this->contact->addresses)); ?>

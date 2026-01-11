@@ -1,0 +1,6 @@
+<td class="list-links">
+    <?php echo (new Model_Company)->getClienteDescriptionByFlagValue($this->getValue()); ?>
+    <?php if($this->_source->getCellByFieldName('partita_iva') == 'Provvisoria') : ?>
+    &nbsp;<abbr title="Azienda registrata senza Partita IVA">?</abbr>
+    <?php endif; ?>
+</td>

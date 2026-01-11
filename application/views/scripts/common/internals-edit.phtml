@@ -1,0 +1,27 @@
+<div class="clear2"><?php /*  echo $this->formHidden('id_internal[]', $this->user['internals']); */ ?>
+<dl>
+	<dt><label for="internals">Scegli:</label></dt>
+	<dd class="internals-edit">
+    <?php foreach($this->internals as $k => $i) : ?>
+        <div class="internals-edit-in">
+            <input type="checkbox" value="<?php echo $i['internal_id']; ?>"
+                <?php
+                    $checked = '';
+                   foreach($this->user['internals'] as $int)
+                   {
+                       if($int['internal_id'] == $i['internal_id'])
+                       {
+                           $checked = 'checked="checked"';
+                           break;
+                       }
+                   }
+                   echo $checked;
+                   ?>
+                name="internals[]" id="cb_<?php echo $i['internal_id']; ?>" />
+            <label class="inline" for="cb_<?php echo $i['internal_id']; ?>" title="<?php echo $i['full_name']; ?>"><?php echo $i['abbr']; ?></label>
+        </div>
+
+    <?php endforeach; ?>
+    </dd>
+</dl>
+</div>

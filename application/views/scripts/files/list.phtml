@@ -1,0 +1,54 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <ul id="actiosns-menu">
+            <li><a class="heading_tab advanced_link tab1" href="#">Elenco File</a></li>
+        </ul>
+    </div>
+
+    <h2>Documenti</h2>
+
+    <ul class="contextual-menu">
+        <li>
+            <a style="display: none" id="makeArchive" href="#"><img src="<?php echo $this->baseUrl('img/new-folder.png'); ?>"/> scarica archivio</a>
+        </li>
+        <li>
+          <a id="create-folder" href="#"><img src="<?php echo $this->baseUrl('img/new-folder.png'); ?>"/> crea cartella</a> 
+        </li>
+        <li>
+          <input id="file_upload" name="file_upload" type="file" />
+        </li>
+        <li>
+            <input id="archive_upload" name="archive_upload" type="file" />
+        </li>
+    </ul>
+
+    <div id="files-list">
+        <?php $this->dag->deploy(); ?>
+    </div>
+
+    <div id="newfolder-form" title="Crea nuova cartella">
+        <form>
+        <fieldset>
+            <label for="name">Nome Cartella</label>
+            <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+            <p class="error" id="create-folder-error" style="display: none">
+                Il nome della cartella contiene caratteri non validi!
+            </p>
+        </fieldset>
+        </form>
+    </div>
+
+    
+</div>
+
+<div id="upload_container">
+    <form action="" method="get">
+        <div id="upload"></div>
+    </form>
+</div>
+
+<input type="hidden" name="sid" id="sid" value="<?php echo session_id(); ?>" />
+<input type="hidden" name="p" id="p" value="<?php echo $this->path; ?>" />
+
+<?php $this->upload(); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/files/upload.js')); ?>

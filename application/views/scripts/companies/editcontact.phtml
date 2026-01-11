@@ -1,0 +1,17 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Nuovo Contatto</a>
+    </div>
+
+<h2><?php echo $this->contentTitle; ?></h2>
+<form action="<?php echo $this->baseUrl(); ?>/companies/savecontact" method="post" id="edit" name="edit">
+    <input type="hidden" name="id_company" id="id_company" value="<?php echo $this->id_company; ?>" />
+
+    <?php echo $this->partial('contacts/edit/main.phtml', array('contact' => $this->contact, 'contact_titles' => $this->contact_titles, 'inputNamePrefix' => '')); ?>
+    
+    <p class="submit"><input class="button" type="submit" value="salva" /></p>  
+</form>
+
+</div>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/edit.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/companies/editcontact.js')); ?>

@@ -1,0 +1,32 @@
+<table class="detail fluid">
+    <tr><th colspan="4">Anagrafica</th></tr>
+    <tr>
+        <td class="label">Ragione Sociale:</td>
+        <td class="value"><?php echo $this->company['ragione_sociale']; ?></td>
+        <td class="label">Partita IVA:</td>
+        <td class="value"><?php echo $this->company['partita_iva']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Codice Fiscale:</td>
+        <td class="value"><?php echo $this->company['cf']; ?></td>
+        <td class="label">IBAN:</td>
+        <td class="value"><?php echo $this->company['iban']; ?></td>
+    </tr>
+</table>
+
+<table class="detail fluid">
+    <tr><th colspan="4">Sede</th></tr>
+    <tr>
+        <td class="label">Sede di riferimento:</td>
+        <td class="value">
+            <span id="lo_text">
+                <?php echo $this->company['office']; ?>
+            </span>
+            <?php if($this->acl('companies', 'link_office')) : ?>
+            <a id="lo_link" href="<?php echo $this->baseUrl(); ?>/companies/lo/id/<?php echo $this->company['company_id']; ?>/format/html" style="color: #999">modifica</a>
+            <?php endif; ?>
+        </td>
+        <td class="label"></td>
+        <td class="value"></td>
+    </tr>
+</table>

@@ -1,0 +1,5 @@
+<input type="text" class="input-flex80"
+	name="<?php echo $this->getColumnFieldName(); ?>" value="<?php 
+        if(isset($_GET) && isset($_GET[$this->getColumnFieldName()]))
+            echo $_GET[$this->getColumnFieldName()];
+    ?>" />

@@ -1,0 +1,17 @@
+
+<div id="cco">
+	<h2>Chiudi fase</h2>
+	<form name="close_form" id="close_form" action="<?php echo $this->baseUrl(); ?>/orders/closefases/format/json" method="post">
+		<?php echo $this->formHidden('id_moment', $this->id_moment); ?> 
+		<dl>
+			<dt><label for="dtg"><span class="red">*</span> Data chisura:</label></dt>
+			<dd>
+				<?php echo $this->formText('date_done', date('d/m/Y'), array('class' => 'input-small required validate-date')); ?>
+			</dd>
+		</dl>
+	
+		<p class="submit">
+			<input class="button" type="submit" id="spw_button" value="Salva" />
+		</p>
+	</form>
+</div>

@@ -1,0 +1,13 @@
+<div class="message-detail <?php if($this->message['type'] == 1) echo 'todo'; ?>">
+<?php if($this->message['no_delete'] != 1) : ?>
+<a href="<?php echo $this->baseUrl('/messages/delete/id/' . $this->message['message_id']); ?>" class="fright message-delete-a" title="elimina messaggio">elimina</a>
+<?php endif; ?>
+<h3><?php echo $this->message['title']; ?></h3>
+<p class="info">
+    da <?php echo $this->message['from_name']; ?> -
+    <?php echo Maco_Utils_DbDate::fromDb($this->message['date_created'], $this->message['type'] == 1 ? Maco_Utils_DbDate::DBDATE_FULL : Maco_Utils_DbDate::DBDATE_DATE); ?>
+</p>
+<p>
+    <?php echo $this->message['body']; ?>
+</p>
+</div>

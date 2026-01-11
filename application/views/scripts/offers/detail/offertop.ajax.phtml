@@ -1,0 +1,53 @@
+<h2><span title="stato offerta" id="stato_offerta">
+                    <?php echo $this->offer['status_name']; ?>
+                </span> | 
+                <span title="cambia revisione">revisione:
+                    <select name="crev" id="crev">
+                        <?php foreach($this->offer['revisions'] as $rev) : ?>
+                            <?php $selected = ($this->offer['revision'] == $rev) ? 'selected="selected"' : ''; ?>
+                            <option value="<?php echo $rev; ?>" <?php echo $selected; ?>><?php echo $rev; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </span>
+    </h2>
+
+        <ul class="contextual-menu">
+            <?php if($this->offer['active'] != 1) : ?>
+                <li>
+                    <a href="#" id="arev"><img src="<?php echo $this->baseUrl('img/undo.png'); ?>"/> ripristina revisione</a>
+                </li>
+            <?php endif; ?>
+            <?php // HARD CODED 4 = id stato offerta aggiudicata ?>
+            <li>
+                <a href="<?php echo $this->baseUrl('offers/export/id/' . $this->offer['offer_id']) . '/type/docx'; ?>"><img src="<?php echo $this->baseUrl('img/docx.png'); ?>"/> esporta</a></li>
+            </li>
+            <?php /*
+            <li>
+                <a href="#"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> esporta <span class="info">beta</span></a>
+                <ul>
+                    <li><a href="<?php echo $this->baseUrl('offers/export/id/' . $this->offer['offer_id']); ?>"><img src="<?php echo $this->baseUrl('img/pdf.png'); ?>"/> formato pdf</a></li>
+                    <li><a href="<?php echo $this->baseUrl('offers/export/id/' . $this->offer['offer_id']) . '/type/docx'; ?>"><img src="<?php echo $this->baseUrl('img/docx.png'); ?>"/> documento di word</a></li>
+                </ul>
+            </li>
+            */ ?>
+            <?php if(($this->offer['id_status'] != 4 || $this->acl('offers', 'modify_always')) && ($this->acl('offers', 'modify') || ($this->acl('offers', 'modify_own') && $this->loggedUser()->user_id == $this->offer['created_by']))) : ?>
+                <li><a href="<?php echo $this->baseUrl('offers/edit/id/' . $this->offer['offer_id']); ?>"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> modifica</a></li>
+            <?php endif; ?>
+            <?php if($this->offer['id_order'] != '') : ?>
+                <li><a href="<?php echo $this->baseUrl() . '/orders/detail/id/' . $this->offer['id_order']; ?>" title="vedi commessa"><img src="<?php echo $this->baseUrl('img/order16.png'); ?>"/> vedi commessa</a></li>
+            <?php else : ?>
+                <?php if($this->acl('offers', 'modify') || ($this->acl('offers', 'modify_own') && $this->loggedUser()->user_id == $this->offer['created_by'])) : ?>
+                <?php if($this->offer['id_status'] != 4) : ?>
+                    <?php if($this->offer['id_status'] != 6 || ($this->offer['id_status'] == 6 && ($this->acl('offers', 'approve_any') || ($this->acl('offers', 'approve') && $this->offer['id_approver'] == $this->loggedUser()->user_id)))) : ?>
+                        <li><a href="#" id="cs"><img src="<?php echo $this->baseUrl('img/status16.png'); ?>"/> cambia stato</a></li>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php if($this->acl('orders', 'create')) : ?>
+                    <li><a href="#" title="crea commessa" id="cco"><img src="<?php echo $this->baseUrl('img/order16.png'); ?>"/> crea commessa</a></li>
+                    <?php endif; ?>
+                <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
+            <li><a href="<?php echo $this->baseUrl('tasks/edit/id_offer/' . $this->offer['offer_id']); ?>"><img src="<?php echo $this->baseUrl('img/task16.png'); ?>"/> nuovo impegno</a></li>
+        </ul>
+        

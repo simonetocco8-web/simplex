@@ -1,0 +1,59 @@
+<table class="fluid listview" id="users">
+	<thead>
+	    <tr>
+            <th>
+				<a href="<?php echo $this->baseUrl(); ?>/admin/users/task/list/_s/username/_d/ASC" class="sorter ajax"/>Nome Utente</a>
+            </th>
+            <th>
+				<a href="<?php echo $this->baseUrl(); ?>/admin/users/task/list/_s/nome/_d/ASC" class="sorter ajax"/>Nome</a>
+            </th>
+            <th>
+				<a href="<?php echo $this->baseUrl(); ?>/admin/users/task/list/_s/cognome/_d/ASC" class="sorter ajax"/>Cognome</a>
+            </th>
+            <th>
+                <a href="<?php echo $this->baseUrl(); ?>/admin/users/task/list/_s/id_role/_d/ASC" class="sorter ajax"/>Ruolo</a>
+            </th>
+            <th>
+                Internals
+            </th>
+            <th>
+                <a href="<?php echo $this->baseUrl(); ?>/admin/users/task/list/_s/active/_d/ASC" class="sorter ajax"/>Attivo</a>
+            </th>
+        </tr>
+        <!--
+        <tr>
+            <td>
+                <input type="text" class="input-flex80" name="username" value="" />
+            </td>
+            <td>
+                <input type="text" class="input-flex80" name="nome" value="" />
+            </td>
+            <td>
+                <input type="text" class="input-flex80" name="cognome" value="" />
+            </td>
+            <td>
+                <input type="text" class="input-flex80" name="role_name" value="" />
+            </td>
+            <td>
+                <input type="text" class="input-flex80" name="internals" value="" />
+            </td>
+            <td>
+                <?php echo $this->formSelect('active', null, array('class' => 'input'), array(null => '', 1 => 'si', 0 => 'no')); ?>
+            </td>
+        </tr>
+        -->
+    </thead>
+    <tbody>
+        <?php $index = 0; ?>
+        <?php foreach($this->users as $user) : ?>
+            <tr class="<?php echo (++$index % 2 == 0) ? 'even' : 'odd'; ?>" id="user_<?php echo $user['user_id']; ?>">
+                <td><a href="<?php echo $this->baseUrl(); ?>/admin/users/task/detail/id/<?php echo $user['user_id']; ?>"><?php echo $user['username']; ?></a></td>
+                <td><?php echo $user['nome']; ?></td>
+                <td><?php echo $user['cognome']; ?></td>
+                <td title="<?php echo $user['role_description']; ?>"><?php echo $user['role_name']; ?></td>
+                <td><?php echo implode(', ', $user['internals']); ?></td>
+                <td><?php echo ($user['active'] == 1) ? 'si' : 'no'; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

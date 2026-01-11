@@ -1,0 +1,27 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#"><?php echo $this->data['nome'] . ' ' . $this->data['cognome']; ?></a>
+    </div>
+    <div class="submenu right">
+        <ul id="actiosns-menu">
+            <a class="heading_tab advanced_link tab4" href="<?php echo $this->baseUrl('contacts/edit/id/' . $this->data['id']); ?>">Modifica</a>
+            <?php if($this->layout()->userId != $this->data['id']) : ?>
+                <li><a class="heading_tab advanced_link tab4 important" href="<?php echo $this->baseUrl('contacts/delete/id/' . $this->data['id']); ?>">Elimina</a></li>
+            <?php endif; ?>
+	        <li>
+	 			<a class="heading_tab advanced_link tab4 important" href="#">Altre Azioni</a>
+	    		<ul class="action-menu">
+	    			<li><a href="<?php echo $this->baseUrl('tasks/edit/id_receiver/' . $this->data['id']); ?>">Nuovo Contatto</a></li>
+	    		</ul>
+	    	</li>
+	    </ul>
+
+    </div>
+
+</div>
+
+<h2>Dettaglio Utente</h2>
+
+<?php echo $this->partial('contacts/detail/main.phtml', $this); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/detail.js')); ?>

@@ -1,0 +1,12 @@
+/.vagrant
+/adminer.php
+.idea
+.settings
+.project
+.buildpath
+.svn
+logs/*
+logs/.gitkeep
+repo/aziende/*
+repo/utenti/*
+temp/*

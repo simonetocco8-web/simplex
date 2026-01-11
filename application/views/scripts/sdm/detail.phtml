@@ -1,0 +1,22 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <a class="heading_tab advanced_link active tab1" href="#">Segnalazione di Miglioramento</a>
+    </div>
+</div>
+
+<div id="main_sdm">
+
+<?php echo $this->partial('sdm/detail.ajax.phtml', array('sdm' => $this->sdm)); ?>
+
+</div>
+
+<br />
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/detail.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/sdm/detail.js')); ?>

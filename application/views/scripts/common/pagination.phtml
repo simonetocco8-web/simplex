@@ -1,0 +1,26 @@
+
+<div class="pagination">
+    <div class="fright">
+        <?php if(isset($this->previous)) : ?>
+        <a class="paginate ajax" rel="<?php echo $this->first; ?>" href="<?php echo $this->url(array('page' => $this->first)); ?>">Prima</a> <a class="paginate ajax" rel="<?php echo $this->previous; ?>" href="<?php echo $this->url(array('page' => $this->previous)); ?>">Precedente</a> 
+        <?php else : ?> 
+        <span class="pagination_disabled">Prima</span> <span class="pagination_disabled">Precedente</span>
+        <?php endif; ?>
+        <input type="text" <?php /*onkeyups="if((event && event.keyCode==13)){
+location.href='<?php echo $this->getPaginationUriWithoutPageNumber(); ?>' + this.value;
+if(event.preventDefault) event.preventDefault(); else return false;}" */ ?> 
+            size="1" value="<?php echo $this->current; ?>" name="page" /> di <?php echo $this->last; ?>
+        <?php if(isset($this->next)) : ?>
+        <a class="paginate ajax" rel="<?php echo $this->next; ?>" href="<?php echo $this->url(array('page' => $this->next)); ?>">Successiva</a> <a class="paginate ajax" rel="<?php echo $this->last; ?>" href="<?php echo $this->url(array('page' => $this->last)); ?>">Ultima</a>
+        <?php else : ?> 
+        <span class="pagination_disabled">Successiva</span> <span class="pagination_disabled">Ultima</span> 
+        <?php endif; ?> 
+        <?php
+            //$sel = new Zend_View_Helper_FormSelect();
+            echo $this->view->formSelect('perpage', $this->per_page, array('class' => 'perpage'), $this->per_page_options);
+        ?> <!-- <span class="more_info">(1 - 3 di 6)</span> -->
+    </div>
+    <div class="pagination_info fleft">
+        <strong><?php echo $this->currentItemCount; ?></strong> records su <strong><?php echo $this->totalItemCount; ?></strong> totali - pagina <strong> <?php echo $this->current . '/' . $this->pageCount; ?></strong>
+    </div>
+</div>

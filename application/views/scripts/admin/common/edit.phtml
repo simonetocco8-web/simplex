@@ -1,0 +1,81 @@
+<h2><?php echo $this->contentTitle; ?> <?php echo $this->labels['singolare']; ?>
+</h2>
+<form
+	action="<?php echo $this->baseUrl(); ?>/admin/common/item/<?php echo $this->item; ?>/task/save"
+	method="post" id="edit" name="edit">
+<fieldset><legend>Inserisci le informazioni relative alla nuova <?php echo $this->labels['singolare']; ?></legend>
+<br />
+
+<?php echo $this->partial('common/warning-messages.phtml', array('messages' => $this->messages)); ?>
+
+<div class="fieldset-container">
+<h4>Informazioni <?php echo $this->labels['singolare']; ?></h4>
+
+<?php echo $this->formHidden($this->pk, $this->data[$this->pk]); ?>
+<?php foreach($this->fields['fields'] as $k => $v) : ?>
+	<dl class="fleft with-margin">
+		<dt>
+			<label for="<?php echo $k; ?>">
+				<?php if($v['required']) : ?>
+					<span class="red">*</span>
+				<?php endif; ?>
+				<?php echo $v['label']; ?>:
+			</label>
+		</dt>
+		<dd>
+			<?php
+				if(isset($v['depends']))
+				{
+                    $attrs = array('class' => $v['class'], 'multiple' => '');
+                    if(isset($v['depends']['with-parent']))
+                    {
+                        $attrs['class'] .= ' with-parent';
+                        $attrs['self_table'] = $v['depends']['table'];
+                        $attrs['parent_table'] = $v['depends']['with-parent']['parent_table'];
+                        $attrs['self_field'] = $v['depends']['with-parent']['self_field'];
+                        $attrs['parent_field'] = $v['depends']['with-parent']['parent_field'];
+                        $attrs['self_parent_field'] = $v['depends']['with-parent']['self_parent_field'];
+                        $attrs['self_label_field'] = $v['depends']['with-parent']['self_label_field'];
+                    }
+					echo $this->formSelect($k, $this->data[$k], $attrs, $v['select']);
+				}
+				else
+				{ 
+                    if(isset($v['element']))
+                    {
+                        switch($v['element'])
+                        {
+                            case 'textarea':
+                                echo $this->formTextarea($k, $this->data[$k], array('class' => $v['class']));
+                                break;
+                            default:
+					            echo $this->formText($k, $this->data[$k], array('class' => $v['class']));
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        echo $this->formText($k, $this->data[$k], array('class' => $v['class']));
+                    }
+				} 
+                
+                if(isset($v['require_js']) && is_array($v['require_js']))
+                {
+                    foreach($v['require_js'] as $js)
+                    {
+                        $this->headScript()->appendFile($this->baseUrl($js));
+                    }
+                }
+			?>
+		</dd>
+	</dl>
+        <div class="clear"></div>
+    <?php endforeach; ?></div>
+
+<p class="submit"><input class="button" type="submit" value="salva" /></p>
+</fieldset>
+</form>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/edit.js')); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/admin/common/edit.js')); ?>

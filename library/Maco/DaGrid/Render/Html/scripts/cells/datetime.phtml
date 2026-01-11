@@ -1,0 +1,5 @@
+<td class="<?php echo implode(' ', $this->_cssClasses); ?>" id="<?php echo $this->_id; ?>"> 
+    <?php
+        echo Maco_Utils_DbDate::fromDb($this->getValue());
+    ?>
+</td>

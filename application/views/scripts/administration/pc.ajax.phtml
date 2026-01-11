@@ -1,0 +1,27 @@
+<div id="pc">
+<h2>Pagamento Nota Credito</h2>
+<form name="pc_form" id="pc_form" action="<?php echo $this->baseUrl(); ?>/administration/pcs/format/json" method="post">
+
+<?php echo $this->formHidden('invoice_id', $this->invoice_id); ?>
+
+<dl>
+    <dt><label for="oldpw">Tipologia di Pagamento:</label></dt>
+    <dd>
+        <?php echo $this->formSelect('id_tipo_pagamento', '', array('class' => 'input-medium', 'multiple' => ''), $this->pagamenti); ?>
+    </dd>
+</dl>
+
+<div class="clear"></div>
+
+<dl>
+    <dt><label for="oldpw">Data Pagamento:</label></dt>
+    <dd><?php echo $this->formText('date_end', date('d-m-Y'), array('class' => 'input-small validate-date')); ?></dd>
+</dl>
+
+<div class="clear"></div>
+
+<p class="submit">
+    <input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+</form>
+</div>

@@ -1,0 +1,39 @@
+<div class="address to-be-added <?php echo ($this->index == 0) ?: 'added'; ?>">
+    <?php echo $this->formHidden($this->inputNamePrefix . 'address_id[]', $this->address['address_id']); ?>
+    <dl class="helper-cnt">
+	    <dt><label for="localita[]">Comincia a scrivere un cap, una localit&agrave; o una provincia per avere un aiuto:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix . 'helper[]', '', array('class' => 'input-big helper')); ?></dd>
+    </dl>
+    <dl class="fleft with-margin">
+	    <dt><label for="via[]">Via:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix . 'via[]', $this->address['via'], array('class' => 'input-medium')); ?></dd>
+    </dl>
+    <dl class="fleft" style="margin-right: 64px">
+	    <dt><label for="numero[]">Nr:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix . 'numero[]', $this->address['numero'], array('class' => 'input-fixed', 'size' => 4)); ?></dd>
+    </dl>
+    <dl class="fleft with-margin">
+	    <dt><label for="cap[]">CAP:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix . 'cap[]', $this->address['cap'], array('class' => 'input-small maxLength:5 validate-digits cap')); ?></dd>
+    </dl>
+    <div class="clear"></div>
+    <dl class="fleft with-margin">
+	    <dt><label for="localita[]">Localit&agrave;:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix . 'localita[]', $this->address['localita'], array('class' => 'input-medium localita')); ?></dd>
+    </dl>
+    <dl class="fleft">
+	    <dt><label for="provincia[]">Provincia:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix . 'provincia[]', $this->address['provincia'], array('class' => 'input-medium provincia')); ?></dd>
+    </dl>
+    <div class="clear"></div>
+    <dl>
+        <dt><label for="address-description[]">Descrizione:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'description[]', $this->address['description'], array('class' => 'input-big')); ?></dd>
+    </dl>
+    <a class="remove-more link-button" name="removeaddress" id="removeaddress">Cancella</a>
+    <a class="link-button help-link">aiutami a compilare l'indirizzo</a>
+    <div style="clear: both;"></div>
+</div>
+
+<?php $this->textboxList(); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/addressPicker.js')); ?>

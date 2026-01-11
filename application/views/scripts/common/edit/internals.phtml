@@ -1,0 +1,17 @@
+<div class="clear2"><?php /*  echo $this->formHidden('id_internal[]', $this->info['internals']); */ ?>
+    <dl>
+	    <dt><label for="internals">Scegli:</label></dt>
+	    <dd class="internals-edit">
+        <?php foreach($this->internals as $k => $i) : ?>
+	        <div class="internals-edit-in">
+                <input type="checkbox" value="<?php echo $i['id']; ?>" 
+                    <?php if(array_key_exists($i['id'], $this->data['internals'])) echo 'checked="checked"'; ?>
+		name="<?php echo $this->inputNamePrefix . 'internals[]'; ?>" id="cb_<?php echo $i['id']; ?>" /> 
+        <label class="inline" for="cb_<?php echo $i['id']; ?>" title="<?php echo $i['name']; ?>">
+            <?php echo $i['abbr']; ?>
+        </label>
+            </div>
+		<?php endforeach; ?>
+        </dd>
+    </dl>
+</div>

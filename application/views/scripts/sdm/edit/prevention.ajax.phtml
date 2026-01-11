@@ -1,0 +1,35 @@
+    <form name="mod_prevention_form" id="mod_prevention_form"
+          action="<?php echo $this->baseUrl(); ?>/sdm/mpnv/save/1/format/json"
+          method="post">
+    <?php echo $this->formHidden('id', $this->data['sdm_id']); ?>
+ <div class="fieldset-container">
+    <h4>Dati Azione Preventiva</h4>
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'id_preventer'; ?>"><span class="red">*</span> Responsabile Azione Preventiva:</label></dt>
+        <dd>
+            <?php $id_preventer = (isset($this->data['id_preventer']) && $this->data['id_preventer'])
+                ? $this->data['id_preventer']
+                : ((isset($this->id_preventer) && $this->id_preventer) ? $this->id_preventer : null); ?>
+            <?php echo $this->formSelect($this->inputNamePrefix . 'id_preventer', $id_preventer, array('class' => 'input-medium required', 'multiple' => ''), $this->preventers); ?>
+        </dd>
+    </dl>
+     <dl>
+         <dt><label for="<?php echo $this->inputNamePrefix . 'date_expected_prevention'; ?>"><span class="red">*</span> Data attesa esecuzione azione preventiva:</label></dt>
+         <dd>
+             <?php echo $this->formText($this->inputNamePrefix . 'date_expected_prevention', Maco_Utils_DbDate::fromDb($this->data['date_expected_resolution']), array('class' => 'input-medium validate-date date-field required')); ?>
+         </dd>
+     </dl>
+
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'cause'; ?>">Informazioni Aggiuntive:</label></dt>
+        <dd>
+            <?php echo $this->formTextarea($this->inputNamePrefix . 'cause', $this->data['cause'], array('class' => 'input-big', 'rows' => 4)); ?>
+        </dd>
+    </dl>
+
+    <div class="clear"></div>
+                                                            
+    <p class="submit"><input class="button" type="submit" value="salva" /></p>  
+                                                            
+</div>        
+</form>

@@ -1,0 +1,118 @@
+<h2>
+    Stato:
+    <span style="color: #<?php echo $this->order->getStatusColor(); ?>">
+        <?php echo $this->order->status_name; ?>
+        </span>
+</h2>
+
+<input type="hidden" name="id" id="id" value="<?php echo $this->order['order_id']; ?>" />
+<input type="hidden" name="id_offer" id="id_offer" value="<?php echo $this->order['id_offer']; ?>" />
+<input type="hidden" name="id_status" id="id_status" value="<?php echo $this->order->id_status; ?>" />
+
+<ul class="contextual-menu">
+    <li>
+        <a href="<?php echo $this->baseUrl('orders/exportrali/id/' . $this->order->order_id); ?>"><img src="<?php echo $this->baseUrl('img/docx.png'); ?>"/> esporta</a>
+    </li>
+    <?php if($this->order->id_status != 5 && $this->acl('orders', 'cancel')) : ?>
+        <li>
+            <a id="cancel-order-link" href="<?php echo $this->baseUrl('orders/cancel/id/' . $this->order->order_id); ?>"><img src="<?php echo $this->baseUrl('img/cancel.png'); ?>"/> annulla</a>
+        </li>
+    <?php endif; ?>
+    <?php if(($this->order->id_status != 3 && $this->order->id_status != 4 && $this->order->id_status != 5) && $this->acl('orders', 'cancel') ) : ?>
+        <li>
+            <a href="<?php echo $this->baseUrl('orders/suspend/id/' . $this->order->order_id); ?>"><img src="<?php echo $this->baseUrl('img/suspend.png'); ?>"/> sospendi</a>
+        </li>
+    <?php endif; ?>
+    <?php if(($this->order->id_status == 4 || $this->order->id_status == 5) && $this->acl('orders', 'cancel')) : ?>
+        <li>
+            <a href="<?php echo $this->baseUrl('orders/resume/id/' . $this->order->order_id); ?>"><img src="<?php echo $this->baseUrl('img/resume.png'); ?>"/> riprendi</a>
+        </li>
+    <?php endif; ?>
+    <?php if((($this->order->id_status != 3 && $this->acl('orders', 'assign')) || $this->acl('orders', 'modify_always'))) : ?>
+        <li>
+            <a href="#" id="mcomm"><img src="<?php echo $this->baseUrl('img/edit.png'); ?>"/> modifica</a>
+        </li>
+    <?php endif; ?>
+</ul>
+
+<table class="detail fluid">
+    <tr><th colspan="4">Dati Generali</th></tr>
+    <tr>
+        <td class="label">Numero:</td>
+        <td><?php echo $this->order->code_order; ?></td>
+        <td class="label">Data R.A.L.I.:</td>
+        <td><?php echo Maco_Utils_DbDate::fromDb($this->order->rali_date); ?></td>
+    </tr>
+    <tr>
+        <td class="label"><b>DTG:</b></td>
+        <td><b><?php echo $this->order->dtg_name; ?></b></td>
+        <?php if($this->acl('orders', 'view_budget')) : ?>
+            <td class="label">Budget:</td>
+            <td><?php echo $this->budget; ?> &euro;</td>
+        <?php else : ?>
+            <td class="label"></td>
+            <td></td>
+        <?php endif; ?>
+    </tr>
+    <tr>
+        <td class="label">Note di Commessa:</td>
+        <td colspan="3" class="cs3" id="note_detail"><?php echo $this->order->note; ?></td>
+    </tr>
+    <tr><th colspan="4">Cliente</th></tr>
+    <tr>
+        <td class="label">Ragione Sociale:</td>
+        <td>
+            <a href="<?php echo $this->baseUrl('companies/detail/id/' . $this->order->offer->company->company_id); ?>">
+                <?php echo $this->order->offer->company->ragione_sociale; ?>
+            </a>
+        </td>
+        <td class="label">Contatto:</td>
+        <td><?php echo $this->order->offer->company_contact_name; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Sede di Erogazione:</td>
+        <td colspan="3" class="cs3"><?php echo $this->order->offer['luogo']; ?></td>
+    </tr>
+    <tr><th colspan="4">Informazioni Offerta <a href="<?php echo $this->baseUrl() . '/offers/detail/id/' . $this->order->offer['offer_id']; ?>"><?php echo $this->order->offer['code_offer']; ?></a></th></tr>
+    <tr>
+        <td class="label">Servizio:</td>
+        <td><?php echo $this->order->offer['service_name']; ?></td>
+        <td class="label">Servizio Specifico:</td>
+        <td><?php echo $this->order->offer['subservice_name']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Oggetto:</td>
+        <td colspan="3" class="cs3"><?php echo $this->order->offer['subject']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Note Offerta:</td>
+        <td colspan="3" class="cs3"><?php echo $this->order->offer['note']; ?></td>
+    </tr>
+    <tr>
+        <td class="label">Scadenze:</td>
+        <td><?php echo $this->order->offer['scadenze']; ?></td>
+        <td class="label">Interesse Cliente:</td>
+        <td><?php echo $this->order->offer['interest_name']; ?></td>
+    </tr>
+
+    <tr><th colspan="4">File Commessa</th></tr>
+    <tr>
+        <td class="label">Scarica:</td>
+        <td>
+            <?php if($this->orderPdf) : ?>
+                <a class="button" href="<?php echo $this->baseUrl() . '/files/download/p/' . $this->orderPdf; ?>">
+                    <img style="vertical-align: middle" src="<?php echo $this->baseUrl('img/pdf.png'); ?>"/>
+                    <?php echo $this->order['code_order'] . '.pdf'; ?>
+                </a>
+            <?php else : ?>
+                <span class="info">file non presente</span>
+            <?php endif; ?>
+        </td>
+        <td class="label">Carica:</td>
+        <td>
+            <input id="file_upload" name="file_upload" type="file" />
+        </td>
+    </tr>
+
+</table>
+    

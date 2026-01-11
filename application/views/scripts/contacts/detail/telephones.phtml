@@ -1,0 +1,9 @@
+<table class="detail fluid">
+    <tr><th colspan="4">Recapiti Telefonici</th></tr>
+    <?php foreach($this->telephones as $telephone) : ?>
+        <tr>
+            <td class="label"><?php echo $telephone['description']; ?></td>
+            <td class="cs3" colspan="3"><?php echo $telephone['number']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>

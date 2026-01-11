@@ -1,0 +1,13 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <ul id="actiosns-menu">
+            <li><a class="heading_tab advanced_link active tab1" href="<?php echo $this->baseUrl(); ?>/tasks">Elenco Impegni <span class="info">(default da svolgere)</span></a></li>
+            <li><a class="heading_tab advanced_link tab1" href="<?php echo $this->baseUrl(); ?>/tasks/list">Calendario Incontri e Riunioni</a></li>
+            <?php /* <li><a class="heading_tab advanced_link tab1" href="<?php echo $this->baseUrl(); ?>/tasks/agenda">Agenda</a></li> */ ?>
+        </ul>
+    </div>
+    <div>
+        <h2>Elenco Impegni</h2>
+        <div id="all" class="tab_content"><?php $this->dag->deploy(); ?></div>
+    </div>
+</div>

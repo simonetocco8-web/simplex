@@ -1,0 +1,17 @@
+<td><a href="<?php echo $this->_base; ?><?php echo ($this->_source->getCellByFieldName('folder') == 'folder') ? 'get' : 'download';?><?php
+            foreach($this->_linksData as $k => $v)
+                echo '/' . $k . '/' . $this->_source->getCellByFieldName($v);
+            ?>"> <?php if($this->_img !== FALSE) : ?>
+            <img class="list-<?php echo $this->_title; ?>"
+                src="<?php echo $this->_baseUrl . $this->_img;?>"
+                alt="<?php echo $this->_title; ?>"
+                title="<?php echo $this->_title; ?>">
+                <?php endif; ?>
+
+                    <img class="list-<?php echo $this->_title; ?>"
+                        src="<?php echo $this->_baseUrl . '/img/' . (($this->_source->getCellByFieldName('folder')) ? 'folder' : 'file') . '.png';?>"
+                        alt="<?php echo $this->_title; ?>"
+                        title="<?php echo $this->_title; ?>">
+                <?php echo $this->getValue(); ?>
+
+</a></td>

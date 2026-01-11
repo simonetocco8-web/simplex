@@ -1,0 +1,6 @@
+
+<?php foreach($this->contacts as $c) : ?>
+    <option value="<?php echo $c['id']; ?>">
+        <?php echo $c['nome'] . ' ' . $c['cognome']; ?>
+    </option>
+<?php endforeach; ?>

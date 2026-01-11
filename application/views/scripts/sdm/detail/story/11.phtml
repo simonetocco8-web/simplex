@@ -1,0 +1,17 @@
+<tr><th colspan="4">Azione Preventiva Eseguita</th></tr>
+<tr>
+    <td class="label">Responsabile dell'azione Preventiva</td>
+    <td>
+        <?php echo $this->story['creator']; ?>
+    </td>
+    <td class="label">Data Applicazione:</td>
+    <td>
+        <?php echo Maco_Utils_DbDate::fromDb($this->story['date2']); ?>
+    </td>
+</tr>
+<tr>
+    <td class="label">Azione Preventiva:</td>
+    <td colspan="3">
+        <?php echo nl2br($this->story['text1']); ?>
+    </td>
+</tr>

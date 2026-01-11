@@ -1,0 +1,76 @@
+<div class="task <?php echo ($this->task['done'] == 1) ? 'task_done' : ''; ?>">
+    <div class="task_when">
+        <?php $when = new DateTime($this->task['when']); ?>
+        <a href="<?php echo $this->baseUrl('/tasks/detail/id/' . $this->task['task_id']); ?>" title="dettaglio impegno">
+            <?php echo $when->format('H:i:s'); ?>
+        </a><br />
+        <span class="info"><?php echo Model_Task::getFormattedTimeExpectedForValue($this->task['time_expected']); ?></span>
+    </div>
+    <?php /*
+    <div class="task_actions">
+        <a href="#">chiudi</a><br />
+        <a href="#">chiudi e nuovo</a><br />
+        <a href="#">chiudi e pubblica</a>
+    </div>
+    */ ?>
+    <div class="task_info">
+        <?php if(isset($this->with_date) && $this->with_date) : ?>
+        <div>
+            <?php echo $when->format('d/m/Y'); ?>
+        </div>
+        <?php endif; ?>
+        <a href="<?php echo $this->baseUrl('/admin/users/task/detail/id/' . $this->task['id_who']); ?>"><?php echo $this->task['who']; ?></a>
+        <?php
+            if($this->task['id_subject'])
+            {
+                $receiver_link = '<a href="' . $this->baseUrl('/companies/detailcontact/id/' . $this->task['id_company'] . '/idc/' . $this->task['id_subject']) . '">' . $this->task['subject'] . '</a>';
+            }
+            else
+            {
+                $receiver_link = $this->task['subject'];
+            }
+
+            $company_link = '<span class="info">(<a href="' . $this->baseUrl('/companies/detail/id/' . $this->task['id_company']) . '">' . $this->task['company'] . '</a>)</span>';
+            switch($this->task['what'])
+            {
+                case 1:
+                    echo ' deve contattare telefonicamente ' . $receiver_link . ' ' . $company_link . ' al numero: ' . $this->task['subject_data'];
+                    break;
+                case 2:
+                    echo ' deve contattare via email ' . $receiver_link . ' ' . $company_link . ' all\'indirizzo mail: <a href="mailto:' . $this->data['subject_data'] . '">' . $this->task['subject_data'] . '</a>';
+                    break;
+                case 3:
+                    echo ' deve incontrarsi con ' . $receiver_link . ' ' . $company_link . ' all\'indirizzo: ' . $this->task['subject_data'];
+                    if($this->task['with_auto'])
+                    {
+                        echo '<span class="info"> (auto prenotata)</span>';
+                    }
+                    break;
+                case 5:
+                    echo ' deve fare riunione con ' . $receiver_link . ' ' . $company_link . ' all\'indirizzo: ' . $this->task['subject_data'];
+                    if($this->task['with_auto'])
+                    {
+                        echo '<span class="info"> (auto prenotata)</span>';
+                    }
+                    break;
+                case 6:
+                    echo ' deve fare videoconferenza con ' . $receiver_link . ' ' . $company_link . ' - info: ' . $this->task['subject_data'];
+                    break;
+                case 8:
+                    echo ' in PFM';
+                    break;
+                default:
+                    echo ' deve parlare con' . $receiver_link;
+                    break;
+            }
+        ?>
+    </div>
+    <?php /*
+    <div class="task_note">
+        info: <?php echo $this->task['info']; ?>
+    </div>
+    <div class="task_note">
+        note: <?php echo $this->task['note']; ?>
+    </div>
+    */ ?>
+</div>

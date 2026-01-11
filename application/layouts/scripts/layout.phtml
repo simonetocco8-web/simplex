@@ -1,0 +1,131 @@
+<?PHP echo $this->doctype(); ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>simpl.ex</title> 
+
+<?php /* TODO <script data-main="<?php echo $this->baseUrl('/js/common/grid.js'); ?>" src="<?php echo $this->baseUrl('/js/common/require.js'); ?>"></script> */ ?>
+
+<?PHP
+$this->headLink()->appendStylesheet($this->baseUrl('/css/reset.css'));
+$this->headLink()->appendStylesheet($this->baseUrl('/css/global.css?v3', true));
+
+$this->headLink()->appendStylesheet($this->baseUrl('/js/common/alert/tiny_alert.css', true));
+
+$this->headLink()->appendStylesheet($this->baseUrl('/js/common/datepicker1.3/datepicker.css', true));
+$this->headLink()->appendStylesheet($this->baseUrl('/js/common/datepicker1.3/datepicker_vista/datepicker_vista.css', true));
+
+$this->headLink()->headLink(array('rel' => 'icon', 'href' => $this->baseUrl('/img/favicon2.ico'), 'type' => 'image/x-icon'));
+echo $this->headLink();
+
+
+$this->headScript()->prependFile($this->baseUrl('/js/common/startUp.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/common/gridview.js'));
+//$this->headScript()->prependFile($this->baseUrl('/js/common/application.js'));
+//$this->headScript()->prependFile($this->baseUrl('/js/common/enpicker.js'));
+
+//$this->headScript()->prependFile($this->baseUrl('/js/moo/mootools-core.js'));
+//$this->headScript()->prependFile('http://ajax.googleapis.com/ajax/libs/mootools/1.2.4/mootools.js');
+//echo $this->headScript();
+
+$this->headScript()->prependFile($this->baseUrl('/js/common/alert/tiny_alert.js'));
+
+//$this->headScript()->prependFile($this->baseUrl('/js/common/listview.js'));
+//$this->headScript()->prependFile($this->baseUrl('/js/common/startUp.js'));
+
+$this->headScript()->prependFile($this->baseUrl('/js/common/By0Chat.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/soundmanager/soundmanager2-nodebug-jsmin.js'));
+
+$this->headScript()->prependFile($this->baseUrl('/js/common/simplex.js'));
+//   $this->headScript()->prependFile($this->baseUrl('/js/common/sidebar.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/common/By0DatePicker.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/common/datepicker1.3/Picker.Date.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/common/datepicker1.3/Picker.Attach.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/common/datepicker1.3/Picker.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/common/datepicker1.3/Locale.it-IT.DatePicker.js'));
+//$this->headScript()->prependFile($this->baseUrl('/js/common/roar.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/common/purr.js'));
+
+$this->headScript()->prependFile($this->baseUrl('/js/common/dmenu.js'));
+
+$this->headScript()->prependFile($this->baseUrl('/js/common/base64.js'));
+
+$this->headScript()->prependFile($this->baseUrl('/js/sammy.min.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/jquery-1.4.4.js'));
+
+
+//$this->headScript()->prependFile($this->baseUrl('/js/common/staticScroller.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/mootools-more-1.3-nocompat.js'));
+$this->headScript()->prependFile($this->baseUrl('/js/mootools-core-1.3-full-compat.js'));
+
+
+echo $this->headScript();
+
+if($this->jQuery()->isEnabled())
+{
+	$this->jQuery()->addStylesheet('http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/cupertino/jquery-ui.css');
+	echo $this->jQuery();
+}
+
+//$this->setEscape('htmlentities');
+?>
+<script type="text/javascript">
+            var baseUrl = '<?php echo $this->baseUrl(); ?>';
+            <?php 
+            /*
+            var __uploaderDebug = <?php echo (APPLICATION_ENVIRONMENT == 'development' || APPLICATION_ENVIRONMENT == 'testing') ? 'true' : 'false'; ?>;
+            setCNETAssetBaseHref(baseUrl + '/js/moo/Assets');
+            
+            window.addEvent('domready', removePreload);
+            var preload;
+            function removePreload(){
+                preload.hide();
+            }
+            */
+            ?>
+        </script>
+</head>
+<body>
+<!--
+        <div style="display:none" id="preload_wrapper_div">
+            <div id="preload_div">Caricamento dati</div>
+        </div>
+        <script type="text/javascript">
+            preload = new StickyWin.Modal({
+                content: $('preload_wrapper_div').get('html')
+            });
+        </script>
+        -->
+
+<div id="container"><?PHP 
+echo $this->render('header.phtml');
+?> <!-- This next call will now include any content that was generated in the
+                    dispatching of a controllers action (or series of actions). -->
+
+<div id="main-container">
+<div id="right-container">
+<div id="content">
+    <?php echo $this->render('common/warning-messages.phtml'); ?>
+    <?PHP echo $this->layout()->content; ?>
+</div>
+</div>
+<?PHP
+echo $this->render('mainMenu.phtml');
+
+?></div>
+
+</div>
+
+<!-- -values used from the js -->
+<div class="clear">
+    <input type="hidden" id="controllerName" value="<?php echo $this->layout()->controllerName; ?>" /> 
+    <input type="hidden" id="actionName" value="<?php echo $this->layout()->actionName; ?>" />
+    <input type="hidden" id="xsrff" value="<?php echo $this->layout()->user->user_id; ?>" />
+</div>
+<!-- If your application requires it, this would be a great place to put a 
+                footer for all pages. -->
+<?PHP
+echo $this->render('footer.phtml');
+?>
+</body>
+</html>

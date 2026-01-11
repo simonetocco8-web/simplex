@@ -1,0 +1,20 @@
+
+<div id="cs" class="overflow-scroll">
+<h2>Modifica Dati Commessa</h2>
+
+<form name="mcomm_form" id="mcomm_form" action="<?php echo $this->baseUrl(); ?>/orders/mcomms/format/json" method="post">
+    <?php echo $this->formHidden('id', $this->data['order_id']); ?> 
+    <h4>Informazioni Commessa</h4>
+
+    <dl>
+        <dt><label for="oldpw">Note commessa: <span class="info"><?php echo $this->data['note_da_offerta']; ?></span></label></dt>
+        <dd><?php echo $this->formTextarea($this->inputNamePrefix . 'note', $this->data['note'], array('class' => 'input-big', 'rows' => '2')); ?></dd>
+    </dl>
+
+<div class="clear"></div>
+<br />
+<p class="submit">
+    <input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+</form>
+</div>

@@ -1,0 +1,33 @@
+<div id="np">
+<h2>Nuovo Pagamento</h2>
+<form name="np_form" id="np_form" action="<?php echo $this->baseUrl(); ?>/administration/nps/format/json" method="post">
+    <?php echo $this->formHidden('id_tranche', $this->tranche->tranche_id); ?> 
+    <?php echo $this->formHidden('payment_id', $this->payment->payment_id); ?> 
+    <dl class="fleft with-margin">
+        <dt><label for="oldpw"><span class="red">*</span> Importo <span class="info">(max <?php 
+            $max = (!empty($this->payment->payment_id)) 
+                ? $this->tranche->getImportoDaPagare() + $this->payment->importo
+                : $this->tranche->getImportoDaPagare();
+            
+            echo $max;
+        ?> &euro;)</span>:</label></dt>
+        <dd>                                                                                            
+        <dd><?php echo $this->formText('importo', $this->payment->importo, array('class' => 'input-small required')); ?></dd>
+        </dd>
+    </dl>
+    <dl class="fleft with-margin">
+        <dt><label for="oldpw">Data Pagamento:</label></dt>
+        <dd><?php echo $this->formText('date_done', Maco_Utils_DbDate::fromDb($this->payment->date_done), array('class' => 'input-small validate-date required')); ?></dd>
+    </dl>
+    <div class="clear"></div>
+    <dl>
+        <dt><label for="oldpw">Note: </label></dt>
+        <dd><?php echo $this->formTextarea('note', $this->payment->note, array('class' => 'input-big', 'rows' => '2')); ?></dd>
+    </dl>
+    <br />
+
+    <p class="submit">
+        <input class="button" type="submit" id="spw_button" value="Salva" />
+    </p>
+</form>
+</div>

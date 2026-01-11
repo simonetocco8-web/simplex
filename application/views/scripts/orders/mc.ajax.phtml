@@ -1,0 +1,27 @@
+
+<div id="cs" class="overflow-scroll">
+<h2>Modifica Consuntivo</h2>
+
+<form name="mc_form" id="mc_form" action="<?php echo $this->baseUrl(); ?>/orders/mcs/format/json" method="post">
+    <?php echo $this->formHidden('id', $this->data['order_id']); ?> 
+    <h4>Dati generali consuntivo</h4>
+    <dl>
+        <dt><label for="oldpw">Ente:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'ente', $this->data['ente'], array('class' => 'input-small ente')); ?></dd>
+    </dl>
+    <dl>
+        <dt><label for="oldpw">Note consuntivo:</label></dt>
+        <dd><?php echo $this->formTextarea($this->inputNamePrefix . 'note_consuntivo', $this->data['note_consuntivo'], array('class' => 'input-big', 'rows' => '2')); ?></dd>
+    </dl>
+    <dl>
+        <dt><label for="oldpw">Sal:</label></dt>
+        <dd><?php echo $this->formSelect($this->inputNamePrefix . 'sal', $this->data['sal'], array('class' => 'input-small'), $this->sal_array); ?></dd>
+    </dl>
+
+<div class="clear"></div>
+<br />
+<p class="submit">
+    <input class="button" type="submit" id="spw_button" value="Salva" />
+</p>
+</form>
+</div>

@@ -1,0 +1,13 @@
+<div class="rcadded to-be-added <?php echo ($this->index == 0) ?: 'added'; ?>">
+<!--    <?php echo $this->formHidden($this->inputNamePrefix . 'rco[]', $this->data['rco']); // TODO: id_rco to rco ?> -->
+    <dl>
+	    <dt><label for="mail[]">Responsabile:</label></dt>
+	    <dd><?php echo $this->formText($this->inputNamePrefix. 'rco[]', $this->data['rco'], array('class' => 'input-medium required rc_tbl')); ?></dd>
+    </dl>
+    <dl>
+        <dt><label for="email-description[]">Note responsabile:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'note[]', $this->data['note'], array('class' => 'input-big')); ?></dd>
+    </dl>
+    <a class="remove-more" name="removemail" id="removemail">Cancella</a>
+    <div style="clear: both;"></div>
+</div>

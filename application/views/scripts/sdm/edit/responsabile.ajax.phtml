@@ -1,0 +1,39 @@
+    <form name="mod_responsabile_form" id="mod_responsabile_form"
+          action="<?php echo $this->baseUrl(); ?>/sdm/mr/save/1/format/json"
+          method="post">
+    <?php echo $this->formHidden('id', $this->data['sdm_id']); ?>
+ <div class="fieldset-container">
+    <h4>Dati Responsabile</h4>
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'id_responsible'; ?>"><span class="red">*</span> Responsabile:</label></dt>
+        <dd>
+            <?php echo $this->formSelect($this->inputNamePrefix . 'id_responsible', $this->data['id_responsible'], array('class' => 'input-medium required', 'multiple' => ''), $this->users); ?>
+        </dd>
+    </dl>
+     <dl>
+         <dt><label for="<?php echo $this->inputNamePrefix . 'date_feedback'; ?>"><span class="red">*</span> Data di feedback:</label></dt>
+         <dd>
+             <?php echo $this->formText($this->inputNamePrefix . 'date_feedback', Maco_Utils_DbDate::fromDb($this->data['date_feedback']), array('class' => 'input-medium validate-date date-field required')); ?>
+         </dd>
+     </dl>
+
+     <dl>
+         <dt><label for="<?php echo $this->inputNamePrefix . 'area'; ?>">Area:</label></dt>
+         <dd>
+             <?php echo $this->formTextarea($this->inputNamePrefix . 'area', $this->data['area'], array('class' => 'input-big', 'rows' => 2)); ?>
+         </dd>
+     </dl>
+    <dl>
+        <dt><label for="<?php echo $this->inputNamePrefix . 'cause'; ?>">Possibile Causa:</label></dt>
+        <dd>
+            <?php echo $this->formTextarea($this->inputNamePrefix . 'cause', $this->data['cause'], array('class' => 'input-big', 'rows' => 4)); ?>
+        </dd>
+    </dl>
+
+
+    <div class="clear"></div>
+                                                            
+    <p class="submit"><input class="button" type="submit" value="salva" /></p>  
+                                                            
+</div>        
+</form>

@@ -1,0 +1,166 @@
+<div id="tabs_main">
+
+    <?php if($this->error) : ?>
+    <p class="message error">
+        Utente gi&agrave; impegnato nel periodo inserito
+    </p>
+    <?php endif; ?>
+
+    <h2><?php echo $this->contentTitle; ?></h2>
+
+    <form action="<?php echo $this->baseUrl(); ?>/tasks/save" method="post" id="edit" name="edit">
+        <?php echo $this->formHidden('task_id', $this->data['task_id']); ?>
+        <?php echo $this->formHidden('id_parent', $this->data['id_parent']); ?>
+        <?php echo $this->formHidden('id_company', $this->data['id_company']); ?>
+        <?php echo $this->formHidden('id_offer', $this->data['id_offer']); ?>
+    <div id="task_div" class="tab_content">
+
+
+
+        <div class="fieldset-container">
+            <h4>Causa <span class="info">(etichetta da modificare)</span></h4>
+
+            <dl class="fleft with-margin">
+                <dt><label for="id_company_contact">Data impegno:</label></dt>
+                <dd>
+                    <?php echo $this->formHidden($this->inputNamePrefix . 'p_task_id', $this->parent_task['task_id']); ?>
+                    <?php echo $this->formText($this->inputNamePrefix . 'p_when', $this->parent_task['when'], array('class' => 'input-small validate-datetime')); ?>
+                </dd>
+            </dl>
+
+            <dl class="fleft with-margin">
+                <dt><label for="p_id_who">Autore:</label></dt>
+                <dd>
+                    <?php echo $this->formSelect($this->inputNamePrefix . 'p_id_who', $this->parent_task['id_who'], array('class' => 'input-small required'), $this->users); ?>
+                </dd>
+            </dl>
+
+            <dl class="fleft with-margin">
+                <dt><label for="p_what">Cosa:</label></dt>
+                <dd>
+                    <dd><?php echo $this->formSelect($this->inputNamePrefix . 'p_what', $this->parent_task['what'], array('class' => 'input-small', 'multiple' => ''), $this->parent_whats); ?></dd>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt><label for="id_company">Con:</label></dt>
+                <dd>
+                    <?php echo $this->formText($this->inputNamePrefix . 'p_subject', $this->parent_task['subject'], array('class' => 'input-small')); ?>
+                </dd>
+            </dl>
+
+        </div>
+
+        
+
+        <hr />
+        <div class="fieldset-container">
+            <h4>Dati Impegno</h4>
+
+            <dl class="fleft with-margin">
+                <dt><label for="id_who">Chi deve fare:</label></dt>
+                <dd>
+                    <?php echo $this->formSelect($this->inputNamePrefix . 'id_who', $this->data['id_who'], array('class' => 'input-small required'), $this->users); ?>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt><label for="what">Cosa:</label></dt>
+                <dd><?php echo $this->formSelect($this->inputNamePrefix . 'what', $this->data['what'], array('class' => 'input-medium', 'multiple' => ''), $this->whats); ?></dd>
+            </dl>
+
+            <dl>
+                <dt><label for="subject">Contatto:</label></dt>
+                <dd>
+                    <?php echo $this->formHidden($this->inputNamePrefix . 'id_subject', $this->data['id_subject']); ?>
+                    <?php echo $this->formText($this->inputNamePrefix . 'subject', $this->data['subject'], array('class' => 'input-small')); ?>
+                </dd>
+            </dl>
+
+            <dl class="dep_what dep_what_1 <?php if($this->data['what'] == 1) echo 'show'; ?>">
+                <dt><label for="id_company_contact">Numero di Telefono:</label></dt>
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'telephone_number', $this->data['subject_data'], array('class' => 'input-small')); ?></dd>
+            </dl>
+
+            <dl class="dep_what dep_what_2 <?php if($this->data['what'] == 2) echo 'show'; ?>">
+                <dt><label for="id_company_contact">Email:</label></dt>
+                <dd><?php echo $this->formText($this->inputNamePrefix . 'email', $this->data['subject_data'], array('class' => 'input-small')); ?></dd>
+            </dl>
+
+            <dl class="dep_what dep_what_3 dep_what_5 <?php if($this->data['what'] == 3 || $this->data['what'] == 5) echo 'show'; ?>">
+                <dt><label for="id_company_contact">Indirizzo:</label></dt>
+                <dd>
+                    <?php echo $this->formText($this->inputNamePrefix . 'address', $this->data['subject_data'], array('class' => 'input-small')); ?>
+                    prenota auto: <?php echo $this->formCheckbox($this->inputNamePrefix . 'with_auto', $this->data['with_auto'], array('checked' => $this->data['with_auto'] == 1)); ?>
+                </dd>
+            </dl>
+            <dl class="dep_what dep_what_6 <?php if($this->data['what'] == 6) echo 'show'; ?>">
+                <dt><label for="id_company_contact">Info:</label></dt>
+                <dd>
+                    <?php echo $this->formText($this->inputNamePrefix . 'subject_data', $this->data['subject_data'], array('class' => 'input-small')); ?>
+                </dd>
+            </dl>
+            <div class="clear"></div>
+
+            <dl class="fleft with-margin">
+                <dt><label for="when">Quando:</label></dt>
+                <dd>
+                    <?php echo $this->formText($this->inputNamePrefix . 'when', $this->data['when'], array('class' => 'input-small validate-datetime required')); ?>
+                    <br />
+                    data flessibile: <?php echo $this->formCheckbox($this->inputNamePrefix . 'when_flexible', $this->data['when_flexible'], array('checked' => $this->data['when_flexible'] == 1)); ?>
+                </dd>
+            </dl>
+
+            <dl class="fleft">
+                <dt><label for="id_company_contact">Ore Previste:</label></dt>
+                <dd>
+                    <?php echo $this->formTime($this->inputNamePrefix . 'time_expected', $this->data['time_expected'], array('class' => 'required')); ?>
+                    <br />
+                    <?php /* tutto il giorno: <?php echo $this->formCheckbox($this->inputNamePrefix . 'when_allday', $this->data['when_allday'], array('checked' => $this->data['when_allday'] == 1)); ?> */ ?>
+                </dd>
+            </dl>
+
+            <div class="clear"></div>
+
+            <dl>
+                <dt><label for="sector"><span class="red">*</span> Settore:</label></dt>
+                <dd>
+                    <?php echo $this->formSelect($this->inputNamePrefix . 'sector', $this->data['sector'], array('class' => 'input-small required'), $this->data->getSectors()); ?>
+                </dd>
+            </dl>
+
+            <dl>
+                <dt><label for="note">Info:</label></dt>
+                <dd><?php echo $this->formTextarea($this->inputNamePrefix . 'info', $this->data['info'], array('class' => 'input-big', 'rows' => 4)); ?></dd>
+            </dl>
+            
+            <div class="clear"></div>
+                                                                    
+        </div>        
+    </div>
+            
+    <p class="submit"><input class="button" type="submit" value="salva" /></p>  
+    
+    </form>
+
+</div>
+
+<?php $this->textboxList(); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/moocheck.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/edit.js?v=' . mktime(0,0,0,11,19,2011))); ?>
+
+<?php /*
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/autocomplete/Meio.Autocomplete.js'));  ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/autocomplete/meio.aucomplete.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/Overlay.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/dialog/MavDialog.js')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/css/dialog/mavdialog.css', true)); ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0MessageForm.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/common/By0LinkedFields.js')); ?>
+
+*/ ?>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/tasks/edit.js')); ?>
+

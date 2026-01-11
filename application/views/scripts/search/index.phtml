@@ -1,0 +1,53 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <?php /* <a class="heading_tab advanced_link <?php echo $this->excluded ? 'active' : ''; ?> tab1" href="<?php echo $this->baseUrl('companies/list/excluded/1'); ?>">Escluse</a> */ ?>
+
+        <!--   <a class="heading_tab advanced_link tab4" href="#">Ricerca Avanzata</a> -->
+    </div>
+
+    <div class="tab_contents">
+        <h2>Risultati Ricerca: &lsquo;<?php echo $this->query; ?>&rsquo;</h2>
+
+        <div id="all" class="tab_content">
+
+            <h3>Aziende</h3>
+            <div>
+                <?php $this->company_grid->deploy(); ?>
+            </div>
+
+            <hr class="divider" />
+
+            <h3>Contatti</h3>
+            <div>
+                <?php $this->contact_grid->deploy(); ?>
+            </div>
+
+            <hr class="divider" />
+
+            <h3>Offerte</h3>
+            <div>
+                <?php $this->offer_grid->deploy(); ?>
+            </div>
+
+            <hr class="divider" />
+
+            <h3>Commesse</h3>
+            <div>
+                <?php $this->order_grid->deploy(); ?>
+            </div>
+
+            <hr class="divider" />
+
+
+            <h3>Utenti</h3>
+            <div>
+                <?php $this->user_grid->deploy(); ?>
+            </div>
+
+            <hr class="divider" />
+
+        </div>
+    </div>
+</div>
+
+<?php $this->headScript()->appendFile($this->baseUrl('/js/search/gridview.js')); ?>

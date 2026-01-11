@@ -1,0 +1,16 @@
+<div id="tabs_main">
+    <div class="submenu">
+        <ul id="actiosns-menu">
+            <li><a class="heading_tab advanced_link active tab1" href="#">Elenco Segnalazioni</a></li>
+            <li> 
+                 <a class="heading_tab advanced_link tab4 important" href="<?php echo $this->baseUrl('sdm/edit'); ?>">Nuova Segnalazione</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab_contents">
+        <h2>Elenco Segnalzioni di Miglioramento</h2>
+        <div id="all" class="tab_content"><?php $this->dag->deploy(); ?> </div>
+    </div>
+</div>
+

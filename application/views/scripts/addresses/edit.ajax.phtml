@@ -1,0 +1,31 @@
+<div class="to-be-added <?php echo ($this->index == 0) ?: 'added'; ?>">
+    <?php echo $this->formHidden($this->inputNamePrefix . 'id[]', $this->data['id']); ?>
+    <dl class="fleft with-margin">
+        <dt><label for="via[]">Via:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'via[]', $this->data['via'], array('class' => 'input-medium')); ?></dd>
+    </dl>
+    <dl class="fleft" style="margin-right: 64px">
+        <dt><label for="numero[]">Nr:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'numero[]', $this->data['numero'], array('class' => 'input-fixed', 'size' => 4)); ?></dd>
+    </dl>
+    <dl class="fleft with-margin">
+        <dt><label for="cap[]">CAP:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'cap[]', $this->data['cap'], array('class' => 'input-small maxLength:5 validate-integer')); ?></dd>
+    </dl>
+    <div class="clear"></div>
+    <dl class="fleft with-margin">
+        <dt><label for="localita[]">Localit&agrave;:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'localita[]', $this->data['localita'], array('class' => 'input-medium')); ?></dd>
+    </dl>
+    <dl class="fleft">
+        <dt><label for="provincia[]">Provincia:</label></dt>
+        <dd><?php echo $this->formSelect($this->inputNamePrefix . 'provincia[]', $this->data['idprovincia'], array('class' => 'input-medium', 'multiple' => ''), $this->province); ?></dd>
+    </dl>
+    <div class="clear"></div>
+    <dl>
+        <dt><label for="address-description[]">Descrizione:</label></dt>
+        <dd><?php echo $this->formText($this->inputNamePrefix . 'description[]', $this->data['description'], array('class' => 'input-flex')); ?></dd>
+    </dl>
+    <a class="remove-more" name="removeaddress" id="removeaddress">Cancella</a>
+    <div style="clear: both;"></div>
+</div>

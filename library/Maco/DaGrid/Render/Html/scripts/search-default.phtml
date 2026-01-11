@@ -1,0 +1,36 @@
+<div id="<?php echo $this->_id; ?>-search" class="search-wrapper">
+
+    <h3>Filtri di Ricerca</h3>
+    <?php $ashidden = (( !isset($_POST['ashidden']) || (isset($_POST['ashidden']) && $_POST['ashidden'] == 1)) && $this->withFastSearch()) ? 1 : 0; ?>
+    <input type="hidden" name="ashidden" id="ashidden" value="<?php echo $ashidden; ?>" />
+    <?php echo $this->_advancedSearch->render(); ?>
+
+    <div style="clear: both;"></div>
+    <div class="search-element">
+        <div class="search-element-label">&nbsp;</div>
+        <div class="search-element-field">
+            <input type="reset" value="annulla" />
+            <input type="submit" value="cerca" />
+        </div>
+    </div>
+</div>
+
+<?php /* ADVANCED SEARCH STUFF */ ?>
+
+<?php $this->_view->headScript()->prependFile($this->_view->baseUrl('/js/common/jdatepicker/daterangepicker.jQuery.js')); ?>
+<?php $this->_view->headScript()->prependFile($this->_view->baseUrl('/js/common/jquery.multiselect.min.js')); ?>
+<?php $this->_view->headScript()->prependFile($this->_view->baseUrl('/js/jquery-ui-1.10.3.custom.min.js')); ?>
+
+<?php $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('/js/common/jdatepicker/css/ui.daterangepicker.css', true)); ?>
+<?php $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('/css/jquery/smoothness/jquery-ui-1.10.3.custom.min.css', true)); ?>
+<?php $this->_view->headLink()->appendStylesheet($this->_view->baseUrl('/css/multiselect/multiselect.css', true)); ?>
+
+<?php $this->_view->textboxList(); ?>
+
+<script type="text/javascript">
+    
+    jQuery(document).ready(function($) {
+        
+    });
+</script>
+
