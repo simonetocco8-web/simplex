@@ -137,6 +137,13 @@ class Model_Order_Repository
         $offerRepo = Maco_Model_Repository_Factory::getRepository('offer');
         $offer = $offerRepo->findWithDependenciesById($id_offer);
 
+        $db = $this->_orderMapper->getDbAdapter();
+        $existingOrderId = $db->fetchOne('select order_id from orders where id_offer = ?', $id_offer);
+        if($existingOrderId)
+        {
+            return array('commessa già creata per questa offerta');
+        }
+
         $order = new Model_Order();
         $order->setValidatorAndFilter(new Model_Order_Validator());
 
@@ -152,7 +159,6 @@ class Model_Order_Repository
 
         $aut = Zend_Auth::getInstance()->getIdentity();
 
-        $db = $this->_orderMapper->getDbAdapter();
         $select = $db->select();
         $select->from('orders', array('year', 'id_order'))
                 ->where('internal_code = ?', $aut->internal_abbr)

@@ -21,7 +21,7 @@
             }
 
             if(is_string($value)){
-                if($value == ((string)(float)$value)){
+                if(is_numeric($value)){
                     return true;
                 }
             }
