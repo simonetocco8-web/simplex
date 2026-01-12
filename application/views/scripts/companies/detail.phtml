@@ -6,7 +6,7 @@
 
         <a class="heading_tab advanced_link tab2" href="#">Impegni</a>
         <a class="heading_tab advanced_link tab2" href="#">Modulistica</a>
-        <a class="heading_tab advanced_link tab2" href="<?php echo $this->baseUrl('files/get/p/' . base64_encode('/aziende/' . $this->layout()->user->internal_abbr . '_' . $this->company['company_id'])); ?>">Documenti</a>
+        <a class="heading_tab advanced_link tab2" href="<?php echo $this->baseUrl('files/get/p/' . rawurlencode(base64_encode('/aziende/' . $this->layout()->user->internal_abbr . '_' . $this->company['company_id']))); ?>">Documenti</a>
         <a class="heading_tab advanced_link tab2" href="<?php echo $this->baseUrl('offers?dalist=offers&format=html&id_company=' . $this->company['company_id']); ?>">Offerte</a>
         <a class="heading_tab advanced_link tab2" href="<?php echo $this->baseUrl('orders?dalist=orders&format=html&id_company=' . $this->company['company_id']); ?>">Commesse</a>
        <!--  <a class="heading_tab advanced_link tab3" href="#">Documenti</a> -->
